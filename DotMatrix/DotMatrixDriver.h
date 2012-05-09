@@ -53,6 +53,7 @@ private:
 	void setCol(byte *p);
 
 	void setSize(byte length, byte rowCount);
+	void shiftSend(byte c);
 };
 
 #endif /* DOTMATRIXDRIVER_H_ */

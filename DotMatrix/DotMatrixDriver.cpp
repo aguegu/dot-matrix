@@ -69,7 +69,18 @@ void DotMatrixDriver::setRow(byte r)
 void DotMatrixDriver::setCol(byte * p)
 {
 	for (byte i = 0; i < _bytesPerRow; i++)
-		shiftOut(_pin_595_DS, _pin_595_SH, LSBFIRST, ~*(p++));
+		this->shiftSend(~*(p++));
+
+		//shiftOut(_pin_595_DS, _pin_595_SH, LSBFIRST, ~*(p++));
+}
+
+void DotMatrixDriver::shiftSend(byte c)
+{
+	for (byte i=0; i<8; i++)
+		digitalWrite(_pin_595_DS, bitRead(c, i));
+
+	digitalWrite(_pin_595_SH, LOW);
+	digitalWrite(_pin_595_SH, HIGH);
 }
 
 void DotMatrixDriver::display(byte times)
