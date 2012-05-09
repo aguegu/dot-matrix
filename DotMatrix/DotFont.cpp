@@ -59,7 +59,7 @@ DotFont::~DotFont()
 	// TODO Auto-generated destructor stub
 }
 
-void DotFont::setPattern(byte * pattern, byte * unitWidth, byte * unitHeight)
+void DotFont::setPattern(const uint8_t * pattern, const uint8_t * unitWidth, const uint8_t * unitHeight)
 {
 	_pattern = pattern;
 	_unitWidth = pgm_read_byte_near(unitWidth);

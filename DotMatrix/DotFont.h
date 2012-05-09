@@ -29,7 +29,7 @@ public:
 
 	void setDotMatrix(DotMatrix * pDM);
 	void show();
-	void setPattern(byte * pattern, byte * unitWidth, byte * unitHeight);
+	void setPattern(const uint8_t * pattern, const uint8_t * unitWidth, const uint8_t * unitHeight);
 	void setIndex(byte index);
 	void setDirection(boolean direction = false);
 	void moveTo(byte col, byte row);
@@ -45,7 +45,7 @@ private:
 	void showV();
 
 	DotMatrix * _pDM;
-	byte *_pattern;
+	const uint8_t *_pattern;
 	byte _unitWidth;
 	byte _unitHeight;
 	byte _col;

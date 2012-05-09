@@ -16,10 +16,10 @@
 
 #include "Font0704.h"
 
-prog_uint8_t FONT_0704_WIDTH[] PROGMEM = {4};
-prog_uint8_t FONT_0704_HEIGHT[] PROGMEM = {7};
+const uint8_t PROGMEM FONT_0704_WIDTH[] = {4};
+const uint8_t PROGMEM  FONT_0704_HEIGHT[] = {7};
 
-prog_uint8_t FONT_0704[] PROGMEM=
+const uint8_t PROGMEM FONT_0704[] =
 {
 	0x00, 0x00, 0x00, 0x00, 	// Space
 	0x5f, 0x00, 0x00, 0x00, 	// !

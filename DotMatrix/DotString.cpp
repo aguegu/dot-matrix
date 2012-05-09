@@ -14,7 +14,7 @@
 	source hosting: http://code.google.com/p/aguegu-arduino-library/
  */
 #include "DotString.h"
-#include "Font0704.h"
+#include "../Font/Font0704.h"
 
 DotString::DotString(DotMatrix * pDM)
 {

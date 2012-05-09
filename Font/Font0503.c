@@ -16,10 +16,10 @@
 
 #include "Font0503.h"
 
-prog_uint8_t FONT_0503_WIDTH[] PROGMEM = {3};
-prog_uint8_t FONT_0503_HEIGHT[] PROGMEM = {5};
+const uint8_t PROGMEM FONT_0503_WIDTH[] = {3};
+const uint8_t PROGMEM FONT_0503_HEIGHT[]  = {5};
 
-prog_uint8_t FONT_0503[] PROGMEM =
+const uint8_t PROGMEM FONT_0503[]  =
 {
 	0x1f, 0x11, 0x1f,	//0
 	0x00, 0x1f, 0x00,	//1

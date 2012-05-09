@@ -1,6 +1,6 @@
 /*
-	Font_0503.h
-	Digital Font of 5x3 Dot Matrix
+	FONT_0704.h
+	Basic ASCII visible Font of 7x4 Dot Matrix
 	library for Arduino to drive LED Dot Matrix Display dirven by 74HC595(column) and 74HC138(row)
 
 	Created on: 2012-1-25
@@ -13,15 +13,18 @@
 
 	source hosting: http://code.google.com/p/aguegu-arduino-library/
  */
-
-#ifndef FONT_0503_H_
-#define FONT_0503_H_
+#ifndef FONT_0704_H_
+#define FONT_0704_H_
 
 #include <avr/pgmspace.h>
 
-extern prog_uint8_t FONT_0503_WIDTH[] PROGMEM;
-extern prog_uint8_t FONT_0503_HEIGHT[] PROGMEM;
+#ifdef PROGMEM
+  #undef PROGMEM
+  #define PROGMEM __attribute__((section(".progmem.data")))
+#endif
 
-extern prog_uint8_t FONT_0503[] PROGMEM;
+extern const uint8_t PROGMEM FONT_0704_WIDTH[];
+extern const uint8_t PROGMEM FONT_0704_HEIGHT[];
+extern const uint8_t PROGMEM FONT_0704[];
 
-#endif /* FONT_0503_H_ */
+#endif /* FONT_0704_H_ */
