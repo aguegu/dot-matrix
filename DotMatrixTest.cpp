@@ -13,7 +13,7 @@
 	source hosting: http://code.google.com/p/aguegu-arduino-library/
  */
 
-#include "aGueguLibraryTest.h"
+#include "DotMatrixTest.h"
 #include "DotMatrixDriver.h"
 #include "DotMatrix.h"
 #include "DotString.h"

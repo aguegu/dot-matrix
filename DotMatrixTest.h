@@ -1,7 +1,6 @@
+#ifndef DOTMATRIXTEST_H_
 
-#ifndef aGueguLibraryTest_H_
-
-#define aGueguLibraryTest_H_
+#define DOTMATRIXTEST_H_
 #include "Arduino.h"
 
 #ifdef __cplusplus
