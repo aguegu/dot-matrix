@@ -18,8 +18,11 @@
 #include "DotMatrix.h"
 #include "DotString.h"
 
+
+
+
 DotMatrix dm(24*1, 7);
-DotMatrixDriver dmd(&dm, 11, 10, 9, 8, 7, 6, 5, 4);
+DotMatrixDriver dmd(dm, 11, 10, 9, 8, 7, 6, 5, 4);
 DotString ds(&dm);
 
 extern HardwareSerial Serial;

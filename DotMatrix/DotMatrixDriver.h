@@ -24,14 +24,14 @@ class DotMatrixDriver
 {
 public:
 
-	DotMatrixDriver(DotMatrix * pDM, uint8_t pin_C_IN, uint8_t pin_C_OE, uint8_t pin_C_ST, uint8_t pin_C_SH, uint8_t pin_R_OE, uint8_t pin_R_A2, uint8_t pin_R_A1, uint8_t pin_R_A0, uint16_t speed = 0x400);
+	DotMatrixDriver(DotMatrix & pDM, uint8_t pin_C_IN, uint8_t pin_C_OE, uint8_t pin_C_ST, uint8_t pin_C_SH, uint8_t pin_R_OE, uint8_t pin_R_A2, uint8_t pin_R_A1, uint8_t pin_R_A0, uint16_t speed = 0x400);
 
 	void display(byte times = 1);
 	void setSpeed(uint16_t speed = 0x400);
 
 private:
 
-	DotMatrix * _pDM;
+	DotMatrix & _pDM;
 
 	byte _length;
 	byte _rowCount;

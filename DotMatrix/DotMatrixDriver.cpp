@@ -16,12 +16,10 @@
 
 #include "DotMatrixDriver.h"
 
-DotMatrixDriver::DotMatrixDriver(DotMatrix * pDM, uint8_t pin_C_IN,
+DotMatrixDriver::DotMatrixDriver(DotMatrix & pDM, uint8_t pin_C_IN,
 		uint8_t pin_C_OE, uint8_t pin_C_ST, uint8_t pin_C_SH, uint8_t pin_R_OE,
-		uint8_t pin_R_A2, uint8_t pin_R_A1, uint8_t pin_R_A0, uint16_t speed)
+		uint8_t pin_R_A2, uint8_t pin_R_A1, uint8_t pin_R_A0, uint16_t speed):_pDM(pDM)
 {
-	_pDM = pDM;
-
 	_pin_595_ST = pin_C_ST;
 	_pin_595_SH = pin_C_SH;
 	_pin_595_DS = pin_C_IN;
@@ -44,7 +42,7 @@ DotMatrixDriver::DotMatrixDriver(DotMatrix * pDM, uint8_t pin_C_IN,
 
 	this->setSpeed(speed);
 
-	this->setSize(_pDM->countBytes(), _pDM->countRow());
+	this->setSize(_pDM.countBytes(), _pDM.countRow());
 }
 
 void DotMatrixDriver::setSpeed(uint16_t speed)
@@ -85,7 +83,7 @@ void DotMatrixDriver::shiftSend(byte c)
 
 void DotMatrixDriver::display(byte times)
 {
-	byte* p = _pDM->output();
+	byte* p = _pDM.output();
 
 	while (times--)
 	{
