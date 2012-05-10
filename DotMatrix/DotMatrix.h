@@ -39,7 +39,6 @@ public:
 
 	void move(Direction d, boolean recycle = false);
 
-
 	byte * output() const;
 	byte countCol() const;
 	byte countRow() const;
@@ -53,7 +52,7 @@ private:
 
 	byte * _pScreen;
 
-	inline byte getIndex(byte col, byte row) const;
+	byte getIndex(byte col, byte row) const;
 };
 
 #endif /* DOTMATRIX_H_ */

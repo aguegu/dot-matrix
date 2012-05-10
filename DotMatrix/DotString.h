@@ -24,12 +24,12 @@
 class DotString
 {
 public:
-	DotString(DotMatrix * pDM);
+	DotString(DotMatrix & pDM);
 	virtual ~DotString();
 
 	void printString(char s[]);
 private:
-	DotMatrix * _pDM;
+	DotMatrix & _pDM;
 	DotFont _df;
 };
 

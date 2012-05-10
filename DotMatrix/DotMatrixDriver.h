@@ -31,7 +31,7 @@ public:
 
 private:
 
-	DotMatrix & _pDM;
+	const DotMatrix & _pDM;
 
 	byte _length;
 	byte _rowCount;

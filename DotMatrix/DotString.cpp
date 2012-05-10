@@ -16,11 +16,11 @@
 #include "DotString.h"
 #include "../Font/Font0704.h"
 
-DotString::DotString(DotMatrix * pDM)
+DotString::DotString(DotMatrix & pDM):_pDM(pDM), _df(pDM)
 {
 	// TODO Auto-generated constructor stub
 	_pDM = pDM;
-	_df.setDotMatrix(_pDM);
+	//_df.setDotMatrix(_pDM);
 	_df.setPattern(FONT_0704, FONT_0704_WIDTH, FONT_0704_HEIGHT);
 	_df.setDirection(false);
 }
@@ -35,9 +35,9 @@ void DotString::printString(char s[])
 	char *p = s;
 	byte cursor = 0;
 
-	_pDM->clear();
+	_pDM.clear();
 
-	while (*p && cursor < _pDM->countCol())
+	while (*p && cursor < _pDM.countCol())
 	{
 		if (*p >= 0x20 && *p < 0x80)
 		{

@@ -35,10 +35,7 @@ DotMatrix::~DotMatrix()
 void DotMatrix::clear(boolean b)
 {
 	byte c = b ? 0xff : 0x00;
-	for (byte i = 0; i < _bytesLength; i++)
-	{
-		_pScreen[i] = c;
-	}
+	memset(_pScreen, c, _bytesLength);
 }
 
 void DotMatrix::reverseDot(byte col, byte row)
@@ -59,10 +56,9 @@ void DotMatrix::setDot(byte col, byte row, boolean b)
 
 byte DotMatrix::getIndex(byte col, byte row) const
 {
-	if (col < 0 || col >= _colCount)
+	if (col >= _colCount || row >= _rowCount)
 		return -1;
-	if (row < 0 || row >= _rowCount)
-		return -1;
+
 	return (row * _bytesPerRow + (col >> 3));
 }
 

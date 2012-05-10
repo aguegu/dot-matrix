@@ -22,12 +22,12 @@
 class DotFont
 {
 public:
-	DotFont();
-	DotFont(DotMatrix * pDM);
-	DotFont(DotMatrix * pDM, byte * pattern, byte unitWidth, byte unitHeight, byte index, byte col, byte row, boolean direction = false);
+
+	DotFont(DotMatrix & pDM);
+	DotFont(DotMatrix & pDM, byte * pattern, byte unitWidth, byte unitHeight, byte index, byte col, byte row, boolean direction = false);
 	virtual ~DotFont();
 
-	void setDotMatrix(DotMatrix * pDM);
+	//void setDotMatrix(DotMatrix * pDM);
 	void show();
 	void setPattern(const uint8_t * pattern, const uint8_t * unitWidth, const uint8_t * unitHeight);
 	void setIndex(byte index);
@@ -44,7 +44,7 @@ private:
 	void showH();
 	void showV();
 
-	DotMatrix * _pDM;
+	DotMatrix & _pDM;
 	const uint8_t *_pattern;
 	byte _unitWidth;
 	byte _unitHeight;
