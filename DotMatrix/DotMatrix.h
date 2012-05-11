@@ -29,7 +29,7 @@ public:
 	void reverseDot(byte col, byte row);
 	void setDot(byte col, byte row, boolean b);
 
-	void setByte(byte index,byte value);
+	void setByte(byte index, byte value);
 	boolean getDot(byte col, byte row) const;
 
 	enum Direction

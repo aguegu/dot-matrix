@@ -75,10 +75,12 @@ void DotMatrixDriver::setCol(byte * p)
 void DotMatrixDriver::shiftSend(byte c)
 {
 	for (byte i=0; i<8; i++)
+	{
 		digitalWrite(_pin_595_DS, bitRead(c, i));
 
-	digitalWrite(_pin_595_SH, LOW);
-	digitalWrite(_pin_595_SH, HIGH);
+		digitalWrite(_pin_595_SH, LOW);
+		digitalWrite(_pin_595_SH, HIGH);
+	}
 }
 
 void DotMatrixDriver::display(byte times)
