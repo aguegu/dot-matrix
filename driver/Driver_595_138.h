@@ -14,17 +14,17 @@
 	source hosting: http://code.google.com/p/aguegu-arduino-library/
  */
 
-#ifndef DOT_MATRIX_DRIVER_H_
-#define DOT_MATRIX_DRIVER_H_
+#ifndef DRIVER_595_138_H_
+#define DRIVER_595_138_H_
 
 #include "Arduino.h"
 #include "DotMatrix.h"
 
-class DotMatrixDriver
+class Driver_595_138
 {
 public:
 
-	DotMatrixDriver(DotMatrix & pDM, uint8_t pin_C_IN, uint8_t pin_C_OE, uint8_t pin_C_ST, uint8_t pin_C_SH, uint8_t pin_R_OE, uint8_t pin_R_A2, uint8_t pin_R_A1, uint8_t pin_R_A0, uint16_t speed = 0x400);
+	Driver_595_138(DotMatrix & pDM, uint8_t pin_C_IN, uint8_t pin_C_OE, uint8_t pin_C_ST, uint8_t pin_C_SH, uint8_t pin_R_OE, uint8_t pin_R_A2, uint8_t pin_R_A1, uint8_t pin_R_A0, uint16_t speed = 0x400);
 
 	void display(byte times = 1);
 	void setSpeed(uint16_t speed = 0x400);
@@ -56,4 +56,4 @@ private:
 	void shiftSend(byte c);
 };
 
-#endif /* DOTMATRIXDRIVER_H_ */
+#endif /* DRIVER_595_138_H_ */

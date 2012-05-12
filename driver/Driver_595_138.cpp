@@ -14,9 +14,9 @@
  source hosting: http://code.google.com/p/aguegu-arduino-library/
  */
 
-#include "DotMatrixDriver.h"
+#include "Driver_595_138.h"
 
-DotMatrixDriver::DotMatrixDriver(DotMatrix & pDM, uint8_t pin_C_IN,
+Driver_595_138::Driver_595_138(DotMatrix & pDM, uint8_t pin_C_IN,
 		uint8_t pin_C_OE, uint8_t pin_C_ST, uint8_t pin_C_SH, uint8_t pin_R_OE,
 		uint8_t pin_R_A2, uint8_t pin_R_A1, uint8_t pin_R_A0, uint16_t speed):_pDM(pDM)
 {
@@ -45,26 +45,26 @@ DotMatrixDriver::DotMatrixDriver(DotMatrix & pDM, uint8_t pin_C_IN,
 	this->setSize(_pDM.countBytes(), _pDM.countRow());
 }
 
-void DotMatrixDriver::setSpeed(uint16_t speed)
+void Driver_595_138::setSpeed(uint16_t speed)
 {
 	_speed = speed;
 }
 
-void DotMatrixDriver::setSize(byte length, byte rowCount)
+void Driver_595_138::setSize(byte length, byte rowCount)
 {
 	_length = length;
 	_rowCount = rowCount;
 	_bytesPerRow = _length / _rowCount;
 }
 
-void DotMatrixDriver::setRow(byte r)
+void Driver_595_138::setRow(byte r)
 {
 	digitalWrite(_pin_138_A0, r & 0x01);
 	digitalWrite(_pin_138_A1, r & 0x02);
 	digitalWrite(_pin_138_A2, r & 0x04);
 }
 
-void DotMatrixDriver::setCol(byte * p)
+void Driver_595_138::setCol(byte * p)
 {
 	for (byte i = 0; i < _bytesPerRow; i++)
 		this->shiftSend(~*(p++));
@@ -72,7 +72,7 @@ void DotMatrixDriver::setCol(byte * p)
 		//shiftOut(_pin_595_DS, _pin_595_SH, LSBFIRST, ~*(p++));
 }
 
-void DotMatrixDriver::shiftSend(byte c)
+void Driver_595_138::shiftSend(byte c)
 {
 	for (byte i=0; i<8; i++)
 	{
@@ -83,7 +83,7 @@ void DotMatrixDriver::shiftSend(byte c)
 	}
 }
 
-void DotMatrixDriver::display(byte times)
+void Driver_595_138::display(byte times)
 {
 	byte* p = _pDM.output();
 

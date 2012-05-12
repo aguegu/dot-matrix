@@ -14,12 +14,12 @@
  */
 
 #include "DotMatrixTest.h"
-#include "DotMatrixDriver.h"
+#include "Driver_595_138.h"
 #include "DotMatrix.h"
 #include "DotString.h"
 
 DotMatrix dm(24*1, 7);
-DotMatrixDriver dmd(dm, 11, 10, 9, 8, 7, 6, 5, 4);
+Driver_595_138 dmd(dm, 11, 10, 9, 8, 7, 6, 5, 4);
 DotString ds(dm);
 
 extern HardwareSerial Serial;
@@ -32,7 +32,9 @@ void setup()
 	dmd.setSpeed(0x200);
 
 	Serial.begin(9600);
-	dm.clear(true);
+	dm.clear(false);
+	dm.setDot(0,0,true);
+	dm.setByte(0, 0xf0);
 }
 
 void loop()
@@ -42,7 +44,7 @@ void loop()
 
 void serialEvent()
 {
-	while (Serial.available() > 0)
+	while (Serial.available())
 	{
 		if (index < dm.countCol())
 		{
