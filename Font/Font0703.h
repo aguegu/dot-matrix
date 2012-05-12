@@ -18,8 +18,13 @@
 
 #include <avr/pgmspace.h>
 
-extern prog_uint8_t FONT_0703_WIDTH[] PROGMEM;
-extern prog_uint8_t FONT_0703_HEIGHT[] PROGMEM;
-extern prog_uint8_t FONT_0703[] PROGMEM;
+#ifdef PROGMEM
+  #undef PROGMEM
+  #define PROGMEM __attribute__((section(".progmem.data")))
+#endif
+
+extern const uint8_t PROGMEM FONT_0703_WIDTH[];
+extern const uint8_t PROGMEM FONT_0703_HEIGHT[];
+extern const uint8_t PROGMEM FONT_0703[];
 
 #endif /* FONT_0703_H_ */
