@@ -32,9 +32,8 @@ DotMatrix::~DotMatrix()
 	free(_pScreen);
 }
 
-void DotMatrix::clear(boolean b)
+void DotMatrix::clear(byte c)
 {
-	byte c = b ? 0xff : 0x00;
 	memset(_pScreen, c, _bytesLength);
 }
 
@@ -48,27 +47,27 @@ void DotMatrix::reverseDot(byte col, byte row)
 
 void DotMatrix::setDot(byte col, byte row, boolean b)
 {
-	int i = getIndex(col, row);
+	word i = getIndex(col, row);
 
 	if (b != -1)
 		bitWrite(_pScreen[i], (col & 0x07), b);
 }
 
-byte DotMatrix::getIndex(byte col, byte row) const
+word DotMatrix::getIndex(byte col, byte row) const
 {
-	if (col >= _colCount || row >= _rowCount)
-		return -1;
-
-	return (row * _bytesPerRow + (col >> 3));
+	word index = row * _bytesPerRow + (col >> 3);
+	if(index < _bytesLength)
+		return (index);
+	else
+		return 0;
 }
 
 boolean DotMatrix::getDot(byte col, byte row) const
 {
 	boolean b = false;
-	int i = getIndex(col, row);
 
-	if (i != -1)
-		b = bitRead(_pScreen[i], (col & 0x07));
+	word i = getIndex(col, row);
+	b = bitRead(_pScreen[i], (col & 0x07));
 
 	return b;
 }
@@ -88,12 +87,17 @@ byte DotMatrix::countRow() const
 	return _rowCount;
 }
 
-byte DotMatrix::countBytes() const
+byte DotMatrix::countBytePerRow() const
+{
+	return _bytesPerRow;
+}
+
+word DotMatrix::countBytes() const
 {
 	return _bytesLength;
 }
 
-void DotMatrix::setByte(byte index, byte value)
+void DotMatrix::setByte(word index, byte value)
 {
 	if (index >= _bytesLength)
 		return;
@@ -108,7 +112,7 @@ void DotMatrix::move(Direction d, boolean recycle)
 	case Left:
 		for (byte r = 0; r < _rowCount; r++)
 		{
-			byte index = r * _bytesPerRow;
+			word index = r * _bytesPerRow;
 			boolean b0 = bitRead(_pScreen[index], 0);
 			for (byte i = 1; i < _bytesPerRow; i++)
 			{
@@ -127,7 +131,7 @@ void DotMatrix::move(Direction d, boolean recycle)
 	case Right:
 		for (byte r = 0; r < _rowCount; r++)
 		{
-			byte index = r * _bytesPerRow + _bytesPerRow - 1;
+			word index = r * _bytesPerRow + _bytesPerRow - 1;
 			boolean b0 = bitRead(_pScreen[index], 7);
 			for (byte i = 1; i < _bytesPerRow; i++)
 			{
@@ -144,12 +148,12 @@ void DotMatrix::move(Direction d, boolean recycle)
 		}
 		break;
 	case Up:
-		for (byte i = 0; i < _bytesPerRow; i++)
+		for (word i = 0; i < _bytesPerRow; i++)
 			pTemp[i] = _pScreen[i];
 
 		for (byte r = 0; r < _rowCount - 1; r++)
 		{
-			byte index = r * _bytesPerRow;
+			word index = r * _bytesPerRow;
 			for (byte i = 0; i < _bytesPerRow; i++)
 			{
 				_pScreen[index] = _pScreen[index + _bytesPerRow];
@@ -157,18 +161,18 @@ void DotMatrix::move(Direction d, boolean recycle)
 			}
 		}
 
-		for (byte index = _bytesPerRow * (_rowCount - 1), i = 0;
+		for (word index = _bytesPerRow * (_rowCount - 1), i = 0;
 				i < _bytesPerRow; i++)
 			_pScreen[index++] = recycle ? pTemp[i] : 0x00;
 
 		break;
 	case Down:
-		for (byte i = 0, index=(_rowCount-1) * _bytesPerRow; i < _bytesPerRow; i++)
+		for (word i = 0, index=(_rowCount-1) * _bytesPerRow; i < _bytesPerRow; i++)
 			pTemp[i] = _pScreen[index++];
 
 		for (byte r = _rowCount - 1; r > 0; r--)
 		{
-			byte index = r * _bytesPerRow;
+			word index = r * _bytesPerRow;
 			for (byte i = 0; i < _bytesPerRow; i++)
 			{
 				_pScreen[index] = _pScreen[index - _bytesPerRow];
@@ -176,10 +180,9 @@ void DotMatrix::move(Direction d, boolean recycle)
 			}
 		}
 
-		for (byte i = 0;	i < _bytesPerRow; i++)
+		for (word i = 0; i < _bytesPerRow; i++)
 			_pScreen[i] = recycle ? pTemp[i] : 0x00;
 
 		break;
-
 	}
 }

@@ -25,11 +25,11 @@ public:
 	DotMatrix(byte colCount, byte rowCount);
 	virtual ~DotMatrix();
 
-	void clear(boolean b=false);
+	void clear(byte c = 0x00);
 	void reverseDot(byte col, byte row);
-	void setDot(byte col, byte row, boolean b);
+	void setDot(byte col, byte row, boolean b = true);
 
-	void setByte(byte index, byte value);
+	void setByte(word index, byte value);
 	boolean getDot(byte col, byte row) const;
 
 	enum Direction
@@ -42,17 +42,18 @@ public:
 	byte * output() const;
 	byte countCol() const;
 	byte countRow() const;
-	byte countBytes() const;
+	word countBytes() const;
+	byte countBytePerRow() const;
 
 private:
 	byte _colCount;
 	byte _rowCount;
 	byte _bytesPerRow;
-	byte _bytesLength;
+	word _bytesLength;
 
 	byte * _pScreen;
 
-	byte getIndex(byte col, byte row) const;
+	word getIndex(byte col, byte row) const;
 };
 
 #endif /* DOTMATRIX_H_ */

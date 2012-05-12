@@ -104,3 +104,8 @@ void Driver_595_138::display(byte times)
 	}
 }
 
+Driver_595_138::~Driver_595_138()
+{
+
+}
+

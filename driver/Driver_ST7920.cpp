@@ -7,11 +7,10 @@
 
 #include "Driver_ST7920.h"
 
-ST7920::ST7920(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7)
+ST7920::ST7920(DotMatrix & dm, uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4,
+		uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7) :
+		_pin_rs(pin_rs), _pin_en(pin_en), _dm(dm)
 {
-	_pin_rs = pin_rs;
-	_pin_en = pin_en;
-
 	_pin_d[0] = pin_d4;
 	_pin_d[1] = pin_d5;
 	_pin_d[2] = pin_d6;
@@ -40,6 +39,8 @@ void ST7920::init()
 	this->setDisplayMode(true, false, false);
 	this->clear();
 	this->setEntryMode(true);
+
+	this->setFunctionMode(false, true, true);
 }
 
 void ST7920::clear()
@@ -116,29 +117,43 @@ void ST7920::setDdRam(byte address)
 void ST7920::writeCmd(byte c)
 {
 	digitalWrite(_pin_rs, LOW);
-	setDB(c);
+	setDB2(c, true);
+	setDB2(c, false);
 }
 
 void ST7920::writeData(byte c)
 {
 	digitalWrite(_pin_rs, HIGH);
-	setDB(c);
+	setDB2(c, true);
+	setDB2(c, false);
+}
+
+void ST7920::writeDataRev(byte c)
+{
+	digitalWrite(_pin_rs, HIGH);
+
+	for (byte i = 0; i < 4; i++)
+		digitalWrite(_pin_d[3 - i], bit_is_set(c, i));
+
+	this->pulseEn();
+
+	c >>= 4;
+
+	for (byte i = 0; i < 4; i++)
+		digitalWrite(_pin_d[3 - i], bit_is_set(c, i));
+
+	this->pulseEn();
 }
 
 void ST7920::setDB2(byte c, bool high)
 {
-	if (high) c >>= 4;
+	if (high)
+		c >>= 4;
 
 	for (byte i = 0; i < 4; i++)
 		digitalWrite(_pin_d[i], bit_is_set(c, i));
 
 	this->pulseEn();
-}
-
-void ST7920::setDB(byte c)
-{
-	setDB2(c, true);
-	setDB2(c, false);
 }
 
 void ST7920::pulseEn()
@@ -172,16 +187,25 @@ void ST7920::clearImage(byte c)
 	this->setFunctionMode(false, true, true);
 }
 
-void ST7920::putImage(byte *p)
+void ST7920::putImage()
 {
 	//this->setFunctionMode(false, true, false);
+	byte *p = _dm.output();
 
 	for (byte r = 0; r < 0x20; r++)
 	{
-		this->setDdRam(r);
-		this->setDdRam(0x00);
-		for (byte i = 0; i < 0x20; i++)
-			this->writeData(*(p++));
+		this->setDdRam(r); // y
+		this->setDdRam(0x00); // x
+		for (byte i = _dm.countBytePerRow(); i; i--)
+			this->writeDataRev(*(p++));
+	}
+
+	for (byte r = 0; r < 0x20; r++)
+	{
+		this->setDdRam(r); // y
+		this->setDdRam(0x08); // x
+		for (byte i =  _dm.countBytePerRow(); i; i--)
+			this->writeDataRev(*(p++));
 	}
 
 	//this->setFunctionMode(false, true, true);

@@ -1,65 +1,31 @@
-/*
-	Sample of 3 sections of M2407 DotMatrix Display to
-	received string (end with "new line") from Arduino Serial Monitor and print it out.
-
-	Created on: 2012-1-25
-	Updated on: 2012-2-26
-	Author: Weihong Guan
-	Blog: http://aguegu.net
-	E-mail: weihong.guan@gmail.com
-	Code license: Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)
-	http://creativecommons.org/licenses/by-nc-sa/3.0/
-
-	source hosting: http://code.google.com/p/aguegu-arduino-library/
- */
-
 #include "DotMatrixTest.h"
-#include "Driver_595_138.h"
+
 #include "DotMatrix.h"
-#include "DotString.h"
+#include "Driver_ST7920.h"
 
-DotMatrix dm(24*1, 7);
-Driver_595_138 dmd(dm, 11, 10, 9, 8, 7, 6, 5, 4);
-DotString ds(dm);
+DotMatrix dm(128, 64);
+ST7920 dmd(dm, 8, 9, 10, 11, 12, 13);
+//DotString ds(dm);
 
-extern HardwareSerial Serial;
-byte index = 0;
-char * s;
+char s0[] = "Agu's Mill";
 
 void setup()
 {
-	s = (char *) malloc(sizeof(char) * dm.countCol());
-	dmd.setSpeed(0x200);
+	dm.clear();
 
-	Serial.begin(9600);
-	dm.clear(false);
-	dm.setDot(0,0,true);
-	dm.setByte(0, 0xf0);
+	for(byte i=0; i< 64; i++)
+		dm.setDot(i,i);
+
+	dmd.init();
+	dmd.clear();
+	//dmd.putImage();
+
 }
 
 void loop()
 {
-	dmd.display(0x08);
-}
+	dm.move(DotMatrix::Down, true);
+	dmd.putImage();
+	//delay(0);
 
-void serialEvent()
-{
-	while (Serial.available())
-	{
-		if (index < dm.countCol())
-		{
-			byte cData = Serial.read();
-
-			s[index] = cData;
-			index++;
-
-			if (cData == 0x0A)
-			{
-				s[index-1] = 0;
-				ds.printString(s);
-				Serial.println(s);
-				index = 0;
-			}
-		}
-	}
 }
