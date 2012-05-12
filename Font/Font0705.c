@@ -16,8 +16,8 @@
 
 #include "Font0705.h"
 
-const uint8_t PROGMEM FONT_0705_WIDTH[] = {5};
-const uint8_t PROGMEM FONT_0705_HEIGHT[] = {7};
+const uint8_t PROGMEM FONT_0705_STATE[] = {5, 7, 0x30, 10};
+
 
 const uint8_t PROGMEM FONT_0705[] =
 {

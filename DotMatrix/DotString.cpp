@@ -14,38 +14,39 @@
 	source hosting: http://code.google.com/p/aguegu-arduino-library/
  */
 #include "DotString.h"
-#include "../Font/Font0704.h"
+#include "DotFont.h"
 
-DotString::DotString(DotMatrix & pDM):_pDM(pDM), _df(pDM)
+DotString::DotString(DotFont & df, byte length, bool smart_width): _df(df)
 {
-	// TODO Auto-generated constructor stub
-	_pDM = pDM;
-	//_df.setDotMatrix(_pDM);
-	_df.setPattern(FONT_0704, FONT_0704_WIDTH, FONT_0704_HEIGHT);
-	_df.setDirection(false);
+	_length = length;
+	_smart_width = smart_width;
+	_p = (char *)malloc(sizeof(char)*_length);
 }
 
 DotString::~DotString()
 {
-	// TODO Auto-generated destructor stub
+	free(_p);
 }
 
-void DotString::printString(char s[])
+void DotString::printf(const char *__fmt, ...)
 {
-	char *p = s;
-	byte cursor = 0;
+	va_list ap;
+	va_start(ap, __fmt);
+	vsnprintf(_p, _length, __fmt, ap);
+	va_end(ap);
+}
 
-	_pDM.clear();
+void DotString::print(byte col, byte row)
+{
+	byte cursor = col;
+	char *p = _p;
 
-	while (*p && cursor < _pDM.countCol())
+	while(*p)
 	{
-		if (*p >= 0x20 && *p < 0x80)
-		{
-			_df.setIndex(*p - 0x20);
-			_df.moveTo(cursor, 0);
-			_df.show();
-		}
-		p++;
-		cursor += _df.calcFontRealWidth() + 1;
+		_df.setChar(*(p++));
+		_df.postAt(cursor , row);
+		_df.print();
+		cursor += _smart_width? _df.calcFontRealWidth()+1: _df.getWidth() + 1;
+
 	}
 }

@@ -23,8 +23,7 @@
   #define PROGMEM __attribute__((section(".progmem.data")))
 #endif
 
-extern const uint8_t PROGMEM FONT_0704_WIDTH[];
-extern const uint8_t PROGMEM FONT_0704_HEIGHT[];
+extern const uint8_t PROGMEM FONT_0704_STATE[];
 extern const uint8_t PROGMEM FONT_0704[];
 
 #endif /* FONT_0704_H_ */

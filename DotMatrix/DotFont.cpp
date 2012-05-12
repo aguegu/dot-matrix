@@ -16,18 +16,6 @@
 
 #include "DotFont.h"
 
-DotFont::DotFont(DotMatrix & pDM, byte * pattern, byte unitWidth,
-		byte unitHeight, byte index, byte col, byte row, boolean direction):_pDM(pDM)
-{
-	_pattern = pattern;
-	_unitWidth = pgm_read_byte_near(unitWidth);
-	_unitHeight = pgm_read_byte_near(unitHeight);
-	_col = col;
-	_row = row;
-	_index = index;
-	_direction = direction;
-}
-
 byte DotFont::getWidth()
 {
 	return _unitWidth;
@@ -40,7 +28,8 @@ byte DotFont::getHeight()
 
 DotFont::DotFont(DotMatrix & pDM):_pDM(pDM)
 {
-
+	_col = _row = _index = 0;
+	_vertical = true;
 }
 
 DotFont::~DotFont()
@@ -48,24 +37,26 @@ DotFont::~DotFont()
 	// TODO Auto-generated destructor stub
 }
 
-void DotFont::setPattern(const uint8_t * pattern, const uint8_t * unitWidth, const uint8_t * unitHeight)
+void DotFont::setPattern(const uint8_t * pattern, const uint8_t * pattern_state)
 {
 	_pattern = pattern;
-	_unitWidth = pgm_read_byte_near(unitWidth);
-	_unitHeight = pgm_read_byte_near(unitHeight);
+	_unitWidth = pgm_read_byte_near(pattern_state);
+	_unitHeight = pgm_read_byte_near(pattern_state+1);
+	_patternIndent = pgm_read_byte_near(pattern_state+2);
+	_patternLength = pgm_read_byte_near(pattern_state+3);
 }
 
-void DotFont::setIndex(byte index)
+void DotFont::setChar(char chr)
 {
-	_index = index;
+	_index = (chr - _patternIndent) % _patternLength;
 }
 
-void DotFont::setDirection(boolean direction)
+void DotFont::setDirection(boolean vertical)
 {
-	_direction = direction;
+	_vertical = vertical;
 }
 
-void DotFont::moveTo(byte col, byte row)
+void DotFont::postAt(byte col, byte row)
 {
 	_col = col;
 	_row = row;
@@ -93,9 +84,9 @@ void DotFont::fill(byte col, byte row)
 	}
 }
 
-void DotFont::show()
+void DotFont::print()
 {
-	_direction ? showV() : showH();
+	_vertical ? showH() : showV();
 }
 
 void DotFont::showH()

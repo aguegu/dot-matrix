@@ -172,21 +172,6 @@ void ST7920::printWord(char *p)
 	}
 }
 
-void ST7920::clearImage(byte c)
-{
-	this->setFunctionMode(false, true, false);
-
-	for (byte r = 0; r < 0x20; r++)
-	{
-		this->setDdRam(r);
-		this->setDdRam(0x00);
-		for (byte i = 0; i < 0x20; i++)
-			this->writeData(i);
-	}
-
-	this->setFunctionMode(false, true, true);
-}
-
 void ST7920::putImage()
 {
 	//this->setFunctionMode(false, true, false);

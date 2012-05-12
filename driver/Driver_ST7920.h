@@ -14,23 +14,23 @@
 class ST7920
 {
 public:
-	ST7920(DotMatrix & dm, uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7);
+	ST7920(DotMatrix & dm, uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4,
+			uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7);
 	virtual ~ST7920();
 
 	void init();
-	void writeCmd(byte c);
-	void writeData(byte c);
+
 	void printWord(char *);
 	void clear();
 	void home();
 	void setEntryMode(bool right = true);
-	void setDisplayMode(bool display = true, bool cursor = false, bool blink = false);
+	void setDisplayMode(bool display = true, bool cursor = false, bool blink =
+			false);
 	void moveCursor(bool right = true);
 	void moveDisplay(bool right = true);
-	void setFunctionMode(bool interface8 = false, bool re = false, bool graphic = false);
-	void setCgRam(byte value);
-	void setDdRam(byte address);	// Set address in Text Mode
-	void clearImage(byte c = 0x00);
+	void setFunctionMode(bool interface8 = false, bool re = false,
+			bool graphic = false);
+
 	void putImage();
 
 private:
@@ -44,6 +44,10 @@ private:
 	void pulseEn();
 	void setDB2(byte c, bool high);
 	void writeDataRev(byte c);
+	void setCgRam(byte value);
+	void setDdRam(byte address); // Set address in Text Mode
+	void writeCmd(byte c);
+	void writeData(byte c);
 };
 
 #endif /* LCD12864_H_ */

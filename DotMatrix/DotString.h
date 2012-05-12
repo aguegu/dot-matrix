@@ -17,20 +17,22 @@
 #ifndef DOTSTRING_H_
 #define DOTSTRING_H_
 
-
 #include "DotMatrix.h"
 #include "DotFont.h"
 
 class DotString
 {
 public:
-	DotString(DotMatrix & pDM);
+	DotString(DotFont & df, byte length, bool smart_width = false);
 	virtual ~DotString();
 
-	void printString(char s[]);
+	void print(byte col, byte row);
+	void printf(const char *__fmt, ...);
 private:
-	DotMatrix & _pDM;
-	DotFont _df;
+	DotFont & _df;
+	char *_p;
+	boolean _smart_width;
+	byte _length;
 };
 
 #endif /* DOTSTRING_H_ */

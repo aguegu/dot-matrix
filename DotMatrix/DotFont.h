@@ -24,15 +24,13 @@ class DotFont
 public:
 
 	DotFont(DotMatrix & pDM);
-	DotFont(DotMatrix & pDM, byte * pattern, byte unitWidth, byte unitHeight, byte index, byte col, byte row, boolean direction = false);
 	virtual ~DotFont();
 
-	//void setDotMatrix(DotMatrix * pDM);
-	void show();
-	void setPattern(const uint8_t * pattern, const uint8_t * unitWidth, const uint8_t * unitHeight);
-	void setIndex(byte index);
-	void setDirection(boolean direction = false);
-	void moveTo(byte col, byte row);
+	void print();
+	void setPattern(const uint8_t * pattern, const uint8_t * pattern_state);
+	void setChar(char chr);
+	void setDirection(boolean direction = true);
+	void postAt(byte col, byte row);
 	void clear(byte col, byte row);
 	void fill(byte col, byte row);
 
@@ -48,10 +46,13 @@ private:
 	const uint8_t *_pattern;
 	byte _unitWidth;
 	byte _unitHeight;
+	byte _patternIndent;
+	byte _patternLength;
+
 	byte _col;
 	byte _row;
 	byte _index;
-	boolean _direction;
+	boolean _vertical;
 };
 
 #endif /* DOTFONT_H_ */

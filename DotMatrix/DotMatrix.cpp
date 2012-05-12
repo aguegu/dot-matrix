@@ -1,18 +1,18 @@
 /*
-	DotMatrix.h
-	DotMatrix Class for modeling on the Dot Matrix, providing methods like dot control, and serial output
-	library for Arduino to drive LED Dot Matrix Display dirven by 74HC595(column) and 74HC138(row)
+ DotMatrix.h
+ DotMatrix Class for modeling on the Dot Matrix, providing methods like dot control, and serial output
+ library for Arduino to drive LED Dot Matrix Display dirven by 74HC595(column) and 74HC138(row)
 
-	Created on: 2012-1-16
-	Updated on: 2012-2-26
-	Author: Weihong Guan
-	Blog: http://aguegu.net
-	E-mail: weihong.guan@gmail.com
-	Code license: Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)
-	http://creativecommons.org/licenses/by-nc-sa/3.0/
+ Created on: 2012-1-16
+ Updated on: 2012-2-26
+ Author: Weihong Guan
+ Blog: http://aguegu.net
+ E-mail: weihong.guan@gmail.com
+ Code license: Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)
+ http://creativecommons.org/licenses/by-nc-sa/3.0/
 
-	source hosting: http://code.google.com/p/aguegu-arduino-library/
-*/
+ source hosting: http://code.google.com/p/aguegu-arduino-library/
+ */
 
 #include "DotMatrix.h"
 
@@ -53,10 +53,89 @@ void DotMatrix::setDot(byte col, byte row, boolean b)
 		bitWrite(_pScreen[i], (col & 0x07), b);
 }
 
+void DotMatrix::setLine(byte cA, byte rA, byte cB, byte rB, bool on)
+{
+	byte cMin, cMax, rMin, rMax;
+
+	cMin = min(cA, cB);
+	cMin = max(cMin, 0);
+
+	cMax = max(cA, cB);
+	cMax = min(cMax, this->_colCount - 1);
+
+	rMin = min(rA, rB);
+	rMin = max(rMin, 0);
+
+	rMax = max(rA, rB);
+	rMax = min(rMax, this->_rowCount - 1);
+
+	if (cMax - cMin >= rMax - rMin)
+	{
+		for (byte c = cMin; c <= cMax; c++)
+		{
+			int d = 32767;
+			for (byte r = rMin; r <= rMax; r++)
+			{
+				int k = abs((c - cA) * (rA - rB) - (r - rA) * (cA - cB));
+				if (d > k)
+					d = k;
+			}
+
+			for (byte r = rMin; r <= rMax; r++)
+			{
+				if (abs((c - cA) * (rA - rB) - (r - rA) * (cA - cB)) == d)
+					this->setDot(c, r, on);
+			}
+		}
+	}
+	else
+	{
+		for (byte r = rMin; r <= rMax; r++)
+		{
+			int d = 32767;
+			for (byte c = cMin; c <= cMax; c++)
+			{
+				int k = abs((c - cA) * (rA - rB) - (r - rA) * (cA - cB));
+				if (d > k)
+					d = k;
+			}
+
+			for (byte c = cMin; c <= cMax; c++)
+			{
+				if (abs((c - cA) * (rA - rB) - (r - rA) * (cA - cB)) == d)
+					this->setDot(c, r, on);
+			}
+		}
+	}
+}
+
+void DotMatrix::setRect(byte cA, byte rA, byte cB, byte rB, bool on)
+{
+	byte cMin, cMax, rMin, rMax;
+
+	cMin = min(cA, cB);
+	cMin = max(cMin, 0);
+
+	cMax = max(cA, cB);
+	cMax = min(cMax, this->_colCount - 1);
+
+	rMin = min(rA, rB);
+	rMin = max(rMin, 0);
+
+	rMax = max(rA, rB);
+	rMax = min(rMax, this->_rowCount - 1);
+
+	for (uint16_t c = cMin; c <= cMax; c++)
+		for (uint16_t r = rMin; r <= rMax; r++)
+		{
+			this->setDot(c, r, on);
+		}
+}
+
 word DotMatrix::getIndex(byte col, byte row) const
 {
 	word index = row * _bytesPerRow + (col >> 3);
-	if(index < _bytesLength)
+	if (index < _bytesLength)
 		return (index);
 	else
 		return 0;
@@ -167,7 +246,8 @@ void DotMatrix::move(Direction d, boolean recycle)
 
 		break;
 	case Down:
-		for (word i = 0, index=(_rowCount-1) * _bytesPerRow; i < _bytesPerRow; i++)
+		for (word i = 0, index = (_rowCount - 1) * _bytesPerRow;
+				i < _bytesPerRow; i++)
 			pTemp[i] = _pScreen[index++];
 
 		for (byte r = _rowCount - 1; r > 0; r--)

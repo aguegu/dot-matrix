@@ -16,8 +16,7 @@
 
 #include "Font0503.h"
 
-const uint8_t PROGMEM FONT_0503_WIDTH[] = {3};
-const uint8_t PROGMEM FONT_0503_HEIGHT[]  = {5};
+const uint8_t PROGMEM FONT_0503_STATE[] = {3, 5, 0x30, 10};
 
 const uint8_t PROGMEM FONT_0503[]  =
 {

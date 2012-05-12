@@ -26,11 +26,14 @@ public:
 	virtual ~DotMatrix();
 
 	void clear(byte c = 0x00);
+	void setByte(word index, byte value);
+
 	void reverseDot(byte col, byte row);
 	void setDot(byte col, byte row, boolean b = true);
-
-	void setByte(word index, byte value);
 	boolean getDot(byte col, byte row) const;
+
+	void setLine(byte cA, byte rA, byte cB, byte rB, bool on = true);
+	void setRect(byte cA, byte rA, byte cB, byte rB, bool on = true);
 
 	enum Direction
 	{

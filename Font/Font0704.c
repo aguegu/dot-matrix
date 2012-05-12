@@ -16,8 +16,8 @@
 
 #include "Font0704.h"
 
-const uint8_t PROGMEM FONT_0704_WIDTH[] = {4};
-const uint8_t PROGMEM  FONT_0704_HEIGHT[] = {7};
+const uint8_t PROGMEM FONT_0704_STATE[] = {4, 7, 0x20, 0x60};
+
 
 const uint8_t PROGMEM FONT_0704[] =
 {
