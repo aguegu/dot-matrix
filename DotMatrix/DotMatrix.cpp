@@ -49,8 +49,7 @@ void DotMatrix::setDot(byte col, byte row, boolean b)
 {
 	word i = getIndex(col, row);
 
-	if (b != -1)
-		bitWrite(_pScreen[i], (col & 0x07), b);
+	bitWrite(_pScreen[i], (col & 0x07), b);
 }
 
 void DotMatrix::setLine(byte cA, byte rA, byte cB, byte rB, bool on)

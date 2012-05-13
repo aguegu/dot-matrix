@@ -16,17 +16,32 @@
 
 #include "DotFont.h"
 
-byte DotFont::getWidth()
+byte DotFont::getWidth() const
 {
 	return _unitWidth;
 }
 
-byte DotFont::getHeight()
+byte DotFont::getHeight() const
 {
 	return _unitHeight;
 }
 
-DotFont::DotFont(DotMatrix & pDM):_pDM(pDM)
+boolean DotFont::getVertical() const
+{
+	return _vertical;
+}
+
+byte DotFont::getMaxCol() const
+{
+	return _dm.countCol() - 1;
+}
+
+byte DotFont::getMaxRow() const
+{
+	return _dm.countRow() - 1;
+}
+
+DotFont::DotFont(DotMatrix & dm):_dm(dm)
 {
 	_col = _row = _index = 0;
 	_vertical = true;
@@ -51,7 +66,7 @@ void DotFont::setChar(char chr)
 	_index = (chr - _patternIndent) % _patternLength;
 }
 
-void DotFont::setDirection(boolean vertical)
+void DotFont::setVertical(boolean vertical)
 {
 	_vertical = vertical;
 }
@@ -68,7 +83,7 @@ void DotFont::clear(byte col, byte row)
 	{
 		for (byte r = 0; r < _unitHeight; r++)
 		{
-			_pDM.setDot(col + c, row + r, false);
+			_dm.setDot(col + c, row + r, false);
 		}
 	}
 }
@@ -79,7 +94,7 @@ void DotFont::fill(byte col, byte row)
 	{
 		for (byte r = 0; r < _unitHeight; r++)
 		{
-			_pDM.setDot(col + c, row + r, true);
+			_dm.setDot(col + c, row + r, true);
 		}
 	}
 }
@@ -96,7 +111,7 @@ void DotFont::showH()
 		for (byte r = 0; r < _unitHeight; r++)
 		{
 			if (boolean b = bitRead(pgm_read_byte_near(_pattern + _unitWidth * _index + c), r))
-				_pDM.setDot(_col + c, _row + r, b);
+				_dm.setDot(_col + c, _row + r, b);
 		}
 	}
 }
@@ -108,7 +123,7 @@ void DotFont::showV()
 		for (byte r = 0; r < _unitHeight; r++)
 		{
 			if (boolean b = bitRead(pgm_read_byte_near(_pattern + _unitWidth * _index + c), r))
-				_pDM.setDot(_col + r, _row + _unitWidth - c - 1, b);
+				_dm.setDot(_row + r, _dm.countRow() - _col - 1 - c, b);
 		}
 	}
 }

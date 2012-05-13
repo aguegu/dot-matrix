@@ -23,26 +23,29 @@ class DotFont
 {
 public:
 
-	DotFont(DotMatrix & pDM);
+	DotFont(DotMatrix & dm);
 	virtual ~DotFont();
 
 	void print();
 	void setPattern(const uint8_t * pattern, const uint8_t * pattern_state);
 	void setChar(char chr);
-	void setDirection(boolean direction = true);
+	void setVertical(boolean direction = true);
 	void postAt(byte col, byte row);
 	void clear(byte col, byte row);
 	void fill(byte col, byte row);
 
 	byte calcFontRealWidth();
-	byte getWidth();
-	byte getHeight();
+	byte getWidth() const;
+	byte getHeight() const;
+	boolean getVertical() const;
+	byte getMaxCol() const;
+	byte getMaxRow() const;
 
 private:
 	void showH();
 	void showV();
 
-	DotMatrix & _pDM;
+	DotMatrix & _dm;
 	const uint8_t *_pattern;
 	byte _unitWidth;
 	byte _unitHeight;
