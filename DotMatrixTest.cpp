@@ -1,74 +1,29 @@
 #include "DotMatrixTest.h"
-
 #include "DotMatrix.h"
-#include "Driver_ST7920.h"
-#include "DotFont.h"
-#include "DotString.h"
+#include "Driver_HD44780.h"
 
-#include "Font0703.h"
-#include "Font0704.h"
-#include "Font0705.h"
-#include "Font0503.h"
-
-DotMatrix dm(128, 64);
-ST7920 dmd(dm, 8, 9, 10, 11, 12, 13);
+DotMatrix dm(16, 6);
+HD44780 lcd(dm, 8, 9, 10, 11, 12, 13);
+char s[] = "Hello, World.";
+uint32_t num=0;
 
 void setup()
 {
-	dm.clear();
-
-	DotFont df(dm);
-	df.setPattern(FONT_0703, FONT_0703_STATE);
-	df.setVertical(false);
-
-	df.setPattern(FONT_0705, FONT_0705_STATE);
-	for (byte i = 0; i < 10; i++)
-	{
-		DotString ds(df, 32, true);
-		ds.printf("%d", i);
-		ds.print(i * 6, 0);
-	}
-
-	df.setPattern(FONT_0503, FONT_0503_STATE);
-	for (byte i = 0; i < 10; i++)
-	{
-		DotString ds(df, 32, true);
-		ds.printf("%d", i);
-		ds.print(i * 6, 8);
-	}
-
-	df.setPattern(FONT_0704, FONT_0704_STATE);
-	df.setVertical();
-	DotString hds(df, 32, true);
-	hds.printf("%s", "Lcd12864 driven by dot-matrix");
-	hds.print(18, 2);
-
-	hds.printf("%s", "library for Arduino.");
-	hds.print(18, 12);
-
-	hds.printf("%s", "Developed by W.H. Guan");
-	hds.print(40, 24);
-
-	dm.setRect(32, 40, 108, 56);
-	dm.setRect(34, 42, 106, 54, false);
-
-	hds.printf("%s", "http://aGuegu.net");
-	hds.print(40, 45);
-
-	dm.setLine(20, 48, 30, 54);
-	dm.setLine(16, 54, 30, 54);
-	dm.setLine(20, 60, 30, 54);
-
-	dm.setLine(120, 32, 110, 40);
-	dm.setLine(126, 40, 110, 40);
-	dm.setLine(120, 48, 110, 40);
-
-	dmd.init();
-	dmd.clear();
-	dmd.putImage();
+	lcd.init();
+	lcd.setDisplayMode(true, false, false);
 }
+
 
 void loop()
 {
-
+	lcd.putString(0x40, s, sizeof(s)-1);
+	uint32_t t = num;
+	for(byte i=0; i<10; i++)
+	{
+		lcd.putChar(15-i, (t % 10)+0x30);
+		t /= 10;
+		if (t==0) break;
+	}
+	num++;
+	delay(200);
 }

@@ -16,9 +16,9 @@
 
 #include "Driver_595_138.h"
 
-Driver_595_138::Driver_595_138(DotMatrix & pDM, uint8_t pin_C_IN,
+Driver_595_138::Driver_595_138(DotMatrix & dm, uint8_t pin_C_IN,
 		uint8_t pin_C_OE, uint8_t pin_C_ST, uint8_t pin_C_SH, uint8_t pin_R_OE,
-		uint8_t pin_R_A2, uint8_t pin_R_A1, uint8_t pin_R_A0, uint16_t speed):_pDM(pDM)
+		uint8_t pin_R_A2, uint8_t pin_R_A1, uint8_t pin_R_A0, uint16_t speed):_dm(dm)
 {
 	_pin_595_ST = pin_C_ST;
 	_pin_595_SH = pin_C_SH;
@@ -42,7 +42,7 @@ Driver_595_138::Driver_595_138(DotMatrix & pDM, uint8_t pin_C_IN,
 
 	this->setSpeed(speed);
 
-	this->setSize(_pDM.countBytes(), _pDM.countRow());
+	this->setSize(_dm.countBytes(), _dm.countRow());
 }
 
 void Driver_595_138::setSpeed(uint16_t speed)
@@ -85,7 +85,7 @@ void Driver_595_138::shiftSend(byte c)
 
 void Driver_595_138::display(byte times)
 {
-	byte* p = _pDM.output();
+	byte* p = _dm.output();
 
 	while (times--)
 	{
