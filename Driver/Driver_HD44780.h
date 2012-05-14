@@ -58,13 +58,13 @@ private:
 	const DotMatrix & _dm;
 	char * _cache;
 
-	byte _row_count;
-	byte _col_count;
-	byte _cache_length;
-
 	const uint8_t _pin_rs;
 	const uint8_t _pin_en;
 	uint8_t _pin_dt[4];
+
+	byte _row_count;
+	byte _col_count;
+	byte _cache_length;
 
 	void initHardware() const;
 

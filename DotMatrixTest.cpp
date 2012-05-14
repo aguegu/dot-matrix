@@ -9,21 +9,19 @@ uint32_t num=0;
 
 void setup()
 {
+	dm.clear(0x00);
 	lcd.init();
-	lcd.setDisplayMode(true, false, false);
+
+	//dm.setDot(0,0,true);
+
+	lcd.convertDotMatrixToCache();
+	//lcd.printf("%d", dm.countRow());
+	lcd.putCache();
 }
 
 
 void loop()
 {
-	lcd.putString(0x40, s, sizeof(s)-1);
-	uint32_t t = num;
-	for(byte i=0; i<10; i++)
-	{
-		lcd.putChar(15-i, (t % 10)+0x30);
-		t /= 10;
-		if (t==0) break;
-	}
-	num++;
-	delay(200);
+
+
 }

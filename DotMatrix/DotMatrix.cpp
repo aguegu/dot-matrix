@@ -60,13 +60,13 @@ void DotMatrix::setLine(byte cA, byte rA, byte cB, byte rB, bool on)
 	cMin = max(cMin, 0);
 
 	cMax = max(cA, cB);
-	cMax = min(cMax, this->_colCount - 1);
+	cMax = min(cMax, _colCount - 1);
 
 	rMin = min(rA, rB);
 	rMin = max(rMin, 0);
 
 	rMax = max(rA, rB);
-	rMax = min(rMax, this->_rowCount - 1);
+	rMax = min(rMax, _rowCount - 1);
 
 	if (cMax - cMin >= rMax - rMin)
 	{
