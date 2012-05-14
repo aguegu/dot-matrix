@@ -26,15 +26,14 @@ public:
 	DotFont(DotMatrix & dm);
 	virtual ~DotFont();
 
-	void print();
+	void print() const;
 	void setPattern(const uint8_t * pattern, const uint8_t * pattern_state);
 	void setChar(char chr);
 	void setVertical(boolean direction = true);
 	void postAt(byte col, byte row);
-	void clear(byte col, byte row);
-	void fill(byte col, byte row);
+	void clear(bool on = false) const;
 
-	byte calcFontRealWidth();
+	byte calcFontRealWidth() const;
 	byte getWidth() const;
 	byte getHeight() const;
 	boolean getVertical() const;
@@ -42,8 +41,9 @@ public:
 	byte getMaxRow() const;
 
 private:
-	void showH();
-	void showV();
+
+	void showH() const;
+	void showV() const;
 
 	DotMatrix & _dm;
 	const uint8_t *_pattern;
