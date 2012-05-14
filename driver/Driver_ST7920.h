@@ -38,7 +38,7 @@ private:
 	const uint8_t _pin_rs;
 	const uint8_t _pin_en;
 	uint8_t _pin_d[4];
-	DotMatrix & _dm;
+	const DotMatrix & _dm;
 
 	void initPin();
 	void pulseEn();
