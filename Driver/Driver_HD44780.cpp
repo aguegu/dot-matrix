@@ -27,7 +27,7 @@ const uint8_t PROGMEM HD44780_BAR[] =
 const uint8_t PROGMEM HD44780_ROW_ADDRESS[] =
 { 0x00, 0x40, 0x10, 0x50 };
 
-HD44780::HD44780(DotMatrix dm, uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4,
+HD44780::HD44780(DotMatrix & dm, uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4,
 		uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7) :
 		_dm(dm), _pin_rs(pin_rs), _pin_en(pin_en)
 {
@@ -259,19 +259,14 @@ void HD44780::printf(const char *__fmt, ...)
 
 void HD44780::convertDotMatrixToCache()
 {
-/*	memset(_cache, _dm.countBytePerRow() , _cache_length);
-	//byte *p = _dm.output();
-	this->printf(0x00, "%d", _dm.countCol());
-	this->printf(0x08, "%d", _dm.countRow());
-	this->printf(0x10, "%d", _dm.countBytePerRow());
-*/
+	memset(_cache, 0x00, _cache_length);
 
 	for (byte c = 0; c < _dm.countCol(); c++)
 	{
 		for (byte r = 0; r < _dm.countRow(); r++)
 		{
 			bitWrite(*(_cache + _col_count * (r/3) + c), r % 3,
-					true);
+					_dm.getDot(c, r));
 		}
 	}
 
@@ -281,5 +276,6 @@ void HD44780::convertDotMatrixToCache()
 HD44780::~HD44780()
 {
 	free(_cache);
+	_cache = NULL;
 }
 
