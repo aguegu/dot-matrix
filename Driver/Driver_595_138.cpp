@@ -1,17 +1,17 @@
 /*
- DotMatrixDriver.cpp
- DotMatrixDriver Class for receiving output from DotMatrix, with which to control the display
- library for Arduino to drive LED Dot Matrix Display dirven by 74HC595(column) and 74HC138(row)
+	Driver_595_138.cpp
+	Driver_595_138 Class for dot-matrix printing on matrix driven by 74HC595 and 74HC138
+	Created on: 2012-01-15
+	Updated on: 2012-05-14
 
- Created on: 2012-1-15
- Updated on: 2012-2-26
- Author: Weihong Guan
- Blog: http://aguegu.net
- E-mail: weihong.guan@gmail.com
- Code license: Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)
- http://creativecommons.org/licenses/by-nc-sa/3.0/
+	library for Arduino for Dot Matrix Display, support driver by 74HC595 and 74HC138, ST7920, HD47780
+	Author: Weihong Guan
+	Blog: http://aguegu.net
+	E-mail: weihong.guan@gmail.com
+	Code license: Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)
+	http://creativecommons.org/licenses/by-nc-sa/3.0/
 
- source hosting: http://code.google.com/p/aguegu-arduino-library/
+	source host: https://github.com/aguegu/dot-matrix
  */
 
 #include "Driver_595_138.h"
