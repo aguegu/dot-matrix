@@ -47,19 +47,20 @@ public:
 
 	void putString(byte address, char *p, byte length) const;
 	void putChar(byte address, char c) const;
+	void putCache() const;
 
-	void printCache();
 	void printf(const char *__fmt, ...);
 	void printf(byte index, const char *__fmt, ...);
-	void printDotMatrix();
+	void convertDotMatrixToCache();
 
 private:
 
 	const DotMatrix & _dm;
+	char * _cache;
+
 	byte _row_count;
 	byte _col_count;
 	byte _cache_length;
-	char * _cache;
 
 	const uint8_t _pin_rs;
 	const uint8_t _pin_en;

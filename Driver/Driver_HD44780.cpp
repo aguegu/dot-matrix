@@ -223,7 +223,7 @@ void HD44780::init()
 }
 
 
-void HD44780::printCache()
+void HD44780::putCache() const
 {
 	for (byte r=0; r<_row_count; r++)
 		this->putString(pgm_read_byte_near(HD44780_ROW_ADDRESS+r), _cache + _col_count * r, _col_count);
@@ -247,9 +247,8 @@ void HD44780::printf(const char *__fmt, ...)
 	va_end(ap);
 }
 
-void HD44780::printDotMatrix()
+void HD44780::convertDotMatrixToCache()
 {
-	//byte *p = _dm.output();
 	for(byte c=0; c<_col_count; c++)
 	{
 		for (byte r=0; r<_row_count; r++)
