@@ -49,6 +49,7 @@ public:
 	void putChar(byte address, char c) const;
 	void putCache() const;
 
+	void setCache(byte value = 0x00);
 	void setCache(byte index, byte value);
 	void printf(const char *__fmt, ...);
 	void printf(byte index, const char *__fmt, ...);

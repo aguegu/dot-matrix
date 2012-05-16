@@ -51,7 +51,7 @@ HD44780::HD44780(DotMatrix & dm, uint8_t pin_rs, uint8_t pin_en,
 	_cache_length = _row_count * _col_count + 1;
 	_cache = (char *) malloc(sizeof(char) * _cache_length);
 
-	memset(_cache, 0x00, _cache_length);
+	this->setCache();
 }
 
 void HD44780::initHardware() const
@@ -258,6 +258,11 @@ void HD44780::printf(const char *__fmt, ...)
 	va_end(ap);
 }
 
+void HD44780::setCache(byte value)
+{
+	memset(_cache, value, _cache_length);
+}
+
 void HD44780::setCache(byte index, byte value)
 {
 	if (index >= _cache_length) return;
@@ -267,7 +272,7 @@ void HD44780::setCache(byte index, byte value)
 
 void HD44780::convertDotMatrixToCache()
 {
-	memset(_cache, 0x00, _cache_length);
+	this->setCache();
 
 	for (byte c = 0; c < _dm.countCol(); c++)
 	{
