@@ -258,6 +258,13 @@ void HD44780::printf(const char *__fmt, ...)
 	va_end(ap);
 }
 
+void HD44780::setCache(byte index, byte value)
+{
+	if (index >= _cache_length) return;
+
+	_cache[index] = value;
+}
+
 void HD44780::convertDotMatrixToCache()
 {
 	memset(_cache, 0x00, _cache_length);
