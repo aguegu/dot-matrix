@@ -26,7 +26,7 @@ public:
 	DotString(DotFont & df, byte length, bool smart_width = false);
 	virtual ~DotString();
 
-	void print(byte col, byte row);
+	void postAt(byte col, byte row);
 	void printf(const char *__fmt, ...);
 private:
 	DotFont & _df;

@@ -47,10 +47,10 @@ private:
 
 	DotMatrix & _dm;
 	const uint8_t *_pattern;
-	byte _unitWidth;
-	byte _unitHeight;
-	byte _patternIndent;
-	byte _patternLength;
+	byte _unit_width;
+	byte _unit_height;
+	byte _pattern_indent;
+	byte _pattern_length;
 
 	byte _col;
 	byte _row;

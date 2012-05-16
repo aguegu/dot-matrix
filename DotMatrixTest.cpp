@@ -1,6 +1,7 @@
 #include "DotMatrixTest.h"
 #include "DotMatrix.h"
 #include "DotFont.h"
+#include "DotString.h"
 #include "Driver_HD44780.h"
 
 #include "Font0603.h"
@@ -19,14 +20,9 @@ void setup()
 	DotFont df(dm);
 	df.setPattern(FONT_0603, FONT_0603_STATE);
 
-	byte j=0;
-	for (byte i = 0; i < 4; i++)
-	{
-		df.setChar('2' + i);
-		df.postAt(j, 0);
-		df.print();
-		j+= df.calcFontRealWidth() + 1;
-	}
+	DotString ds(df,8);
+	ds.printf("%4d", 1);
+	ds.postAt(0,0);
 
 	lcd.convertDotMatrixToCache();
 	lcd.putCache();

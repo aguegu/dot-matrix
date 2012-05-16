@@ -37,7 +37,7 @@ void DotString::printf(const char *__fmt, ...)
 	va_end(ap);
 }
 
-void DotString::print(byte col, byte row)
+void DotString::postAt(byte col, byte row)
 {
 	byte cursor;
 
