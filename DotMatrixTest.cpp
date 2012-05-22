@@ -14,10 +14,11 @@ void setup()
 
 void loop()
 {
-	for (byte i = 0; i<10; i++)
+	for (byte i = 0; i < 10; i++)
 	{
-	lcd.printBigNumber(0, i);
-	lcd.putCache();
-	delay(1000);
+		lcd.printBigNumber(0, i);
+		lcd.printBigNumber(6, 9-i);
+		lcd.putCache();
+		delay(1000);
 	}
 }
