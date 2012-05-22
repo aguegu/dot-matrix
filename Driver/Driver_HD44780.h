@@ -25,8 +25,6 @@
   #define PROGMEM __attribute__((section(".progmem.data")))
 #endif
 
-extern const uint8_t PROGMEM HD44780_BAR[];
-
 class HD44780
 {
 public:

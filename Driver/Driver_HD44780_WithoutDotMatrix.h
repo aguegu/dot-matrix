@@ -18,20 +18,17 @@
 #define DRIVER_HD44780_WITHOUT_DOTMATRIX_H_
 
 #include "Arduino.h"
-#include "DotMatrix.h"
 
 #ifdef PROGMEM
   #undef PROGMEM
   #define PROGMEM __attribute__((section(".progmem.data")))
 #endif
 
-extern const uint8_t PROGMEM HD44780_BAR[];
-
 class HD44780_WithoutDotMatrix
 {
 public:
 
-	HD44780_WithoutDotMatrix(DotMatrix & dm, uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7);
+	HD44780_WithoutDotMatrix(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7, byte col_count = 16, byte row_count = 2);
 	virtual ~HD44780_WithoutDotMatrix();
 
 	void init();
@@ -53,11 +50,11 @@ public:
 	void setCache(byte index, byte value);
 	void printf(const char *__fmt, ...);
 	void printf(byte index, const char *__fmt, ...);
-	void convertDotMatrixToCache();
+
+	void printBigNumber(byte address, byte num);
 
 private:
 
-	const DotMatrix & _dm;
 	char * _cache;
 
 	const uint8_t _pin_rs;

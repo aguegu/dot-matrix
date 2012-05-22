@@ -28,11 +28,27 @@ const uint8_t PROGMEM HD44780_BAR[] =
 	0x1f, 0x1f, 0x00, 0x1f, 0x1f, 0x00, 0x1f, 0x1f,
 };
 
+const uint8_t PROGMEM HD44780_NUMBER_FONT[] =
+{
+	0x07, 0x01, 0x07, 0x07, 0x04, 0x07,		// 0
+	0x00, 0x07, 0x00, 0x00, 0x07, 0x00,		// 1
+	0x01, 0x01, 0x07, 0x07, 0x05, 0x05,		// 2
+	0x05, 0x05, 0x07, 0x04, 0x04, 0x07,		// 3
+	0x07, 0x00, 0x07, 0x03, 0x02, 0x07,		// 4
+	0x07, 0x05, 0x05, 0x04, 0x04, 0x07,		// 5
+	0x07, 0x05, 0x05, 0x07, 0x04, 0x07,		// 6
+	0x01, 0x01, 0x07, 0x00, 0x00, 0x07,		// 7
+	0x07, 0x05, 0x07, 0x07, 0x04, 0x07,		// 8
+	0x07, 0x01, 0x07, 0x05, 0x05, 0x07,		// 9
+};
+
 const uint8_t PROGMEM HD44780_ROW_ADDRESS[] = { 0x00, 0x40, 0x10, 0x50 };
 
-HD44780_WithoutDotMatrix::HD44780_WithoutDotMatrix(DotMatrix & dm, uint8_t pin_rs, uint8_t pin_en,
-		uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7)
-		: _dm(dm), _pin_rs(pin_rs), _pin_en(pin_en)
+HD44780_WithoutDotMatrix::HD44780_WithoutDotMatrix(uint8_t pin_rs, uint8_t pin_en,
+		uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7,
+		byte col_count, byte row_count)
+
+		:  _pin_rs(pin_rs), _pin_en(pin_en)
 {
 	_pin_dt[0] = pin_d4;
 	_pin_dt[1] = pin_d5;
@@ -45,8 +61,8 @@ HD44780_WithoutDotMatrix::HD44780_WithoutDotMatrix(DotMatrix & dm, uint8_t pin_r
 	for (byte i = 0; i < 4; i++)
 		pinMode(_pin_dt[i], OUTPUT);
 
-	_col_count = _dm.countCol();
-	_row_count = _dm.countRow() / 3;
+	_col_count = col_count;
+	_row_count = row_count;
 
 	_cache_length = _row_count * _col_count + 1;
 	_cache = (char *) malloc(sizeof(char) * _cache_length);
@@ -258,6 +274,16 @@ void HD44780_WithoutDotMatrix::printf(const char *__fmt, ...)
 	va_end(ap);
 }
 
+void HD44780_WithoutDotMatrix::printBigNumber(byte address, byte num)
+{
+	byte indent = num * 6;
+	for(byte i=0; i<3; i++)
+	{
+		this->setCache(address + i, pgm_read_byte_near(HD44780_NUMBER_FONT+ indent + i));
+		this->setCache(address + _col_count + i, pgm_read_byte_near(HD44780_NUMBER_FONT+ indent + i + 3));
+	}
+}
+
 void HD44780_WithoutDotMatrix::setCache(byte value)
 {
 	memset(_cache, value, _cache_length);
@@ -268,20 +294,6 @@ void HD44780_WithoutDotMatrix::setCache(byte index, byte value)
 	if (index >= _cache_length) return;
 
 	_cache[index] = value;
-}
-
-void HD44780_WithoutDotMatrix::convertDotMatrixToCache()
-{
-	this->setCache();
-
-	for (byte c = 0; c < _dm.countCol(); c++)
-	{
-		for (byte r = 0; r < _dm.countRow(); r++)
-		{
-			bitWrite(*(_cache + _col_count * (r/3) + c), r % 3,
-					_dm.getDot(c, r));
-		}
-	}
 }
 
 //////////////////////
