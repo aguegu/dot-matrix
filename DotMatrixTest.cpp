@@ -1,24 +1,19 @@
 #include "DotMatrixTest.h"
-#include "Driver_HD44780_WithoutDotMatrix.h"
+#include "DotMatrix.h"
+#include "Driver_1818_138.h"
 
-HD44780_WithoutDotMatrix lcd(8, 9, 10, 11, 12, 13);
-char s[] = "Hello, World.";
-uint32_t num = 0;
+DotMatrix dm(64, 8);
+Driver_1818_138 cube(dm, A3, 8, 9, 10, 3, 4, 5, 11);
 
 void setup()
 {
-	lcd.init();
-	lcd.printBigNumber(0, 1);
-	lcd.putCache();
+	dm.clear(0x00);
+	dm.setDot(0, random(8), true);
 }
 
 void loop()
 {
-	for (byte i = 0; i < 10; i++)
-	{
-		lcd.printBigNumber(0, i);
-		lcd.printBigNumber(6, 9-i);
-		lcd.putCache();
-		delay(1000);
-	}
+	dm.move(DotMatrix::Right, false);
+
+	cube.display(0x04);
 }
