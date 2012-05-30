@@ -300,6 +300,5 @@ void HD44780_WithoutDotMatrix::setCache(byte index, byte value)
 HD44780_WithoutDotMatrix::~HD44780_WithoutDotMatrix()
 {
 	free(_cache);
-	_cache = NULL;
 }
 
