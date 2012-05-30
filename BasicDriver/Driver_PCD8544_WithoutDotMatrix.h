@@ -19,6 +19,8 @@ public:
 	Driver_PCD8544_WithoutDotMatrix();
 	virtual ~Driver_PCD8544_WithoutDotMatrix();
 	void init();
+	void setRamX(byte x);
+	void setRamY(byte y);
 private:
 
 	uint8_t _pin_sce;

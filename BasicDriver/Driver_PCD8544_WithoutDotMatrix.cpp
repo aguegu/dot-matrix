@@ -49,16 +49,36 @@ void Driver_PCD8544_WithoutDotMatrix::init()
 {
 	digitalWrite(_pin_sce, LOW);
 	digitalWrite(_pin_rst, LOW);
-	delay(10);
+	delay(50);
 	digitalWrite(_pin_rst, HIGH);
 
 	this->send(0x21, COMMAND);
-	this->send(0xc6, COMMAND);
-	this->send(0x06, COMMAND);
-	this->send(0x13, COMMAND);
+	this->send(0x80 | 0x48, COMMAND);
+	this->send(0x04 | 0x02, COMMAND);
+	this->send(0x10, COMMAND);
 
 	this->send(0x20, COMMAND);
 	this->send(0x0c, COMMAND);
 
+
+	this->setRamX(0);
+	this->setRamY(0);
+
+	for(byte r=0; r<6; r++)
+	{
+		for (byte c=0; c<84; c++)
+		{
+			this->send(0xcc, DATA);
+		}
+	}
 }
 
+void Driver_PCD8544_WithoutDotMatrix::setRamX(byte x)
+{
+	this->send(0x80 | x, COMMAND);
+}
+
+void Driver_PCD8544_WithoutDotMatrix::setRamY(byte y)
+{
+	this->send(0x40 | y, COMMAND);
+}

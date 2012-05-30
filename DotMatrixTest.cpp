@@ -7,9 +7,11 @@ Driver_PCD8544_WithoutDotMatrix lcd;
 
 void setup()
 {
+	pinMode(7, OUTPUT);
+	digitalWrite(7, HIGH);
+
 	lcd.init();
-	pinMode(2, OUTPUT);
-	digitalWrite(2, HIGH);
+
 }
 
 void loop()
