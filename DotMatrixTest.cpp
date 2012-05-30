@@ -1,20 +1,18 @@
 #include "DotMatrixTest.h"
-#include "DotMatrix3D.h"
-#include "Driver_1818_138.h"
+#include "Driver_PCD8544_WithoutDotMatrix.h"
 
-DotMatrix3D dm(8, 8, 8);
-Driver_1818_138 cube(dm, A3, 8, 9, 10, 3, 4, 5, 11);
+Driver_PCD8544_WithoutDotMatrix lcd;
+
+
 
 void setup()
 {
-	dm.clear(0x00);
-	dm.DotMatrix::setDot(0, 0, true);
-	dm.setDot(0, 0, 0, true);
+	lcd.init();
+	pinMode(2, OUTPUT);
+	digitalWrite(2, HIGH);
 }
 
 void loop()
 {
-	dm.move(DotMatrix::Right, false);
 
-	cube.display(0x04);
 }
