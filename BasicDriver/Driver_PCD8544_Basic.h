@@ -1,5 +1,5 @@
 /*
- *	Driver_PCD8544_WithoutDotMatrix.h
+ *	Driver_PCD8544_Basic.h
  *	Driver_PCD8544 Class for dot-matrix printing on liquid crystal display driven by HD47780, namely 1602/1604
  *	Created on: 2012-05-30
  *
@@ -13,22 +13,22 @@
  *	source host: https://github.com/aguegu/dot-matrix
  */
 
-#ifndef DRIVER_PCD8544_WITHOUT_DOTMATRIX_H_
-#define DRIVER_PCD8544_WITHOUT_DOTMATRIX_H_
+#ifndef DRIVER_PCD8544_BASIC
+#define DRIVER_PCD8544_BASIC
 
 #include "Arduino.h"
 
 #define COMMAND	false
 #define DATA	true
 
-class Driver_PCD8544_WithoutDotMatrix
+class Driver_PCD8544_Basic
 {
 
 public:
 
-	Driver_PCD8544_WithoutDotMatrix
+	Driver_PCD8544_Basic
 		(uint8_t pin_sce, uint8_t pin_rst, uint8_t pin_dc, uint8_t pin_din, uint8_t pin_sclk);
-	virtual ~Driver_PCD8544_WithoutDotMatrix();
+	virtual ~Driver_PCD8544_Basic();
 	void init();
 	void setRamAddress(byte x, byte y);
 

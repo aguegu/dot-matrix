@@ -18,12 +18,12 @@
 
 #include "Arduino.h"
 #include "DotMatrix.h"
-#include "Driver_PCD8544_WithoutDotMatrix.h"
+#include "Driver_PCD8544_Basic.h"
 
 #define COMMAND	false
 #define DATA	true
 
-class Driver_PCD8544:public Driver_PCD8544_WithoutDotMatrix
+class Driver_PCD8544:public Driver_PCD8544_Basic
 {
 
 public:
