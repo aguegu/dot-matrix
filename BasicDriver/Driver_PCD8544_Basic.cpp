@@ -76,16 +76,6 @@ void Driver_PCD8544_Basic::init()
 
 	this->configureHardware();
 	this->configureDisplay();
-
-	this->setRamAddress(0, 0);
-
-	for(byte r=0; r<6; r++)
-	{
-		for (byte c=0; c<84; c++)
-		{
-			this->sendMsbFirst(0xff, DATA);
-		}
-	}
 }
 
 void Driver_PCD8544_Basic::configureFunction(bool active, bool vertical_addressing, bool extend_command)

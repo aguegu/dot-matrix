@@ -4,7 +4,7 @@
 #include "DotString.h"
 #include "Driver_PCD8544.h"
 
-#include "Font0704.h"
+#include "Font0703.h"
 
 
 DotMatrix dm(48, 84);
@@ -21,37 +21,31 @@ void setup()
 	dm.clear();
 
 	DotFont df(dm);
-	df.setPattern(FONT_0704, FONT_0704_STATE);
+	df.setPattern(FONT_0703, FONT_0703_STATE);
 	DotString ds(df, 32, true);
 
 	ds.printf("Hello, world.");
-	ds.postAt(0,0);
+	ds.postAt(2,0);
 
-	ds.printf("Font Display");
+	df.setVertical(false);
+	ds.printf("Font Display on Nokia");
+	ds.postAt(0, 0);
+
+	ds.printf("5110, driven by");
 	ds.postAt(0, 9);
 
-	ds.printf("on Nokia 5110,");
+	ds.printf("Arduino.");
 	ds.postAt(0, 18);
 
-	ds.printf("driven by");
+	ds.printf("aGuegu.net");
 	ds.postAt(0, 27);
 
-	ds.printf("Arduino.");
-	ds.postAt(0, 36);
-
-	ds.printf("Cool, right?");
-	ds.postAt(0, 45);
-
-	ds.printf("aGuegu.net");
-	ds.postAt(4, 63);
-
 	ds.printf("%2d-%02d, %d", 5, 31, 2012);
-	ds.postAt(8, 72);
-
-	lcd.putDM();
+	ds.postAt(0, 36);
 }
 
 void loop()
 {
-
+	lcd.putDM();
+	delay(1000);
 }
