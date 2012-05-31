@@ -49,10 +49,10 @@ public:
 	byte countBytePerRow() const;
 
 private:
-	byte _colCount;
-	byte _rowCount;
-	byte _bytesPerRow;
-	word _bytesLength;
+	byte _col_count;
+	byte _row_count;
+	byte _bytes_per_row;
+	word _bytes_length;
 
 	byte * _pScreen;
 

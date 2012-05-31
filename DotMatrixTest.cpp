@@ -2,7 +2,7 @@
 #include "DotMatrix.h"
 #include "Driver_PCD8544.h"
 
-DotMatrix dm(48, 84);
+DotMatrix dm(84, 48);
 Driver_PCD8544 lcd(dm, 2, 3, 4, 5, 6);
 
 void setup()
@@ -13,8 +13,8 @@ void setup()
 	lcd.init();
 
 	dm.clear();
-	dm.setDot(0,0);
-	dm.setDot(8,0);
+	dm.setDot(0, 0);
+
 	lcd.putDM();
 }
 
