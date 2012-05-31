@@ -30,10 +30,10 @@ public:
 
 	Driver_PCD8544(DotMatrix & dm, uint8_t pin_sce, uint8_t pin_rst, uint8_t pin_dc, uint8_t pin_din, uint8_t pin_sclk);
 	virtual ~Driver_PCD8544();
+
+	void putDM();
 private:
 	const DotMatrix & _dm;
-
-
 };
 
 #endif /* DRIVER_PCD8544_H_ */

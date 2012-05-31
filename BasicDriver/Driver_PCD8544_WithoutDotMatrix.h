@@ -36,6 +36,10 @@ public:
 	void configureDisplay(bool display_on = true, bool reverse = false);
 	void configureFunction(bool active = true, bool vertical_addressing = true, bool extend_command = false);
 
+protected:
+
+	void send(byte c, bool b);
+
 private:
 
 	const uint8_t _pin_sce;
@@ -47,7 +51,7 @@ private:
 	const static byte BYTES_PER_COLUMN = 6;
 	const static byte CLOLUMN_COUNT = 84;
 
-	void send(byte c, bool b);
+
 
 };
 

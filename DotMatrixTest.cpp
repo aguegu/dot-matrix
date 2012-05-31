@@ -11,6 +11,11 @@ void setup()
 	digitalWrite(7, HIGH);
 
 	lcd.init();
+
+	dm.clear();
+	dm.setDot(0,0);
+	dm.setDot(8,0);
+	lcd.putDM();
 }
 
 void loop()
