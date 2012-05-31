@@ -7,15 +7,11 @@
 
 #include "Driver_PCD8544_WithoutDotMatrix.h"
 
-Driver_PCD8544_WithoutDotMatrix::Driver_PCD8544_WithoutDotMatrix()
+Driver_PCD8544_WithoutDotMatrix::Driver_PCD8544_WithoutDotMatrix
+	(uint8_t pin_sce, uint8_t pin_rst, uint8_t pin_dc, uint8_t pin_din, uint8_t pin_sclk)
+	:_pin_sce(pin_sce), _pin_rst(pin_rst), _pin_dc(pin_dc), _pin_din(pin_din), _pin_sclk(pin_sclk)
 {
 	// TODO Auto-generated constructor stub
-	_pin_sce = 2;
-	_pin_rst = 3;
-	_pin_dc = 4;
-	_pin_din = 5;
-	_pin_sclk = 6;
-
 	pinMode(_pin_sce, OUTPUT);
 	pinMode(_pin_rst, OUTPUT);
 	pinMode(_pin_dc, OUTPUT);
@@ -51,34 +47,40 @@ void Driver_PCD8544_WithoutDotMatrix::init()
 	digitalWrite(_pin_rst, LOW);
 	delay(50);
 	digitalWrite(_pin_rst, HIGH);
+	digitalWrite(_pin_sce, HIGH);
 
-	this->send(0x21, COMMAND);
-	this->send(0x80 | 0x48, COMMAND);
-	this->send(0x04 | 0x02, COMMAND);
-	this->send(0x10, COMMAND);
+	this->configureFunction();
+	this->configureDisplay();
 
-	this->send(0x20, COMMAND);
-	this->send(0x0c, COMMAND);
-
-
-	this->setRamX(0);
-	this->setRamY(0);
+	this->setRamAddress(0, 0);
 
 	for(byte r=0; r<6; r++)
 	{
 		for (byte c=0; c<84; c++)
 		{
-			this->send(0xcc, DATA);
+			this->send(c, DATA);
 		}
 	}
 }
 
-void Driver_PCD8544_WithoutDotMatrix::setRamX(byte x)
+void Driver_PCD8544_WithoutDotMatrix::configureFunction(byte tc, byte bias, byte vop)
 {
-	this->send(0x80 | x, COMMAND);
+	this->send(0x20 | 0x03, COMMAND);
+	this->send(0x04 | (tc & 0x03), COMMAND);
+	this->send(0x10 | (bias & 0x07), COMMAND);
+	this->send(0x80 | (vop & 0x7f), COMMAND);
+	this->send(0x20 | 0x02, COMMAND);
 }
 
-void Driver_PCD8544_WithoutDotMatrix::setRamY(byte y)
+void Driver_PCD8544_WithoutDotMatrix::configureDisplay(bool display_on, bool reverse)
 {
+	this->send(0x08 | (display_on? 0x04:0x00) | (reverse? 0x01:0x00), COMMAND);
+}
+
+void Driver_PCD8544_WithoutDotMatrix::setRamAddress(byte x, byte y)
+{
+	x %= 84;
+	y %= 6;
+	this->send(0x80 | x, COMMAND);
 	this->send(0x40 | y, COMMAND);
 }
