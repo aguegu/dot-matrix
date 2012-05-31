@@ -38,7 +38,10 @@ public:
 
 protected:
 
-	void send(byte c, bool b);
+	void sendMsbFirst(byte c, bool b);
+	void sendLsbFirst(byte c, bool b);
+	const static byte BYTES_PER_COLUMN = 6;
+	const static byte CLOLUMN_COUNT = 84;
 
 private:
 
@@ -48,8 +51,7 @@ private:
 	const uint8_t _pin_din;
 	const uint8_t _pin_sclk;
 
-	const static byte BYTES_PER_COLUMN = 6;
-	const static byte CLOLUMN_COUNT = 84;
+
 
 
 

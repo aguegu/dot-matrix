@@ -22,7 +22,7 @@
 class DotMatrix
 {
 public:
-	DotMatrix(byte colCount, byte rowCount);
+	DotMatrix(byte col_count, byte row_count);
 	virtual ~DotMatrix();
 
 	void clear(byte c = 0x00);

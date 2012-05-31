@@ -31,9 +31,17 @@ void Driver_PCD8544::putDM()
 	byte *p = _dm.output();
 	this->setRamAddress(0,0);
 
-	word length = _dm.countBytes();
+	byte j=_dm.countRow();
+	while(j--)
+	{
+		p+=BYTES_PER_COLUMN;
 
-	while(length--)
-		this->send(*(p++), DATA);
+		byte i = BYTES_PER_COLUMN;
 
+		while(i--)
+			this->sendLsbFirst(*(--p), DATA);
+
+		p+=BYTES_PER_COLUMN;
+	}
 }
+

@@ -32,7 +32,7 @@ Driver_PCD8544_Basic::~Driver_PCD8544_Basic()
 	// TODO Auto-generated destructor stub
 }
 
-void Driver_PCD8544_Basic::send(byte c, bool b)
+void Driver_PCD8544_Basic::sendMsbFirst(byte c, bool b)
 {
 	digitalWrite(_pin_sce, LOW);
 
@@ -49,11 +49,28 @@ void Driver_PCD8544_Basic::send(byte c, bool b)
 	digitalWrite(_pin_sce, HIGH);
 }
 
+void Driver_PCD8544_Basic::sendLsbFirst(byte c, bool b)
+{
+	digitalWrite(_pin_sce, LOW);
+
+	digitalWrite(_pin_dc, b);
+
+	for(byte i=0; i<8; i++)
+	{
+		digitalWrite(_pin_din, bitRead(c, 0));
+		digitalWrite(_pin_sclk, LOW);
+		digitalWrite(_pin_sclk, HIGH);
+		c >>= 1;
+	}
+
+	digitalWrite(_pin_sce, HIGH);
+}
+
 void Driver_PCD8544_Basic::init()
 {
 	digitalWrite(_pin_sce, LOW);
 	digitalWrite(_pin_rst, LOW);
-	delay(50);
+	delay(0x40);
 	digitalWrite(_pin_rst, HIGH);
 	digitalWrite(_pin_sce, HIGH);
 
@@ -66,34 +83,34 @@ void Driver_PCD8544_Basic::init()
 	{
 		for (byte c=0; c<84; c++)
 		{
-			this->send(c, DATA);
+			this->sendMsbFirst(0xff, DATA);
 		}
 	}
 }
 
 void Driver_PCD8544_Basic::configureFunction(bool active, bool vertical_addressing, bool extend_command)
 {
-	this->send(0x20 | (active? 0x00 : 0x04) | (vertical_addressing? 0x02:0x00) | (extend_command? 0x01:0x00), COMMAND);
+	this->sendMsbFirst(0x20 | (active? 0x00 : 0x04) | (vertical_addressing? 0x02:0x00) | (extend_command? 0x01:0x00), COMMAND);
 }
 
 void Driver_PCD8544_Basic::configureHardware(byte tc, byte bias, byte vop)
 {
 	this->configureFunction(true, true, true);
-	this->send(0x04 | (tc & 0x03), COMMAND);
-	this->send(0x10 | (bias & 0x07), COMMAND);
-	this->send(0x80 | (vop & 0x7f), COMMAND);
+	this->sendMsbFirst(0x04 | (tc & 0x03), COMMAND);
+	this->sendMsbFirst(0x10 | (bias & 0x07), COMMAND);
+	this->sendMsbFirst(0x80 | (vop & 0x7f), COMMAND);
 	this->configureFunction(true, true, false);
 }
 
 void Driver_PCD8544_Basic::configureDisplay(bool display_on, bool reverse)
 {
-	this->send(0x08 | (display_on? 0x04:0x00) | (reverse? 0x01:0x00), COMMAND);
+	this->sendMsbFirst(0x08 | (display_on? 0x04:0x00) | (reverse? 0x01:0x00), COMMAND);
 }
 
 void Driver_PCD8544_Basic::setRamAddress(byte x, byte y)
 {
 	x %= CLOLUMN_COUNT;
 	y %= BYTES_PER_COLUMN;
-	this->send(0x80 | x, COMMAND);
-	this->send(0x40 | y, COMMAND);
+	this->sendMsbFirst(0x80 | x, COMMAND);
+	this->sendMsbFirst(0x40 | y, COMMAND);
 }
