@@ -1,9 +1,9 @@
 #include "DotMatrixTest.h"
-#include "Driver_PCD8544_WithoutDotMatrix.h"
+#include "DotMatrix.h"
+#include "Driver_PCD8544.h"
 
-Driver_PCD8544_WithoutDotMatrix lcd(2, 3, 4, 5, 6);
-
-
+DotMatrix dm(48, 84);
+Driver_PCD8544 lcd(dm, 2, 3, 4, 5, 6);
 
 void setup()
 {

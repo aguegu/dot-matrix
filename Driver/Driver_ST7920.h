@@ -40,7 +40,7 @@ public:
 	void setFunctionMode(bool interface8 = false, bool re = false,
 			bool graphic = false);
 
-	void putImage();
+	void putDM();
 
 private:
 

@@ -181,7 +181,7 @@ void ST7920::printWord(char *p)
 	}
 }
 
-void ST7920::putImage()
+void ST7920::putDM()
 {
 	//this->setFunctionMode(false, true, false);
 	byte *p = _dm.output();
