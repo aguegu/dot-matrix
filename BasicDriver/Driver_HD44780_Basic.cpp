@@ -76,11 +76,11 @@ void HD44780_Basic::initHardware() const
 
 	this->setDT(0x20, true);
 
-	this->setFunctionMode();
+	this->configureFunction();
 	this->configureDisplay(false, false, false);
 
 	this->clear();
-	this->setInputMode();
+	this->configureInput();
 	this->rst();
 }
 
@@ -135,7 +135,7 @@ void HD44780_Basic::rst() const // 0x02
 	delayMicroseconds(2000);
 }
 
-void HD44780_Basic::setInputMode(bool ac, bool screen_move) const // 0x04
+void HD44780_Basic::configureInput(bool ac, bool screen_move) const // 0x04
 {
 	byte cmd = 0x04;
 
@@ -175,7 +175,7 @@ void HD44780_Basic::moveScreen(bool right) const // 0x11
 	this->writeCmd(cmd);
 }
 
-void HD44780_Basic::setFunctionMode(bool interface8, bool doubleline,
+void HD44780_Basic::configureFunction(bool interface8, bool doubleline,
 		bool font5x10) const // 0x20
 {
 	byte cmd = 0x20;
@@ -192,7 +192,7 @@ void HD44780_Basic::setCGRam(byte *pFont, byte length) const
 {
 	byte i;
 
-	this->setInputMode(1, 0);
+	this->configureInput(true, false);
 	this->writeCmd(0x40);
 
 	for (i = 0; i < length; i++)

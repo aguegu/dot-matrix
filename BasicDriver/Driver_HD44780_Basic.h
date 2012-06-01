@@ -18,9 +18,8 @@
 class HD44780_Basic
 {
 public:
-	HD44780_Basic(uint8_t pin_rs, uint8_t pin_en,
-			uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7,
-			byte col_count, byte row_count);
+	HD44780_Basic(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7,
+			byte col_count = 16, byte row_count = 2);
 	virtual ~HD44780_Basic();
 
 	void init();
@@ -43,6 +42,12 @@ public:
 	void printf(const char *__fmt, ...);
 	void printf(byte index, const char *__fmt, ...);
 
+protected:
+
+	byte _row_count;
+	byte _col_count;
+	byte _cache_length;
+
 private:
 
 	char * _cache;
@@ -51,9 +56,6 @@ private:
 	const uint8_t _pin_en;
 	uint8_t _pin_dt[4];
 
-	byte _row_count;
-	byte _col_count;
-	byte _cache_length;
 
 	void initHardware() const;
 
@@ -64,8 +66,8 @@ private:
 	void writeCmd(byte) const;
 	void writeData(byte) const;
 
-	void setInputMode(bool ac = true, bool screen_move = false) const;
-	void setFunctionMode(bool interface8 = false, bool doubleline = true, bool font5x10 = false) const;
+	void configureInput(bool ac = true, bool screen_move = false) const;
+	void configureFunction(bool interface8 = false, bool doubleline = true, bool font5x10 = false) const;
 };
 
 #endif /* DRIVER_HD44780_BASIC_H_ */
