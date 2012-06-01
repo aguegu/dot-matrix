@@ -14,11 +14,11 @@
 	source host: https://github.com/aguegu/dot-matrix
  */
 
-#include "Driver_ST7920.h"
+#include "Driver_ST7920_Basic.h"
 
-ST7920::ST7920(DotMatrix & dm, uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4,
+ST7920_Basic::ST7920_Basic(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4,
 		uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7) :
-		_pin_rs(pin_rs), _pin_en(pin_en), _dm(dm)
+		_pin_rs(pin_rs), _pin_en(pin_en)
 {
 	_pin_d[0] = pin_d4;
 	_pin_d[1] = pin_d5;
@@ -28,7 +28,7 @@ ST7920::ST7920(DotMatrix & dm, uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4,
 	this->initPin();
 }
 
-void ST7920::initPin()
+void ST7920_Basic::initPin()
 {
 	pinMode(_pin_rs, OUTPUT);
 	pinMode(_pin_en, OUTPUT);
@@ -39,7 +39,7 @@ void ST7920::initPin()
 	digitalWrite(_pin_en, LOW);
 }
 
-void ST7920::init()
+void ST7920_Basic::init()
 {
 	delayMicroseconds(50000);
 
@@ -52,18 +52,18 @@ void ST7920::init()
 	this->setFunctionMode(false, true, true);
 }
 
-void ST7920::clear()
+void ST7920_Basic::clear()
 {
 	this->writeCmd(0x01);
 	delayMicroseconds(2000);
 }
 
-void ST7920::home()
+void ST7920_Basic::home()
 {
 	this->writeCmd(0x02);
 }
 
-void ST7920::setEntryMode(bool right)
+void ST7920_Basic::setEntryMode(bool right)
 {
 	byte cmd = 0x04;
 	if (right)
@@ -71,7 +71,7 @@ void ST7920::setEntryMode(bool right)
 	this->writeCmd(cmd);
 }
 
-void ST7920::setDisplayMode(bool display, bool cursor, bool blink)
+void ST7920_Basic::setDisplayMode(bool display, bool cursor, bool blink)
 {
 	byte cmd = 0x08;
 	if (display)
@@ -83,7 +83,7 @@ void ST7920::setDisplayMode(bool display, bool cursor, bool blink)
 	this->writeCmd(cmd);
 }
 
-void ST7920::moveCursor(bool right)
+void ST7920_Basic::moveCursor(bool right)
 {
 	byte cmd = 0x10;
 	if (right)
@@ -91,7 +91,7 @@ void ST7920::moveCursor(bool right)
 	this->writeCmd(cmd);
 }
 
-void ST7920::moveDisplay(bool right)
+void ST7920_Basic::moveDisplay(bool right)
 {
 	byte cmd = 0x18;
 	if (right)
@@ -99,7 +99,7 @@ void ST7920::moveDisplay(bool right)
 	this->writeCmd(cmd);
 }
 
-void ST7920::setFunctionMode(bool interface8, bool re, bool graphic)
+void ST7920_Basic::setFunctionMode(bool interface8, bool re, bool graphic)
 {
 	byte cmd = 0x20;
 	if (interface8)
@@ -111,33 +111,33 @@ void ST7920::setFunctionMode(bool interface8, bool re, bool graphic)
 	this->writeCmd(cmd);
 }
 
-void ST7920::setCgRam(byte value)
+void ST7920_Basic::setCgRam(byte value)
 {
 	this->writeData(0x40 | value);
 }
 
-void ST7920::setDdRam(byte address)
+void ST7920_Basic::setDdRam(byte address)
 {
 	this->writeCmd(0x80 | address);
 }
 
 /////////////////////////////////////
 
-void ST7920::writeCmd(byte c)
+void ST7920_Basic::writeCmd(byte c)
 {
 	digitalWrite(_pin_rs, LOW);
 	setDB2(c, true);
 	setDB2(c, false);
 }
 
-void ST7920::writeData(byte c)
+void ST7920_Basic::writeData(byte c)
 {
 	digitalWrite(_pin_rs, HIGH);
 	setDB2(c, true);
 	setDB2(c, false);
 }
 
-void ST7920::writeDataRev(byte c)
+void ST7920_Basic::writeDataRev(byte c)
 {
 	digitalWrite(_pin_rs, HIGH);
 
@@ -154,7 +154,7 @@ void ST7920::writeDataRev(byte c)
 	this->pulseEn();
 }
 
-void ST7920::setDB2(byte c, bool high)
+void ST7920_Basic::setDB2(byte c, bool high)
 {
 	if (high)
 		c >>= 4;
@@ -165,14 +165,14 @@ void ST7920::setDB2(byte c, bool high)
 	this->pulseEn();
 }
 
-void ST7920::pulseEn()
+void ST7920_Basic::pulseEn()
 {
 	digitalWrite(_pin_en, HIGH);
 	digitalWrite(_pin_en, LOW);
 	delayMicroseconds(100);
 }
 
-void ST7920::printWord(char *p)
+void ST7920_Basic::printWord(char *p)
 {
 	while (*p)
 	{
@@ -181,31 +181,7 @@ void ST7920::printWord(char *p)
 	}
 }
 
-void ST7920::putDM()
-{
-	//this->setFunctionMode(false, true, false);
-	byte *p = _dm.output();
-
-	for (byte r = 0; r < 0x20; r++)
-	{
-		this->setDdRam(r); // y
-		this->setDdRam(0x00); // x
-		for (byte i = _dm.countBytePerRow(); i; i--)
-			this->writeDataRev(*(p++));
-	}
-
-	for (byte r = 0; r < 0x20; r++)
-	{
-		this->setDdRam(r); // y
-		this->setDdRam(0x08); // x
-		for (byte i =  _dm.countBytePerRow(); i; i--)
-			this->writeDataRev(*(p++));
-	}
-
-	//this->setFunctionMode(false, true, true);
-}
-
-ST7920::~ST7920()
+ST7920_Basic::~ST7920_Basic()
 {
 
 }

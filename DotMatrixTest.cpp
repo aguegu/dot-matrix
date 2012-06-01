@@ -52,7 +52,7 @@ void setup()
 	dm.setRect(32, 40, 108, 56);
 	dm.setRect(34, 42, 106, 54, false);
 
-	hds.printf("%s", "http://aGuegu.net");
+	hds.printf("%s", "aGuegu.net");
 	hds.postAt(40, 45);
 
 	dm.setLine(20, 48, 30, 54);

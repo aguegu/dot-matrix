@@ -1,5 +1,5 @@
 /*
-	Driver_ST7920.h
+	Driver_ST7920_Basic.h
 	Driver_ST7920 Class for dot-matrix printing on liquid crystal display driven by ST7920, namely 12864
 	Created on: 2012-03-04
 	Updated on: 2012-05-14
@@ -14,18 +14,17 @@
 	source host: https://github.com/aguegu/dot-matrix
  */
 
-#ifndef DRIVER_ST7920_H_
-#define DRIVER_ST7920_H_
+#ifndef DRIVER_ST7920_BASIC_H_
+#define DRIVER_ST7920_BASIC_H_
 
 #include "Arduino.h"
 #include "DotMatrix.h"
 
-class ST7920
+class ST7920_Basic
 {
 public:
-	ST7920(DotMatrix & dm, uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4,
-			uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7);
-	virtual ~ST7920();
+	ST7920_Basic(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7);
+	virtual ~ST7920_Basic();
 
 	void init();
 
@@ -40,21 +39,23 @@ public:
 	void setFunctionMode(bool interface8 = false, bool re = false,
 			bool graphic = false);
 
-	void putDM();
+protected:
+
+	void setDdRam(byte address); // Set address in Text Mode
+	void writeDataRev(byte c);
 
 private:
 
 	const uint8_t _pin_rs;
 	const uint8_t _pin_en;
 	uint8_t _pin_d[4];
-	const DotMatrix & _dm;
 
 	void initPin();
 	void pulseEn();
 	void setDB2(byte c, bool high);
-	void writeDataRev(byte c);
+
 	void setCgRam(byte value);
-	void setDdRam(byte address); // Set address in Text Mode
+
 	void writeCmd(byte c);
 	void writeData(byte c);
 };
