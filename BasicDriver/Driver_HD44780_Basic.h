@@ -47,10 +47,9 @@ protected:
 	byte _row_count;
 	byte _col_count;
 	byte _cache_length;
+	char * _cache;
 
 private:
-
-	char * _cache;
 
 	const uint8_t _pin_rs;
 	const uint8_t _pin_en;
