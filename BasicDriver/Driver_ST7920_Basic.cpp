@@ -1,8 +1,8 @@
 /*
 	Driver_ST7920.cpp
-	Driver_ST7920 Class for dot-matrix printing on liquid crystal display driven by ST7920, namely 12864
+	Driver_ST7920 Class, Arduino Driver for liquid crystal display driven by ST7920, namely 12864
 	Created on: 2012-03-04
-	Updated on: 2012-05-14
+	Updated on: 2012-06-01
 
 	library for Arduino for Dot Matrix Display, support driver by 74HC595 and 74HC138, ST7920, HD47780
 	Author: Weihong Guan

@@ -1,6 +1,6 @@
 /*
  *	Driver_HD44780_Basic.cpp
- *	Driver_HD44780_Basic Class for dot-matrix printing on liquid crystal display driven by HD47780, namely 1602/1604
+ *	Driver_HD44780_Basic Class, arduino driver for liquid crystal display driven by HD47780, namely 1602/1604
  *	Created on: 2012-06-01
  *
  *	library for Arduino for Dot Matrix Display, support driver by 74HC595 and 74HC138, ST7920, HD47780
