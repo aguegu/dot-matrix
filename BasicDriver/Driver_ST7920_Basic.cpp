@@ -44,12 +44,12 @@ void ST7920_Basic::init()
 	delayMicroseconds(50000);
 
 	this->setDB2(0x20, true);
-	this->setFunctionMode(false, false);
-	this->setDisplayMode(true, false, false);
+	this->configureFunction(false, false);
+	this->configureDisplay(true, false, false);
 	this->clear();
-	this->setEntryMode(true);
+	this->configureEntry(true);
 
-	this->setFunctionMode(false, true, true);
+	this->configureFunction(false, true, true);
 }
 
 void ST7920_Basic::clear()
@@ -63,7 +63,7 @@ void ST7920_Basic::home()
 	this->writeCmd(0x02);
 }
 
-void ST7920_Basic::setEntryMode(bool right)
+void ST7920_Basic::configureEntry(bool right)
 {
 	byte cmd = 0x04;
 	if (right)
@@ -71,7 +71,7 @@ void ST7920_Basic::setEntryMode(bool right)
 	this->writeCmd(cmd);
 }
 
-void ST7920_Basic::setDisplayMode(bool display, bool cursor, bool blink)
+void ST7920_Basic::configureDisplay(bool display, bool cursor, bool blink)
 {
 	byte cmd = 0x08;
 	if (display)
@@ -99,7 +99,7 @@ void ST7920_Basic::moveDisplay(bool right)
 	this->writeCmd(cmd);
 }
 
-void ST7920_Basic::setFunctionMode(bool interface8, bool re, bool graphic)
+void ST7920_Basic::configureFunction(bool interface8, bool re, bool graphic)
 {
 	byte cmd = 0x20;
 	if (interface8)

@@ -31,13 +31,11 @@ public:
 	void printWord(char *);
 	void clear();
 	void home();
-	void setEntryMode(bool right = true);
-	void setDisplayMode(bool display = true, bool cursor = false, bool blink =
-			false);
+	void configureEntry(bool right = true);
+	void configureDisplay(bool display = true, bool cursor = false, bool blink = false);
 	void moveCursor(bool right = true);
 	void moveDisplay(bool right = true);
-	void setFunctionMode(bool interface8 = false, bool re = false,
-			bool graphic = false);
+	void configureFunction(bool interface8 = false, bool re = false, bool graphic = false);
 
 protected:
 
