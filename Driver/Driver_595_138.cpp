@@ -76,7 +76,7 @@ void Driver_595_138::shiftSend(byte c)
 {
 	for (byte i=0; i<8; i++)
 	{
-		digitalWrite(_pin_595_DS, bitRead(c, i));
+		digitalWrite(_pin_595_DS, bitRead(c, 7-i));
 
 		digitalWrite(_pin_595_SH, LOW);
 		digitalWrite(_pin_595_SH, HIGH);
