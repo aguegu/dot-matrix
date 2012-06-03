@@ -1,6 +1,6 @@
 /*
-	Created on: 2012-1-25
-	Updated on: 2012-2-26
+	Created on: 2012-01-25
+	Updated on: 2012-06-03
 	Author: Weihong Guan
 	Blog: http://aguegu.net
 	E-mail: weihong.guan@gmail.com
@@ -11,25 +11,30 @@
 #include "DotMatrixTest.h"
 #include "Driver_595_138.h"
 #include "DotMatrix.h"
+#include "DotFont.h"
 #include "DotString.h"
+#include "Font0703.h"
 
 DotMatrix dm(24*1, 7);
 Driver_595_138 dmd(dm, 11, 10, 9, 8, 7, 6, 5, 4);
-DotString ds(dm);
+DotFont df(dm);
+DotString ds(df, dm.countCol(), true);
 
 extern HardwareSerial Serial;
 byte index = 0;
-char * s;
+
+char *s;
 
 void setup()
 {
-	s = (char *) malloc(sizeof(char) * dm.countCol());
-	dmd.setSpeed(0x200);
+	dm.clear(0x00);
 
+	s = (char *)malloc(sizeof(char)*dm.countCol());
+	df.setPattern(FONT_0703, FONT_0703_STATE);
+	ds.printf("Hello.");
+	ds.postAt(0,0);
+	dmd.setSpeed(0x200);
 	Serial.begin(9600);
-	dm.clear(false);
-	dm.setDot(0,0,true);
-	dm.setByte(0, 0xf0);
 }
 
 void loop()
@@ -37,8 +42,10 @@ void loop()
 	dmd.display(0x08);
 }
 
+
 void serialEvent()
 {
+
 	while (Serial.available())
 	{
 		if (index < dm.countCol())
@@ -50,11 +57,15 @@ void serialEvent()
 
 			if (cData == 0x0A)
 			{
+				dm.clear();
 				s[index-1] = 0;
-				ds.printString(s);
+				ds.printf("%s", s);
+				ds.postAt(0,0);
 				Serial.println(s);
 				index = 0;
 			}
 		}
 	}
+
 }
+

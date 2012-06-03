@@ -28,6 +28,8 @@ public:
 
 	void postAt(byte col, byte row);
 	void printf(const char *__fmt, ...);
+	void setChar(byte index, char chr);
+	char * getString();
 private:
 	DotFont & _df;
 	char *_p;

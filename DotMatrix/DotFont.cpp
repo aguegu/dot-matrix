@@ -107,12 +107,11 @@ void DotFont::showH() const
 				_dm.setDot(_row + r, _dm.countRow() - _col - 1 - c, b);
 		}
 	}
-
 }
 
 void DotFont::showV() const
 {
-	for (byte c = 0; c < _unit_width; c++)
+	for (byte c = 0; c < _unit_width && c+_col < _dm.countCol(); c++)
 	{
 		for (byte r = 0; r < _unit_height; r++)
 		{

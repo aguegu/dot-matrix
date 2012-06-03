@@ -57,3 +57,15 @@ void DotString::postAt(byte col, byte row)
 			break;
 	}
 }
+
+void DotString::setChar(byte index, char chr)
+{
+	if (index >= _length) return;
+
+	*(_p + index) = chr;
+}
+
+char * DotString::getString()
+{
+	return _p;
+}
