@@ -15,26 +15,33 @@
 #include "DotString.h"
 #include "Font0703.h"
 
-DotMatrix dm(24*1, 7);
-Driver_595_138 dmd(dm, 11, 10, 9, 8, 7, 6, 5, 4);
+DotMatrix dm(24, 7);
+Driver_595_138 dmd(dm, 10, 11, 13, 12, 7, 6, 5, 4);
 DotFont df(dm);
 DotString ds(df, dm.countCol(), true);
 
 extern HardwareSerial Serial;
 byte index = 0;
 
-char *s;
-
 void setup()
 {
-	dm.clear(0x00);
+	pinMode(8, OUTPUT);
+	digitalWrite(8, LOW);
 
-	s = (char *)malloc(sizeof(char)*dm.countCol());
+	pinMode(9, OUTPUT);
+	digitalWrite(9, HIGH);
+
+	dm.clear(0x00);
+	dm.setDot(0,0);
+
 	df.setPattern(FONT_0703, FONT_0703_STATE);
-	ds.printf("Hello.");
+	ds.printf("Hi, world.");
 	ds.postAt(0,0);
+
 	dmd.setSpeed(0x200);
+
 	Serial.begin(9600);
+
 }
 
 void loop()
@@ -42,7 +49,7 @@ void loop()
 	dmd.display(0x08);
 }
 
-
+/*
 void serialEvent()
 {
 
@@ -52,20 +59,19 @@ void serialEvent()
 		{
 			byte cData = Serial.read();
 
-			s[index] = cData;
+			ds.setChar(index, cData);
 			index++;
 
 			if (cData == 0x0A)
 			{
 				dm.clear();
-				s[index-1] = 0;
-				ds.printf("%s", s);
+				ds.setChar(index-1, 0);
 				ds.postAt(0,0);
-				Serial.println(s);
+				Serial.println(ds.getString());
 				index = 0;
 			}
 		}
 	}
-
 }
 
+*/

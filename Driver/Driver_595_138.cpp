@@ -66,7 +66,7 @@ void Driver_595_138::setRow(byte r)
 
 void Driver_595_138::setCol(byte * p)
 {
-	for (byte i = 0; i < _bytesPerRow; i++)
+	for (byte i = _bytesPerRow; i ; i--)
 		this->shiftSend(~*(p++));
 
 		//shiftOut(_pin_595_DS, _pin_595_SH, LSBFIRST, ~*(p++));
@@ -76,7 +76,7 @@ void Driver_595_138::shiftSend(byte c)
 {
 	for (byte i=0; i<8; i++)
 	{
-		digitalWrite(_pin_595_DS, bitRead(c, 7-i));
+		digitalWrite(_pin_595_DS, bitRead(c, i));
 
 		digitalWrite(_pin_595_SH, LOW);
 		digitalWrite(_pin_595_SH, HIGH);
