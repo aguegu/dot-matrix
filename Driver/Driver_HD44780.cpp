@@ -18,7 +18,7 @@
 
 HD44780::HD44780(DotMatrix & dm, uint8_t pin_rs, uint8_t pin_en,
 		uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7)
-		: HD44780_Basic(pin_rs, pin_en, pin_d4, pin_d4, pin_d4, pin_d4, _dm.countCol(), _dm.countRow() / 3), _dm(dm)
+		: HD44780_Basic(pin_rs, pin_en, pin_d4, pin_d5, pin_d6, pin_d7, dm.countCol(), dm.countRow() / 3), _dm(dm)
 {
 	this->init();
 }

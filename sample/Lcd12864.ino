@@ -26,7 +26,7 @@ void setup()
 	{
 		DotString ds(df, 32, true);
 		ds.printf("%d", i);
-		ds.print(i * 6, 0);
+		ds.postAt(i * 6, 0);
 	}
 
 	df.setPattern(FONT_0503, FONT_0503_STATE);
@@ -34,26 +34,26 @@ void setup()
 	{
 		DotString ds(df, 32, true);
 		ds.printf("%d", i);
-		ds.print(i * 6, 8);
+		ds.postAt(i * 6, 8);
 	}
 
 	df.setPattern(FONT_0704, FONT_0704_STATE);
 	df.setVertical();
 	DotString hds(df, 32, true);
 	hds.printf("%s", "Lcd12864 driven by dot-matrix");
-	hds.print(18, 2);
+	hds.postAt(18, 2);
 
 	hds.printf("%s", "library for Arduino.");
-	hds.print(18, 12);
+	hds.postAt(18, 12);
 
 	hds.printf("%s", "Developed by W.H. Guan");
-	hds.print(40, 24);
+	hds.postAt(40, 24);
 
 	dm.setRect(32, 40, 108, 56);
 	dm.setRect(34, 42, 106, 54, false);
 
-	hds.printf("%s", "http://aGuegu.net");
-	hds.print(40, 45);
+	hds.printf("%s", "aGuegu.net");
+	hds.postAt(40, 45);
 
 	dm.setLine(20, 48, 30, 54);
 	dm.setLine(16, 54, 30, 54);
@@ -63,9 +63,8 @@ void setup()
 	dm.setLine(126, 40, 110, 40);
 	dm.setLine(120, 48, 110, 40);
 
-	dmd.init();
-	dmd.clear();
-	dmd.putImage();
+
+	dmd.putDM();
 }
 
 void loop()

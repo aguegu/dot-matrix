@@ -21,7 +21,7 @@
 #include "DotMatrix.h"
 #include "Driver_HD44780_Basic.h"
 
-class HD44780:HD44780_Basic
+class HD44780: public HD44780_Basic
 {
 public:
 

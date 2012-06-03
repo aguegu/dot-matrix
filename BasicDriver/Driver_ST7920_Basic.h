@@ -18,7 +18,6 @@
 #define DRIVER_ST7920_BASIC_H_
 
 #include "Arduino.h"
-#include "DotMatrix.h"
 
 class ST7920_Basic
 {
