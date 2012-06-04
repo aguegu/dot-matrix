@@ -24,6 +24,8 @@ Driver_595_138_Basic::Driver_595_138_Basic(uint8_t pin_C_IN, uint8_t pin_C_OE,
 	pinMode(_pin_138_A2, OUTPUT);
 	pinMode(_pin_138_A1, OUTPUT);
 	pinMode(_pin_138_A0, OUTPUT);
+
+	digitalWrite(_pin_138_OE, HIGH);
 }
 
 Driver_595_138_Basic::~Driver_595_138_Basic()
@@ -42,8 +44,6 @@ void Driver_595_138_Basic::setCol(byte * p, byte length)
 {
 	for (byte i = length; i ; i--)
 		this->shiftSend(~*(p++));
-
-		//shiftOut(_pin_595_DS, _pin_595_SH, LSBFIRST, ~*(p++));
 }
 
 void Driver_595_138_Basic::shiftSend(byte c)

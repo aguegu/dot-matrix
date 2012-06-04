@@ -39,13 +39,13 @@ void Driver_595_138::display(byte times)
 		for (byte r = 0; r < _rowCount; r++)
 		{
 			setCol(p + _bytesPerRow * r, _bytesPerRow);
-			digitalWrite(_pin_138_OE, LOW);
+			//digitalWrite(_pin_138_OE, LOW);
 
 			digitalWrite(_pin_595_ST, LOW);
 			digitalWrite(_pin_595_ST, HIGH);
 
 			setRow(r);
-			digitalWrite(_pin_138_OE, HIGH);
+			//digitalWrite(_pin_138_OE, HIGH);
 			delayMicroseconds(_speed);
 		}
 	}

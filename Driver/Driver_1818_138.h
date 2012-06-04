@@ -43,6 +43,7 @@ private:
 	byte _length;
 	byte _row_count;
 	byte _word_per_row;
+	byte _byte_per_row;
 
 	void setRow(byte r);
 	void setCol(byte *p);

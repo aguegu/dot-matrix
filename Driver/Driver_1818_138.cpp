@@ -41,7 +41,10 @@ void Driver_1818_138::setSize(byte length, byte row_count)
 {
 	_length = length;
 	_row_count = row_count;
-	_word_per_row = _length / _row_count / 2;
+	_byte_per_row = _length / _row_count;
+	_word_per_row = _byte_per_row / 2;
+
+
 }
 
 void Driver_1818_138::setRow(byte r)
@@ -55,7 +58,7 @@ void Driver_1818_138::setCol(byte *p)
 {
 	for (byte i = 0; i < _word_per_row; i++)
 	{
-		for (char j = 0; j < 8; j++)
+		for (byte j = 0; j < 8; j++)
 		{
 			digitalWrite(_pin_62726_DS, bitRead(*p,j));
 			digitalWrite(_pin_62726_SH, LOW);
@@ -63,9 +66,9 @@ void Driver_1818_138::setCol(byte *p)
 		}
 		p++;
 
-		for (char j = 7; j >= 0; j--)
+		for (byte j = 8; j;)
 		{
-			digitalWrite(_pin_62726_DS, bitRead(*p,j));
+			digitalWrite(_pin_62726_DS, bitRead(*p,--j));
 			digitalWrite(_pin_62726_SH, LOW);
 			digitalWrite(_pin_62726_SH, HIGH);
 		}
@@ -80,7 +83,7 @@ void Driver_1818_138::display(byte times)
 	while(times--)
 	for (byte r = 0; r < _row_count; r++)
 	{
-		this->setCol(p + _word_per_row * r * 2);
+		this->setCol(p + _byte_per_row * r );
 		digitalWrite(_pin_62726_OE, HIGH);
 
 		digitalWrite(_pin_62726_ST, HIGH);
