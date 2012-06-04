@@ -30,6 +30,12 @@ public:
 
 private:
 	const DotMatrix & _dm;
+	byte _length;
+	byte _rowCount;
+	byte _bytesPerRow;
+
+	void setSize();
+
 };
 
 #endif /* DRIVER_595_138_H_ */

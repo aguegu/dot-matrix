@@ -38,12 +38,7 @@ void Driver_595_138_Basic::setSpeed(uint16_t speed)
 	_speed = speed;
 }
 
-void Driver_595_138_Basic::setSize(byte length, byte rowCount)
-{
-	_length = length;
-	_rowCount = rowCount;
-	_bytesPerRow = _length / _rowCount;
-}
+
 
 void Driver_595_138_Basic::setRow(byte r)
 {
@@ -52,9 +47,9 @@ void Driver_595_138_Basic::setRow(byte r)
 	digitalWrite(_pin_138_A2, r & 0x04);
 }
 
-void Driver_595_138_Basic::setCol(byte * p)
+void Driver_595_138_Basic::setCol(byte * p, byte length)
 {
-	for (byte i = _bytesPerRow; i ; i--)
+	for (byte i = length; i ; i--)
 		this->shiftSend(~*(p++));
 
 		//shiftOut(_pin_595_DS, _pin_595_SH, LSBFIRST, ~*(p++));
@@ -71,21 +66,4 @@ void Driver_595_138_Basic::shiftSend(byte c)
 	}
 }
 
-void Driver_595_138_Basic::display(byte *p, byte times)
-{
-	while (times--)
-	{
-		for (byte r = 0; r < _rowCount; r++)
-		{
-			setCol(p + _bytesPerRow * r);
-			digitalWrite(_pin_138_OE, LOW);
 
-			digitalWrite(_pin_595_ST, LOW);
-			digitalWrite(_pin_595_ST, HIGH);
-
-			setRow(r);
-			digitalWrite(_pin_138_OE, HIGH);
-			delayMicroseconds(_speed);
-		}
-	}
-}

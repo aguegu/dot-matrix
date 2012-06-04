@@ -22,13 +22,7 @@ Driver_595_138::Driver_595_138(DotMatrix & dm, uint8_t pin_C_IN,
 	:Driver_595_138_Basic(pin_C_IN, pin_C_OE, pin_C_ST, pin_C_SH,
 			pin_R_OE, pin_R_A2, pin_R_A1, pin_R_A0, speed), _dm(dm)
 {
-	this->setSize(_dm.countBytes(), _dm.countRow());
-}
-
-
-void Driver_595_138::display(byte times)
-{
-	Driver_595_138_Basic::display(_dm.output(), times);
+	this->setSize();
 }
 
 Driver_595_138::~Driver_595_138()
@@ -36,3 +30,29 @@ Driver_595_138::~Driver_595_138()
 
 }
 
+void Driver_595_138::display(byte times)
+{
+	byte *p = _dm.output();
+	while (times--)
+	{
+		for (byte r = 0; r < _rowCount; r++)
+		{
+			setCol(p + _bytesPerRow * r, _bytesPerRow);
+			digitalWrite(_pin_138_OE, LOW);
+
+			digitalWrite(_pin_595_ST, LOW);
+			digitalWrite(_pin_595_ST, HIGH);
+
+			setRow(r);
+			digitalWrite(_pin_138_OE, HIGH);
+			delayMicroseconds(_speed);
+		}
+	}
+}
+
+void Driver_595_138::setSize()
+{
+	_length = _dm.countBytes();
+	_rowCount = _dm.countRow();
+	_bytesPerRow = _length / _rowCount;
+}
