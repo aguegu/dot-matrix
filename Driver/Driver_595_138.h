@@ -17,10 +17,10 @@
 #ifndef DRIVER_595_138_H_
 #define DRIVER_595_138_H_
 
-#include "Arduino.h"
+#include "Driver_595_138_Basic.h"
 #include "DotMatrix.h"
 
-class Driver_595_138
+class Driver_595_138:public Driver_595_138_Basic
 {
 public:
 
