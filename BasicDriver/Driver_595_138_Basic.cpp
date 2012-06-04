@@ -9,10 +9,10 @@
 
 Driver_595_138_Basic::Driver_595_138_Basic(uint8_t pin_C_IN, uint8_t pin_C_OE,
 		uint8_t pin_C_ST, uint8_t pin_C_SH, uint8_t pin_R_OE, uint8_t pin_R_A2,
-		uint8_t pin_R_A1, uint8_t pin_R_A0, uint16_t speed) :
+		uint8_t pin_R_A1, uint8_t pin_R_A0) :
 		_pin_595_DS(pin_C_IN), _pin_595_OE(pin_C_OE), _pin_595_ST(pin_C_ST), _pin_595_SH(
 				pin_C_SH), _pin_138_OE(pin_R_OE), _pin_138_A2(pin_R_A2), _pin_138_A1(
-				pin_R_A1), _pin_138_A0(pin_R_A1)
+				pin_R_A1), _pin_138_A0(pin_R_A0)
 
 {
 	pinMode(_pin_595_DS, OUTPUT);
@@ -24,21 +24,12 @@ Driver_595_138_Basic::Driver_595_138_Basic(uint8_t pin_C_IN, uint8_t pin_C_OE,
 	pinMode(_pin_138_A2, OUTPUT);
 	pinMode(_pin_138_A1, OUTPUT);
 	pinMode(_pin_138_A0, OUTPUT);
-
-	this->setSpeed(speed);
 }
 
 Driver_595_138_Basic::~Driver_595_138_Basic()
 {
 
 }
-
-void Driver_595_138_Basic::setSpeed(uint16_t speed)
-{
-	_speed = speed;
-}
-
-
 
 void Driver_595_138_Basic::setRow(byte r)
 {

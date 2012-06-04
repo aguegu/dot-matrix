@@ -15,9 +15,9 @@ class Driver_595_138_Basic
 public:
 	Driver_595_138_Basic(uint8_t pin_C_IN, uint8_t pin_C_OE, uint8_t pin_C_ST,
 			uint8_t pin_C_SH, uint8_t pin_R_OE, uint8_t pin_R_A2,
-			uint8_t pin_R_A1, uint8_t pin_R_A0, uint16_t speed = 0x400);
+			uint8_t pin_R_A1, uint8_t pin_R_A0);
 	virtual ~Driver_595_138_Basic();
-	void setSpeed(uint16_t speed = 0x400);
+
 
 protected:
 
@@ -30,7 +30,6 @@ protected:
 	uint8_t _pin_138_A2;
 	uint8_t _pin_138_A1;
 	uint8_t _pin_138_A0;
-	uint16_t _speed;
 
 	void setRow(byte r);
 	void setCol(byte *p, byte length);
