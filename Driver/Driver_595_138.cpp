@@ -33,12 +33,13 @@ Driver_595_138::~Driver_595_138()
 
 void Driver_595_138::display(byte times)
 {
-	byte *p = _dm.output();
 	while (times--)
 	{
+		byte *p = _dm.output();
 		for (byte r = 0; r < _rowCount; r++)
 		{
-			setCol(p + _bytesPerRow * r, _bytesPerRow);
+			setCol(p, _bytesPerRow);
+			p += _bytesPerRow;
 			//digitalWrite(_pin_138_OE, LOW);
 
 			digitalWrite(_pin_595_ST, LOW);
