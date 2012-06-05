@@ -19,7 +19,8 @@ public:
 			uint8_t pin_138_A0, uint8_t pin_138_A1, uint8_t pin_138_A2, uint8_t pin_brightness, uint16_t scan_speed = 0x400);
 
 	void setSpeed(uint16_t scan_span);
-	void setSize(byte length, byte rowCount);
+	void setSize();
+	void setBrightness(byte brg = 0xff);
 
 	void display(byte times = 0x01) const;
 
@@ -34,7 +35,6 @@ private:
 
 	word _scan_span;
 
-	byte _length;
 	byte _row_count;
 	byte _word_per_row;
 	byte _byte_per_row;

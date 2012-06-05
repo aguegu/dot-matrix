@@ -28,8 +28,6 @@ Driver_595_138::Driver_595_138(DotMatrix & dm, uint8_t pin_C_IN,
 	pinMode(_pin_595_OE, OUTPUT);
 	pinMode(_pin_595_ST, OUTPUT);
 	pinMode(_pin_138_OE, OUTPUT);
-
-	digitalWrite(_pin_595_OE, LOW);
 }
 
 Driver_595_138::~Driver_595_138()
@@ -42,11 +40,11 @@ void Driver_595_138::display(byte times) const
 	while (times--)
 	{
 		byte *p = _dm.output();
-		for (byte r = 0; r < _rowCount; r++)
+		for (byte r = 0; r < _row_count; r++)
 		{
-			setColFromLSB(p, _bytesPerRow);
+			setColFromLSB(p, _bytes_per_row);
 
-			p += _bytesPerRow;
+			p += _bytes_per_row;
 
 			digitalWrite(_pin_138_OE, LOW);
 
@@ -69,7 +67,6 @@ void Driver_595_138::setSpeed(uint16_t scan_span)
 
 void Driver_595_138::setSize()
 {
-	_length = _dm.countBytes();
-	_rowCount = _dm.countRow();
-	_bytesPerRow = _length / _rowCount;
+	_row_count = _dm.countRow();
+	_bytes_per_row = _dm.countBytePerRow();
 }

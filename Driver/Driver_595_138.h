@@ -37,13 +37,11 @@ private:
 
 	const DotMatrix & _dm;
 
-	byte _length;
-	byte _rowCount;
-	byte _bytesPerRow;
+	byte _row_count;
+	byte _bytes_per_row;
 	uint16_t _scan_span;
 
 	void setSize();
-
 };
 
 #endif /* DRIVER_595_138_H_ */

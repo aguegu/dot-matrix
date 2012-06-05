@@ -19,10 +19,10 @@ Driver_1818_138::Driver_1818_138(DotMatrix & dm, uint8_t pin_62726_DS,
 	pinMode(_pin_62726_ST, OUTPUT);
 
 	pinMode(_pin_brightness, OUTPUT);
-	analogWrite(_pin_brightness, 0xff);
 
+	this->setBrightness();
 	this->setSpeed(scan_speed);
-	this->setSize(dm.countBytes(), dm.countRow());
+	this->setSize();
 }
 
 void Driver_1818_138::setSpeed(uint16_t scan_span)
@@ -30,12 +30,16 @@ void Driver_1818_138::setSpeed(uint16_t scan_span)
 	_scan_span = scan_span;
 }
 
-void Driver_1818_138::setSize(byte length, byte row_count)
+void Driver_1818_138::setSize()
 {
-	_length = length;
-	_row_count = row_count;
-	_byte_per_row = _length / _row_count;
+	_row_count = _dm.countRow();
+	_byte_per_row = _dm.countBytePerRow();
 	_word_per_row = _byte_per_row / 2;
+}
+
+void Driver_1818_138::setBrightness(byte brg)
+{
+	analogWrite(_pin_brightness, brg);
 }
 
 void Driver_1818_138::setCol(byte *p) const
