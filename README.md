@@ -3,7 +3,7 @@ dot-matrix
 
 source host: https://github.com/aguegu/dot-matrix
 <br />
-library for Arduino for Dot Matrix Display, support driver by 74HC595 and 74HC138, ST7920, HD47780, PCD8544
+library for Arduino for Dot Matrix Display, support driver by 74HC595 and 74HC138, ST7920, HD47780, PCD8544, TB62726(TA1818)
 <br />
 Author: Weihong Guan
 <br />
