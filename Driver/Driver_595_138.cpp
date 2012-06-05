@@ -45,6 +45,7 @@ void Driver_595_138::display(byte times) const
 		for (byte r = 0; r < _rowCount; r++)
 		{
 			setColFromLSB(p, _bytesPerRow);
+
 			p += _bytesPerRow;
 
 			digitalWrite(_pin_138_OE, LOW);

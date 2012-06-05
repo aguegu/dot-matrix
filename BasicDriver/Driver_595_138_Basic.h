@@ -31,8 +31,8 @@ protected:
 	void setColFromLSB(byte *p, byte length) const;
 	void setColFromMSB(byte *p, byte length) const;
 
-	inline void shiftSendFromLSB(byte c) const;
-	inline void shiftSendFromMSB(byte c) const;
+	void shiftSendFromLSB(byte c) const;
+	void shiftSendFromMSB(byte c) const;
 };
 
 #endif /* DRIVER_595_138_BASIC_H_ */

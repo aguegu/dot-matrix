@@ -44,7 +44,7 @@ void Driver_595_138_Basic::setColFromMSB(byte * p, byte length) const
 		this->shiftSendFromMSB(~*(p++));
 }
 
-inline void Driver_595_138_Basic::shiftSendFromLSB(byte c) const
+void Driver_595_138_Basic::shiftSendFromLSB(byte c) const
 {
 	for (byte i=0; i<8; i++)
 	{
@@ -55,7 +55,7 @@ inline void Driver_595_138_Basic::shiftSendFromLSB(byte c) const
 	}
 }
 
-inline void Driver_595_138_Basic::shiftSendFromMSB(byte c) const
+void Driver_595_138_Basic::shiftSendFromMSB(byte c) const
 {
 	for (byte i=0; i<8; i++)
 	{
