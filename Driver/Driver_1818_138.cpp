@@ -19,8 +19,8 @@ Driver_1818_138::Driver_1818_138(DotMatrix & dm, uint8_t pin_62726_DS,
 	// TODO Auto-generated constructor stub
 	pinMode(_pin_62726_DS, OUTPUT);
 	pinMode(_pin_62726_OE, OUTPUT);
-	pinMode(_pin_62726_SH, OUTPUT);
 	pinMode(_pin_62726_ST, OUTPUT);
+	pinMode(_pin_62726_SH, OUTPUT);
 
 	pinMode(_pin_138_A0, OUTPUT);
 	pinMode(_pin_138_A1, OUTPUT);
@@ -44,7 +44,6 @@ void Driver_1818_138::setSize(byte length, byte row_count)
 	_row_count = row_count;
 	_byte_per_row = _length / _row_count;
 	_word_per_row = _byte_per_row / 2;
-
 }
 
 void Driver_1818_138::setRow(byte r)

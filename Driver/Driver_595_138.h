@@ -27,15 +27,20 @@ public:
 	Driver_595_138(DotMatrix & dm, uint8_t pin_C_IN, uint8_t pin_C_OE, uint8_t pin_C_ST, uint8_t pin_C_SH, uint8_t pin_R_OE, uint8_t pin_R_A2, uint8_t pin_R_A1, uint8_t pin_R_A0, uint16_t speed = 0x400);
 	virtual ~Driver_595_138();
 	void display(byte times = 1);
-	void setSpeed(uint16_t speed = 0x400);
+	void setSpeed(uint16_t scan_span = 0x400);
 
 private:
 
+	const uint8_t _pin_595_OE;
+	const uint8_t _pin_595_ST;
+	const uint8_t _pin_138_OE;
+
 	const DotMatrix & _dm;
+
 	byte _length;
 	byte _rowCount;
 	byte _bytesPerRow;
-	uint16_t _speed;
+	uint16_t _scan_span;
 
 	void setSize();
 
