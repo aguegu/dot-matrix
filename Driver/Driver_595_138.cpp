@@ -2,7 +2,7 @@
 	Driver_595_138.cpp
 	Driver_595_138 Class for dot-matrix printing on matrix driven by 74HC595 and 74HC138
 	Created on: 2012-01-15
-	Updated on: 2012-06-04
+	Updated on: 2012-06-05
 
 	library for Arduino for Dot Matrix Display, support driver by 74HC595 and 74HC138, ST7920, HD47780
 	Author: Weihong Guan
@@ -37,22 +37,25 @@ Driver_595_138::~Driver_595_138()
 
 }
 
-void Driver_595_138::display(byte times)
+void Driver_595_138::display(byte times) const
 {
 	while (times--)
 	{
 		byte *p = _dm.output();
 		for (byte r = 0; r < _rowCount; r++)
 		{
-			setCol(p, _bytesPerRow);
+			setColFromLSB(p, _bytesPerRow);
 			p += _bytesPerRow;
+
 			digitalWrite(_pin_138_OE, LOW);
 
 			digitalWrite(_pin_595_ST, LOW);
 			digitalWrite(_pin_595_ST, HIGH);
 
 			setRow(r);
+
 			digitalWrite(_pin_138_OE, HIGH);
+
 			delayMicroseconds(_scan_span);
 		}
 	}

@@ -26,9 +26,13 @@ protected:
 	const uint8_t _pin_138_A1;
 	const uint8_t _pin_138_A0;
 
-	void setRow(byte r);
-	void setCol(byte *p, byte length);
-	void shiftSend(byte c);
+	void setRow(byte r) const;
+
+	void setColFromLSB(byte *p, byte length) const;
+	void setColFromMSB(byte *p, byte length) const;
+
+	inline void shiftSendFromLSB(byte c) const;
+	inline void shiftSendFromMSB(byte c) const;
 };
 
 #endif /* DRIVER_595_138_BASIC_H_ */

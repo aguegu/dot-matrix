@@ -25,25 +25,42 @@ Driver_595_138_Basic::~Driver_595_138_Basic()
 
 }
 
-void Driver_595_138_Basic::setRow(byte r)
+void Driver_595_138_Basic::setRow(byte r) const
 {
 	digitalWrite(_pin_138_A0, r & 0x01);
 	digitalWrite(_pin_138_A1, r & 0x02);
 	digitalWrite(_pin_138_A2, r & 0x04);
 }
 
-void Driver_595_138_Basic::setCol(byte * p, byte length)
+void Driver_595_138_Basic::setColFromLSB(byte * p, byte length) const
 {
 	for (byte i = length; i ; i--)
-		this->shiftSend(~*(p++));
+		this->shiftSendFromLSB(~*(p++));
 }
 
-void Driver_595_138_Basic::shiftSend(byte c)
+void Driver_595_138_Basic::setColFromMSB(byte * p, byte length) const
+{
+	for (byte i = length; i ; i--)
+		this->shiftSendFromMSB(~*(p++));
+}
+
+inline void Driver_595_138_Basic::shiftSendFromLSB(byte c) const
 {
 	for (byte i=0; i<8; i++)
 	{
 		digitalWrite(_pin_595_DS, c & 0x01);
 		c >>= 1;
+		digitalWrite(_pin_595_SH, LOW);
+		digitalWrite(_pin_595_SH, HIGH);
+	}
+}
+
+inline void Driver_595_138_Basic::shiftSendFromMSB(byte c) const
+{
+	for (byte i=0; i<8; i++)
+	{
+		digitalWrite(_pin_595_DS, c & 0x80);
+		c <<= 1;
 		digitalWrite(_pin_595_SH, LOW);
 		digitalWrite(_pin_595_SH, HIGH);
 	}
