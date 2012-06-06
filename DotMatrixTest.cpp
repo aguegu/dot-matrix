@@ -9,7 +9,7 @@ void setup()
 {
 	dm.clear(0x00);
 	//dm.DotMatrix::setDot(0, 0, true);
-	cube.setBrightness(0xff);
+	cube.setBrightness(0x20);
 
 	for(byte i=0; i<8; i++)
 		dm.setDot(i, i, i, true);

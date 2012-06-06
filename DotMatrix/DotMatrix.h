@@ -57,6 +57,10 @@ private:
 	byte * _pScreen;
 
 	word getIndex(byte col, byte row) const;
+	void moveLeft(bool recycle);
+	void moveRight(bool recycle);
+	void moveUp(bool recycle);
+	void moveDown(bool recycle);
 };
 
 #endif /* DOTMATRIX_H_ */

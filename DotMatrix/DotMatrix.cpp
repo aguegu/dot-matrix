@@ -1,17 +1,17 @@
 /*
- 	DotMatrix.cpp
-	DotMatrix Class for modeling on the Dot Matrix, providing methods like dot control, draw rectangle, line
-	Created on: 2012-01-16
-	Updated on: 2012-05-14
+ DotMatrix.cpp
+ DotMatrix Class for modeling on the Dot Matrix, providing methods like dot control, draw rectangle, line
+ Created on: 2012-01-16
+ Updated on: 2012-05-14
 
-	library for Arduino for Dot Matrix Display, support driver by 74HC595 and 74HC138, ST7920, HD47780
-	Author: Weihong Guan
-	Blog: http://aguegu.net
-	E-mail: weihong.guan@gmail.com
-	Code license: Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)
-	http://creativecommons.org/licenses/by-nc-sa/3.0/
+ library for Arduino for Dot Matrix Display, support driver by 74HC595 and 74HC138, ST7920, HD47780
+ Author: Weihong Guan
+ Blog: http://aguegu.net
+ E-mail: weihong.guan@gmail.com
+ Code license: Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)
+ http://creativecommons.org/licenses/by-nc-sa/3.0/
 
-	source host: https://github.com/aguegu/dot-matrix
+ source host: https://github.com/aguegu/dot-matrix
  */
 
 #include "DotMatrix.h"
@@ -182,86 +182,106 @@ void DotMatrix::setByte(word index, byte value)
 	_pScreen[index] = value;
 }
 
-void DotMatrix::move(Direction d, boolean recycle)
+void DotMatrix::moveLeft(bool recycle)
+{
+	for (byte r = 0; r < _row_count; r++)
+	{
+		word index = r * _bytes_per_row;
+		boolean b0 = bitRead(_pScreen[index], 0);
+		for (byte i = 1; i < _bytes_per_row; i++)
+		{
+			boolean b = bitRead(_pScreen[index + 1], 0);
+			_pScreen[index] >>= 1;
+			bitWrite(_pScreen[index], 7, b);
+			index++;
+		}
+
+		_pScreen[index] >>= 1;
+
+		if (recycle)
+			bitWrite(_pScreen[index], 7, b0);
+	}
+}
+
+void DotMatrix::moveRight(bool recycle)
+{
+	for (byte r = 0; r < _row_count; r++)
+	{
+		word index = r * _bytes_per_row + _bytes_per_row - 1;
+		boolean b0 = bitRead(_pScreen[index], 7);
+		for (byte i = 1; i < _bytes_per_row; i++)
+		{
+			boolean b = bitRead(_pScreen[index - 1], 7);
+			_pScreen[index] <<= 1;
+			bitWrite(_pScreen[index], 0, b);
+			index--;
+		}
+
+		_pScreen[index] <<= 1;
+
+		if (recycle)
+			bitWrite(_pScreen[index], 0, b0);
+	}
+}
+
+void DotMatrix::moveUp(bool recycle)
 {
 	byte pTemp[_bytes_per_row];
+	for (word i = 0; i < _bytes_per_row; i++)
+		pTemp[i] = _pScreen[i];
+
+	for (byte r = 0; r < _row_count - 1; r++)
+	{
+		word index = r * _bytes_per_row;
+		for (byte i = 0; i < _bytes_per_row; i++)
+		{
+			_pScreen[index] = _pScreen[index + _bytes_per_row];
+			index++;
+		}
+	}
+
+	for (word index = _bytes_per_row * (_row_count - 1), i = 0;
+			i < _bytes_per_row; i++)
+		_pScreen[index++] = recycle ? pTemp[i] : 0x00;
+
+}
+
+void DotMatrix::moveDown(bool recycle)
+{
+	byte pTemp[_bytes_per_row];
+	for (word i = 0, index = (_row_count - 1) * _bytes_per_row;
+			i < _bytes_per_row; i++)
+		pTemp[i] = _pScreen[index++];
+
+	for (byte r = _row_count - 1; r > 0; r--)
+	{
+		word index = r * _bytes_per_row;
+		for (byte i = 0; i < _bytes_per_row; i++)
+		{
+			_pScreen[index] = _pScreen[index - _bytes_per_row];
+			index++;
+		}
+	}
+
+	for (word i = 0; i < _bytes_per_row; i++)
+		_pScreen[i] = recycle ? pTemp[i] : 0x00;
+}
+
+void DotMatrix::move(Direction d, boolean recycle)
+{
 	switch (d)
 	{
 	case Left:
-		for (byte r = 0; r < _row_count; r++)
-		{
-			word index = r * _bytes_per_row;
-			boolean b0 = bitRead(_pScreen[index], 0);
-			for (byte i = 1; i < _bytes_per_row; i++)
-			{
-				boolean b = bitRead(_pScreen[index + 1], 0);
-				_pScreen[index] >>= 1;
-				bitWrite(_pScreen[index], 7, b);
-				index++;
-			}
-
-			_pScreen[index] >>= 1;
-
-			if (recycle)
-				bitWrite(_pScreen[index], 7, b0);
-		}
+		this->moveLeft(recycle);
 		break;
 	case Right:
-		for (byte r = 0; r < _row_count; r++)
-		{
-			word index = r * _bytes_per_row + _bytes_per_row - 1;
-			boolean b0 = bitRead(_pScreen[index], 7);
-			for (byte i = 1; i < _bytes_per_row; i++)
-			{
-				boolean b = bitRead(_pScreen[index - 1], 7);
-				_pScreen[index] <<= 1;
-				bitWrite(_pScreen[index], 0, b);
-				index--;
-			}
-
-			_pScreen[index] <<= 1;
-
-			if (recycle)
-				bitWrite(_pScreen[index], 0, b0);
-		}
+		this->moveRight(recycle);
 		break;
 	case Up:
-		for (word i = 0; i < _bytes_per_row; i++)
-			pTemp[i] = _pScreen[i];
-
-		for (byte r = 0; r < _row_count - 1; r++)
-		{
-			word index = r * _bytes_per_row;
-			for (byte i = 0; i < _bytes_per_row; i++)
-			{
-				_pScreen[index] = _pScreen[index + _bytes_per_row];
-				index++;
-			}
-		}
-
-		for (word index = _bytes_per_row * (_row_count - 1), i = 0;
-				i < _bytes_per_row; i++)
-			_pScreen[index++] = recycle ? pTemp[i] : 0x00;
-
+		this->moveUp(recycle);
 		break;
 	case Down:
-		for (word i = 0, index = (_row_count - 1) * _bytes_per_row;
-				i < _bytes_per_row; i++)
-			pTemp[i] = _pScreen[index++];
-
-		for (byte r = _row_count - 1; r > 0; r--)
-		{
-			word index = r * _bytes_per_row;
-			for (byte i = 0; i < _bytes_per_row; i++)
-			{
-				_pScreen[index] = _pScreen[index - _bytes_per_row];
-				index++;
-			}
-		}
-
-		for (word i = 0; i < _bytes_per_row; i++)
-			_pScreen[i] = recycle ? pTemp[i] : 0x00;
-
+		this->moveDown(recycle);
 		break;
 	}
 }
