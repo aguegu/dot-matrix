@@ -29,7 +29,7 @@ public:
 	void display(byte times = 1) const;
 	void setSpeed(uint16_t scan_span = 0x400);
 
-private:
+protected:
 
 	const uint8_t _pin_595_OE;
 	const uint8_t _pin_595_ST;

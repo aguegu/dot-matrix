@@ -10,9 +10,10 @@
 Driver_1818_138::Driver_1818_138(DotMatrix & dm, uint8_t pin_62726_DS,
 		uint8_t pin_62726_OE, uint8_t pin_62726_ST, uint8_t pin_62726_SH,
 		uint8_t pin_138_A0, uint8_t pin_138_A1, uint8_t pin_138_A2,
-		uint8_t pin_brightness, uint16_t scan_speed)
-		:Driver_595_138_Basic(pin_62726_DS, pin_62726_SH, pin_138_A2, pin_138_A1, pin_138_A0),
-		 _dm(dm), _pin_62726_OE(pin_62726_OE), _pin_62726_ST(pin_62726_ST), _pin_brightness(pin_brightness)
+		uint8_t pin_brightness, uint16_t scan_speed) :
+		Driver_595_138_Basic(pin_62726_DS, pin_62726_SH, pin_138_A2, pin_138_A1,
+				pin_138_A0), _dm(dm), _pin_62726_OE(pin_62726_OE), _pin_62726_ST(
+				pin_62726_ST), _pin_brightness(pin_brightness)
 
 {
 	pinMode(_pin_62726_OE, OUTPUT);
@@ -42,8 +43,11 @@ void Driver_1818_138::setBrightness(byte brg)
 	analogWrite(_pin_brightness, brg);
 }
 
-void Driver_1818_138::setCol(byte *p) const
+void Driver_1818_138::setCol(byte row) const
 {
+	byte * p = _dm.output();
+	p += _byte_per_row * row;
+
 	for (byte i = 0; i < _word_per_row; i++)
 	{
 		this->shiftSendFromLSB(*p++);
@@ -55,11 +59,9 @@ void Driver_1818_138::display(byte times) const
 {
 	while (times--)
 	{
-		byte * p = _dm.output();
 		for (byte r = 0; r < _row_count; r++)
 		{
-			this->setCol(p);
-			p += _byte_per_row;
+			this->setCol1(r);
 
 			digitalWrite(_pin_62726_OE, HIGH);
 
@@ -73,3 +75,47 @@ void Driver_1818_138::display(byte times) const
 		}
 	}
 }
+
+void Driver_1818_138::setCol1(byte row) const
+{
+	byte *p = _dm.output() + row;
+	for (byte j = 0; j < 8; j++) // z
+	{
+		for (byte i = 0; i < 8; i++) // y
+		{
+			if (j&0x01)	p-=8;
+			digitalWrite(_pin_595_DS, bitRead(*p, j));
+
+			digitalWrite(_pin_595_SH, LOW);
+			digitalWrite(_pin_595_SH, HIGH);
+			if (!(j&0x01)) p+=8;
+			//byte * p = _dm.output() + 8*((j&0x01)?(7-i):i)+ row;
+		}
+	}
+}
+
+void Driver_1818_138::setCol2(byte row) const
+{
+	//word length = _dm.countBytes();
+	byte * p = _dm.output();
+	for (byte j = 0; j < 4; j++)
+	{
+		for (byte i = 0; i < 8; i++) // x
+		{
+			digitalWrite(_pin_595_DS, bitRead(*(p++), row));
+			digitalWrite(_pin_595_SH, LOW);
+			digitalWrite(_pin_595_SH, HIGH);
+		}
+
+		p += 8;
+
+		for (byte i = 0; i < 8; i++)
+		{
+			digitalWrite(_pin_595_DS, bitRead(*(--p), row));
+			digitalWrite(_pin_595_SH, LOW);
+			digitalWrite(_pin_595_SH, HIGH);
+		}
+		p += 8;
+	}
+}
+
