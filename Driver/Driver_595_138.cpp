@@ -46,14 +46,14 @@ void Driver_595_138::display(byte times) const
 
 			p += _bytes_per_row;
 
-			digitalWrite(_pin_138_OE, LOW);
+			pinClear(_pin_138_OE);
 
-			digitalWrite(_pin_595_ST, LOW);
-			digitalWrite(_pin_595_ST, HIGH);
+			pinClear(_pin_595_ST);
+			pinSet(_pin_595_ST);
 
 			setRow(r);
 
-			digitalWrite(_pin_138_OE, HIGH);
+			pinSet(_pin_138_OE);
 
 			delayMicroseconds(_scan_span);
 		}

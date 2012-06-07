@@ -18,7 +18,6 @@
 DotMatrix dm(24*1, 7);
 Driver_595_138 dmd(dm, 11, 10, 9, 8, 7, 6, 5, 4);
 
-
 DotFont df(dm);
 DotString ds(df, dm.countCol(), true);
 
