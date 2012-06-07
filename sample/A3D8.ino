@@ -8,13 +8,17 @@ Driver_1818_138 cube(dm, A3, 8, 9, 10, 3, 4, 5, 11);
 void setup()
 {
 	dm.clear(0x00);
-	dm.DotMatrix::setDot(0, 0, true);
-	dm.setDot(0, 0, 0, true);
+	//dm.DotMatrix::setDot(0, 0, true);
+	cube.setBrightness(0x20);
+
+	for(byte i=0; i<4; i++)
+		dm.setDot(i, i, 0, true);
 }
 
 void loop()
 {
-	dm.move(DotMatrix::Right, false);
+	dm.setDot(random(8), random(8), 7, true);
 
 	cube.display(0x04);
+	dm.move(DotMatrix::Up, false);
 }

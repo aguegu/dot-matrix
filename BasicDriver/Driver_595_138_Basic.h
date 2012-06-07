@@ -10,6 +10,10 @@
 
 #include "Arduino.h"
 
+#ifndef digitalSet
+#define digitalSet(pin, val) ( (val) ? *portOutputRegister(digitalPinToPort(pin)) |= digitalPinToBitMask(pin) : *portOutputRegister(digitalPinToPort(pin)) &= ~digitalPinToBitMask(pin))
+#endif
+
 class Driver_595_138_Basic
 {
 public:
