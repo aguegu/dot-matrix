@@ -43,7 +43,6 @@ void loop()
 
 void serialEvent()
 {
-
 	while (Serial.available())
 	{
 		if (index < dm.countCol())
