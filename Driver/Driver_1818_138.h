@@ -40,8 +40,7 @@ private:
 	byte _byte_per_row;
 
 	void setCol(byte row) const;
-	void setCol1(byte row) const;
-	void setCol2(byte row) const;
+
 };
 
 #endif /* DRIVER1818138_H_ */

@@ -61,7 +61,7 @@ void Driver_1818_138::display(byte times) const
 	{
 		for (byte r = 0; r < _row_count; r++)
 		{
-			this->setCol1(r);
+			this->setCol(r);
 
 			digitalWrite(_pin_62726_OE, HIGH);
 
@@ -75,47 +75,3 @@ void Driver_1818_138::display(byte times) const
 		}
 	}
 }
-
-void Driver_1818_138::setCol1(byte row) const
-{
-	byte *p = _dm.output() + row;
-	for (byte j = 0; j < 8; j++) // z
-	{
-		for (byte i = 0; i < 8; i++) // y
-		{
-			if (j&0x01)	p-=8;
-			digitalWrite(_pin_595_DS, bitRead(*p, j));
-
-			digitalWrite(_pin_595_SH, LOW);
-			digitalWrite(_pin_595_SH, HIGH);
-			if (!(j&0x01)) p+=8;
-			//byte * p = _dm.output() + 8*((j&0x01)?(7-i):i)+ row;
-		}
-	}
-}
-
-void Driver_1818_138::setCol2(byte row) const
-{
-	//word length = _dm.countBytes();
-	byte * p = _dm.output();
-	for (byte j = 0; j < 4; j++)
-	{
-		for (byte i = 0; i < 8; i++) // x
-		{
-			digitalWrite(_pin_595_DS, bitRead(*(p++), row));
-			digitalWrite(_pin_595_SH, LOW);
-			digitalWrite(_pin_595_SH, HIGH);
-		}
-
-		p += 8;
-
-		for (byte i = 0; i < 8; i++)
-		{
-			digitalWrite(_pin_595_DS, bitRead(*(--p), row));
-			digitalWrite(_pin_595_SH, LOW);
-			digitalWrite(_pin_595_SH, HIGH);
-		}
-		p += 8;
-	}
-}
-
