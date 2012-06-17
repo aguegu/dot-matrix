@@ -28,11 +28,28 @@ Driver_3D8::Driver_3D8(DotMatrix & dm, uint8_t pin_62726_DS,
 
 	pinMode(_pin_brightness, OUTPUT);
 
+	this->setMode();
+
 	this->setBrightness();
 	this->setSpeed(scan_speed);
 	this->setSize();
+}
 
+void Driver_3D8::setMode(byte mode)
+{
+	switch(mode)
+	{
+	case 1:
+		_setCol = &Driver_3D8::setColzxy;
+		break;
+	case 2:
+		_setCol = &Driver_3D8::setColyzx;
+		break;
+	default:
+		_setCol = &Driver_3D8::setColxyz;
+		break;
 
+	}
 }
 
 void Driver_3D8::setSpeed(uint16_t scan_span)
@@ -70,7 +87,8 @@ void Driver_3D8::display(byte times) const
 	{
 		for (byte r = 0; r < _row_count; r++)
 		{
-			this->setColxyz(r);
+			//this->setColxyz(r);
+			(this->*_setCol)(r);
 
 			pinSet(_pin_62726_OE);
 

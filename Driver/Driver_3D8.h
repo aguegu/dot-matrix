@@ -25,7 +25,10 @@ public:
 
 	void display(byte times = 0x01) const;
 
+	void setMode(byte mode = 0);
+
 	virtual ~Driver_3D8();
+
 private:
 
 	const DotMatrix & _dm;
@@ -40,6 +43,8 @@ private:
 	byte _row_count;
 	byte _word_per_row;
 	byte _byte_per_row;
+
+	void (Driver_3D8::*_setCol)(byte row) const;
 
 	void setColxyz(byte row) const;
 	void setColzxy(byte row) const;
