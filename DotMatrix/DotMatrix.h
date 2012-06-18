@@ -19,8 +19,6 @@
 
 #include "Arduino.h"
 
-
-
 class DotMatrix
 {
 public:
@@ -63,6 +61,15 @@ private:
 	void moveColPosi(bool recycle);
 	void moveRowNega(bool recycle);
 	void moveRowPosi(bool recycle);
+
+	void moveColNegaForByte(bool recycle);
+	void moveColPosiForByte(bool recycle);
+
+	void moveByteNegaInRow(bool recycle);
+	void moveBytePosiInRow(bool recycle);
+
+	void moveNegaInByte(bool recycle);
+	void movePosiInByte(bool recycle);
 };
 
 #endif /* DOTMATRIX_H_ */
