@@ -182,7 +182,7 @@ void DotMatrix::setByte(word index, byte value)
 	_pScreen[index] = value;
 }
 
-void DotMatrix::moveLeft(bool recycle)
+void DotMatrix::moveColNega(bool recycle)
 {
 	for (byte r = 0; r < _row_count; r++)
 	{
@@ -203,7 +203,7 @@ void DotMatrix::moveLeft(bool recycle)
 	}
 }
 
-void DotMatrix::moveRight(bool recycle)
+void DotMatrix::moveColPosi(bool recycle)
 {
 	for (byte r = 0; r < _row_count; r++)
 	{
@@ -224,7 +224,7 @@ void DotMatrix::moveRight(bool recycle)
 	}
 }
 
-void DotMatrix::moveUp(bool recycle)
+void DotMatrix::moveRowNega(bool recycle)
 {
 	byte pTemp[_bytes_per_row];
 	for (word i = 0; i < _bytes_per_row; i++)
@@ -246,7 +246,7 @@ void DotMatrix::moveUp(bool recycle)
 
 }
 
-void DotMatrix::moveDown(bool recycle)
+void DotMatrix::moveRowPosi(bool recycle)
 {
 	byte pTemp[_bytes_per_row];
 	for (word i = 0, index = (_row_count - 1) * _bytes_per_row;
@@ -271,17 +271,17 @@ void DotMatrix::move(Direction d, boolean recycle)
 {
 	switch (d)
 	{
-	case Left:
-		this->moveLeft(recycle);
+	case COL_NEGA:
+		this->moveColNega(recycle);
 		break;
-	case Right:
-		this->moveRight(recycle);
+	case COL_POSI:
+		this->moveColPosi(recycle);
 		break;
-	case Up:
-		this->moveUp(recycle);
+	case ROW_NEGA:
+		this->moveRowNega(recycle);
 		break;
-	case Down:
-		this->moveDown(recycle);
+	case ROW_POSI:
+		this->moveRowPosi(recycle);
 		break;
 	}
 }

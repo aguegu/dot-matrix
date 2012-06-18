@@ -55,7 +55,7 @@ void animation_flow(word length = 0x40, byte speed = 0x04)
 			for(byte i=0; i< random(4); i++)
 				dm.setDot(random(8), random(8), 7, true);
 			cube.display(speed);
-			dm.move(DotMatrix::Up, false);
+			dm.move(DotMatrix::ROW_NEGA, false);
 		}
 	}
 }
