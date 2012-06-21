@@ -9,7 +9,7 @@ void setup()
 {
 	TCCR2B = (TCCR2B & 0xf8) | 0x02;
 
-	dm.clear(0x00);
+	dm.clear(0xff);
 	//dm.DotMatrix::setDot(0, 0, true);
 	cube.setBrightness(0xff);
 	//cube.setMode(0x02);
@@ -62,6 +62,7 @@ void animation_flow(word length = 0x40, byte speed = 0x04)
 
 void loop()
 {
-	animation_facet_scan();
-	animation_flow();
+//	animation_facet_scan();
+//	animation_flow();
+	cube.display(0x08);
 }

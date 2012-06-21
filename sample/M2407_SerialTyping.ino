@@ -39,12 +39,12 @@ void setup()
 
 void loop()
 {
-	dmd.display(0x08);
+	dm.move(DotMatrix::BIT_IN_BYTE_POSI, true);
+	dmd.display(0x20);
 }
 
 void serialEvent()
 {
-
 	while (Serial.available())
 	{
 		if (index < dm.countCol())

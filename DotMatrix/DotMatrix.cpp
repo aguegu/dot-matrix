@@ -329,7 +329,7 @@ void DotMatrix::move(Direction d, boolean recycle)
 	case BIT_IN_COL_POSI:
 		this->moveBitInColPosi(recycle);
 		break;
-	case BIT_ROW_NEGA:
+	case BIT_IN_ROW_NEGA:
 		this->moveBitInRowNega(recycle);
 		break;
 	case BIT_IN_ROW_POSI:
