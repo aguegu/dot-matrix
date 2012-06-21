@@ -37,7 +37,9 @@ public:
 
 	enum Direction
 	{
-		COL_NEGA, COL_POSI, ROW_NEGA, ROW_POSI
+		BIT_IN_COL_NEGA, BIT_IN_COL_POSI, BIT_ROW_NEGA, BIT_IN_ROW_POSI,
+		BYTE_IN_COL_NEGA, BYTE_IN_COL_POSI, BIT_IN_BYTE_NEGA, BIT_IN_BYTE_POSI
+
 	};
 
 	void move(Direction d, boolean recycle = false);
@@ -57,19 +59,17 @@ private:
 	byte * _pScreen;
 
 	word getIndex(byte col, byte row) const;
-	void moveColNega(bool recycle);
-	void moveColPosi(bool recycle);
-	void moveRowNega(bool recycle);
-	void moveRowPosi(bool recycle);
 
-	void moveColNegaForByte(bool recycle);
-	void moveColPosiForByte(bool recycle);
+	void moveBitInColNega(bool recycle);
+	void moveBitInColPosi(bool recycle);
+	void moveBitInRowNega(bool recycle);
+	void moveBitInRowPosi(bool recycle);
 
-	void moveByteNegaInRow(bool recycle);
-	void moveBytePosiInRow(bool recycle);
+	void moveByteInColNega(bool recycle);
+	void moveByteInColPosi(bool recycle);
 
-	void moveNegaInByte(bool recycle);
-	void movePosiInByte(bool recycle);
+	void moveBitInByteNega(bool recycle);
+	void moveBitInBytePosi(bool recycle);
 };
 
 #endif /* DOTMATRIX_H_ */

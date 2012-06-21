@@ -1,68 +1,70 @@
-#include "DotMatrixTest.h"
-#include "DotMatrix3D.h"
-#include "Driver_3D8.h"
+/*
+	Created on: 2012-01-25
+	Updated on: 2012-06-03
+	Author: Weihong Guan
+	Blog: http://aguegu.net
+	E-mail: weihong.guan@gmail.com
+	Code license: Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)
+	http://creativecommons.org/licenses/by-nc-sa/3.0/
+ */
 
-DotMatrix3D dm(8, 8, 8);
-Driver_3D8 cube(dm, A3, 8, 9, 10, 3, 4, 5, 11);
+#include "DotMatrixTest.h"
+#include "Driver_595_138.h"
+#include "DotMatrix.h"
+#include "DotFont.h"
+#include "DotString.h"
+#include "Font0703.h"
+
+DotMatrix dm(24*1, 7);
+Driver_595_138 dmd(dm, 11, 10, 9, 8, 7, 6, 5, 4);
+
+
+DotFont df(dm);
+DotString ds(df, dm.countCol(), true);
+
+extern HardwareSerial Serial;
+byte index = 0;
 
 void setup()
 {
-	TCCR2B = (TCCR2B & 0xf8) | 0x02;
-
 	dm.clear(0x00);
-	//dm.DotMatrix::setDot(0, 0, true);
-	cube.setBrightness(0xff);
-	//cube.setMode(0x02);
-	/*
-	 for(byte i=0; i<8; i++)
-	 dm.setDot(i, i, 0, true);
-	 */
 
-}
+	df.setPattern(FONT_0703, FONT_0703_STATE);
+	ds.printf("Hello.");
+	ds.postAt(0,0);
 
-void animation_facet_scan(byte speed = 0x04)
-{
-	for (byte j = 0; j < 3; j++)
-	{
-		cube.setMode(j);
-		byte i = 0;
-		while (i < 8)
-		{
-			dm.clear(0x00);
-			dm.setRect(i * 8, 0, i * 8 + 7, 7);
-			cube.display(speed);
-			i++;
-		}
-		while (i)
-		{
-			i--;
-			dm.clear(0x00);
-			dm.setRect(i * 8, 0, i * 8 + 7, 7);
-			cube.display(speed);
-		}
-	}
-}
-
-void animation_flow(word length = 0x40, byte speed = 0x04)
-{
-	word counter;
-	for (byte j = 0; j < 3; j++)
-	{
-		cube.setMode(j);
-		counter = length;
-		while (counter--)
-		{
-			for(byte i=0; i< random(4); i++)
-				dm.setDot(random(8), random(8), 7, true);
-			cube.display(speed);
-			dm.move(DotMatrix::ROW_NEGA, false);
-		}
-	}
+	dmd.setSpeed(0x800);
+	Serial.begin(9600);
 }
 
 void loop()
 {
-
-	animation_facet_scan();
-	animation_flow();
+	dm.move(DotMatrix::BIT_IN_BYTE_POSI, true);
+	dmd.display(0x20);
 }
+
+void serialEvent()
+{
+
+	while (Serial.available())
+	{
+		if (index < dm.countCol())
+		{
+			byte cData = Serial.read();
+
+			ds.setChar(index, cData);
+			index++;
+
+			if (cData == 0x0A)
+			{
+				dm.clear();
+				ds.setChar(index-1, 0);
+				ds.postAt(0,0);
+				Serial.println(ds.getString());
+				index = 0;
+			}
+		}
+	}
+}
+
+
