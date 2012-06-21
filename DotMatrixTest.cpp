@@ -3,7 +3,8 @@
 #include "Driver_3D8.h"
 
 DotMatrix3D dm(8, 8, 8);
-Driver_3D8 cube(dm, A3, 8, 9, 10, 3, 4, 5, 11);
+//Driver_3D8 cube(dm, A3, 8, 9, 10, 3, 4, 5, 11);
+Driver_3D8 cube(dm, 9, 8, 17, 10, 3, 4, 5, 11);
 
 void setup()
 {
@@ -62,7 +63,7 @@ void animation_flow(word length = 0x40, byte speed = 0x04)
 
 void loop()
 {
-//	animation_facet_scan();
-//	animation_flow();
+	animation_facet_scan();
+	animation_flow();
 	cube.display(0x08);
 }
