@@ -37,8 +37,14 @@ public:
 
 	enum Direction
 	{
-		BIT_IN_COL_NEGA, BIT_IN_COL_POSI, BIT_IN_ROW_NEGA, BIT_IN_ROW_POSI,
-		BYTE_IN_COL_NEGA, BYTE_IN_COL_POSI, BIT_IN_BYTE_NEGA, BIT_IN_BYTE_POSI
+		BIT_IN_COL_NEGA,
+		BIT_IN_COL_POSI,
+		BIT_IN_ROW_NEGA,
+		BIT_IN_ROW_POSI,
+		BYTE_IN_COL_NEGA,
+		BYTE_IN_COL_POSI,
+		BIT_IN_BYTE_NEGA,
+		BIT_IN_BYTE_POSI
 
 	};
 
@@ -51,6 +57,7 @@ public:
 	byte countBytePerRow() const;
 
 private:
+
 	byte _col_count;
 	byte _row_count;
 	byte _bytes_per_row;

@@ -46,23 +46,27 @@ void Driver_595_138_Basic::setColFromMSB(byte * p, byte length) const
 
 void Driver_595_138_Basic::shiftSendFromLSB(byte c) const
 {
-	for (byte i=0; i<8; i++)
+	byte i=8;
+
+	while(i--)
 	{
 		pinWrite(_pin_595_DS, c & 0x01);
-		c >>= 1;
 		pinClear(_pin_595_SH);
 		pinSet(_pin_595_SH);
+		c >>= 1;
 	}
 }
 
 void Driver_595_138_Basic::shiftSendFromMSB(byte c) const
 {
-	for (byte i=0; i<8; i++)
+	byte i=8;
+
+	while(i--)
 	{
 		pinWrite(_pin_595_DS, c & 0x80);
-		c <<= 1;
 		pinClear(_pin_595_SH);
 		pinSet(_pin_595_SH);
+		c <<= 1;
 	}
 }
 
