@@ -16,7 +16,7 @@ Driver_3D8::~Driver_3D8()
 
 Driver_3D8::Driver_3D8(DotMatrix & dm, uint8_t pin_62726_DS,
 		uint8_t pin_62726_OE, uint8_t pin_62726_ST, uint8_t pin_62726_SH,
-		uint8_t pin_138_A0, uint8_t pin_138_A1, uint8_t pin_138_A2,
+		uint8_t pin_138_A2, uint8_t pin_138_A1, uint8_t pin_138_A0,
 		uint8_t pin_brightness, uint16_t scan_speed) :
 		Driver_595_138_Basic(pin_62726_DS, pin_62726_SH, pin_138_A2, pin_138_A1,
 				pin_138_A0), _dm(dm), _pin_62726_OE(pin_62726_OE), _pin_62726_ST(
