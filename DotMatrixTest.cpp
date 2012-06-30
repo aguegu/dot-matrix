@@ -1,68 +1,49 @@
 #include "DotMatrixTest.h"
-#include "DotMatrix3D.h"
-#include "Driver_3D8.h"
+#include "DotMatrix.h"
+#include "DotFont.h"
+#include "DotString.h"
+#include "Driver_PCD8544.h"
 
-DotMatrix3D dm(8, 8, 8);
-//Driver_3D8 cube(dm, A3, 8, 9, 10, 3, 4, 5, 11);
-Driver_3D8 cube(dm, 9, 8, 17, 10, 5, 4, 3, 11);
+#include "Font0703.h"
+
+DotMatrix dm(48, 84);
+Driver_PCD8544 lcd(dm, 2, 3, 4, 5, 6);
 
 void setup()
 {
-//	TCCR2B = (TCCR2B & 0xf8) | 0x02;
+	pinMode(7, OUTPUT);
+	digitalWrite(7, HIGH);
 
-	dm.clear(0x00);
-	//dm.DotMatrix::setDot(0, 0, true);
-	cube.setBrightness(0xff);
-	//cube.setMode(0x02);
+	lcd.init();
 
-	for (byte i = 0; i < 8; i++)
-		dm.setDot(i, i, i, true);
+	dm.clear();
 
-}
+	DotFont df(dm);
+	df.setPattern(FONT_0703, FONT_0703_STATE);
+	DotString ds(df, 32, true);
 
-void animation_facet_scan(byte speed = 0x04)
-{
-	for (byte j = 0; j < 3; j++)
-	{
-		cube.setMode(j);
-		byte i = 0;
-		while (i < 8)
-		{
-			dm.clear(0x00);
-			dm.setRect(i * 8, 0, i * 8 + 7, 7);
-			cube.display(speed);
-			i++;
-		}
-		while (i)
-		{
-			i--;
-			dm.clear(0x00);
-			dm.setRect(i * 8, 0, i * 8 + 7, 7);
-			cube.display(speed);
-		}
-	}
-}
+	ds.printf("Hello, world.");
+	ds.postAt(2,0);
 
-void animation_flow(word length = 0x40, byte speed = 0x04)
-{
-	word counter;
-	for (byte j = 0; j < 3; j++)
-	{
-		cube.setMode(j);
-		counter = length;
-		while (counter--)
-		{
-			for (byte i = 0; i < random(4); i++)
-				dm.setDot(random(8), random(8), 7, true);
-			cube.display(speed);
-			dm.move(DotMatrix::BIT_IN_ROW_NEGA, false);
-		}
-	}
+	df.setVertical(false);
+	ds.printf("Font Display on Nokia");
+	ds.postAt(0, 0);
+
+	ds.printf("5110, driven by");
+	ds.postAt(0, 9);
+
+	ds.printf("Arduino.");
+	ds.postAt(0, 18);
+
+	ds.printf("aGuegu.net");
+	ds.postAt(0, 27);
+
+	ds.printf("%2d-%02d, %d", 5, 31, 2012);
+	ds.postAt(0, 36);
 }
 
 void loop()
 {
-	animation_facet_scan();
-	animation_flow();
-	cube.display(0x08);
+	lcd.putDM();
+	delay(1000);
 }
