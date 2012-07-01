@@ -17,10 +17,14 @@ public:
 	DotPattern(DotMatrix & dm);
 	virtual ~DotPattern();
 	void setPattern(const uint8_t * pattern, int length, byte byte_in_row);
+	void postAt(byte col, byte row);
+	void print();
 private:
 	DotMatrix & _dm;
 	byte _byte_in_row;
 	byte _row_count;
+	byte _col;
+	byte _row;
 	int _length;
 	const uint8_t *_pattern;
 

@@ -349,3 +349,13 @@ void DotMatrix::move(Direction d, boolean recycle)
 		break;
 	}
 }
+
+byte DotMatrix::reverseByte(byte c)
+{
+	byte r = 0x00;
+
+	r |= pgm_read_byte_near(REVERSE + (c & 0x0f)) << 4;
+	r |= pgm_read_byte_near(REVERSE + (c  >> 4)) & 0x0f;
+
+	return r;
+}
