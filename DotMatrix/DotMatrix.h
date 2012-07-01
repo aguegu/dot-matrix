@@ -41,6 +41,7 @@ public:
 
 	void clear(byte c = 0x00);
 	void setByte(word index, byte value);
+	void setByte(byte col, byte row, byte value);
 
 	void reverseDot(byte col, byte row);
 	void setDot(byte col, byte row, boolean b = true);

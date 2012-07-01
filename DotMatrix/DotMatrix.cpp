@@ -184,6 +184,14 @@ void DotMatrix::setByte(word index, byte value)
 	_pScreen[index] = value;
 }
 
+void DotMatrix::setByte(byte col, byte row, byte value)
+{
+	word i = getIndex(col, row);
+	byte j = col & 0x07;
+	_pScreen[i] |= value << j;
+	_pScreen[i+1] |= value >> (8-j);
+}
+
 void DotMatrix::moveBitInColNega(bool recycle)
 {
 	for (byte r = 0; r < _row_count; r++)
