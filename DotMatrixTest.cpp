@@ -19,7 +19,7 @@ void setup()
 	lcd.init();
 
 	dm.clear();
-	dm.setMoveDirection(DotMatrix::BIT_IN_BYTE_POSI);
+	dm.setMoveDirection(DotMatrix::BIT_IN_ROW_POSI);
 
 	DotFont df(dm);
 
