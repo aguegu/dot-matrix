@@ -19,10 +19,14 @@ void setup()
 	lcd.init();
 
 	dm.clear();
+	dm.setMoveDirection(DotMatrix::BYTE_IN_COL_POSI);
 
 	DotFont df(dm);
+
 	df.setPattern(FONT_0703, FONT_0703_STATE);
 	DotString ds(df, 32, true);
+
+	dm.setDot(0,0);
 
 	ds.printf("Hello, world.");
 	ds.postAt(2,0);
@@ -47,5 +51,7 @@ void setup()
 void loop()
 {
 	lcd.putDM();
-	delay(1000);
+
+	dm.move(true);
+	delay(200);
 }

@@ -20,14 +20,14 @@ DotPattern::~DotPattern()
 
 void DotPattern::print()
 {
-	uint16_t index = 0;
+	word index = 0;
 	byte row = _row;
 	for (byte r = _row_count; r; r--)
 	{
 		for (byte col = _col, c = _byte_in_row; c; c--)
 		{
 			byte k = DotMatrix::reverseByte(pgm_read_byte_near(_pattern + index++));
-			_dm.setByte(col, row, k);
+			_dm.putByte(col, row, k);
 			col += 8;
 		}
 		row++;

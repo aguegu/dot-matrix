@@ -25,6 +25,7 @@ DotMatrix::DotMatrix(byte colCount, byte rowCount)
 	_bytes_length = _bytes_per_row * _row_count;
 
 	_pScreen = (byte *) malloc(sizeof(byte) * _bytes_length);
+	setMoveDirection(this->BYTE_IN_COL_POSI);
 }
 
 DotMatrix::~DotMatrix()
@@ -136,18 +137,13 @@ void DotMatrix::setRect(byte cA, byte rA, byte cB, byte rB, bool on)
 word DotMatrix::getIndex(byte col, byte row) const
 {
 	word index = row * _bytes_per_row + (col >> 3);
-	if (index < _bytes_length)
-		return (index);
-	else
-		return 0;
+	return index < _bytes_length ? index : 0;
 }
 
 boolean DotMatrix::getDot(byte col, byte row) const
 {
-	boolean b = false;
-
 	word i = getIndex(col, row);
-	b = bitRead(_pScreen[i], (col & 0x07));
+	boolean b = bitRead(_pScreen[i], (col & 0x07));
 
 	return b;
 }
@@ -184,12 +180,12 @@ void DotMatrix::setByte(word index, byte value)
 	_pScreen[index] = value;
 }
 
-void DotMatrix::setByte(byte col, byte row, byte value)
+void DotMatrix::putByte(byte col, byte row, byte value)
 {
 	word i = getIndex(col, row);
 	byte j = col & 0x07;
 	_pScreen[i] |= value << j;
-	_pScreen[i+1] |= value >> (8-j);
+	_pScreen[i + 1] |= value >> (8 - j);
 }
 
 void DotMatrix::moveBitInColNega(bool recycle)
@@ -279,83 +275,92 @@ void DotMatrix::moveBitInRowPosi(bool recycle)
 
 void DotMatrix::moveByteInColNega(bool recycle)
 {
+	byte * p = _pScreen;
 	for (byte r = 0; r < _row_count; r++)
 	{
-		word index = r * _bytes_per_row;
-		byte temp = recycle? _pScreen[index]: 0x00;
-		for (byte c = 1; c < _bytes_per_row; c++)
+		byte temp = recycle ? *p : 0x00;
+		for (byte i = _bytes_per_row - 1; i; i--)
 		{
-			index++;
-			_pScreen[index-1] = _pScreen[index];
+			*(p) = *(p+1);
+			p++;
 		}
-		_pScreen[index] = temp;
+		*(p++) = temp;
 	}
 }
 
 void DotMatrix::moveByteInColPosi(bool recycle)
 {
-	for (byte r = 0; r < _row_count; r++)
+	word c = _bytes_per_row - 1;
+	for (byte r = _row_count; r; r--)
 	{
-		word index = r * _bytes_per_row + _bytes_per_row - 1;
-		byte temp = recycle? _pScreen[index]: 0x00;
-		for (byte c = 1; c < _bytes_per_row; c++)
+		word index = c;
+		byte temp = recycle ? _pScreen[index] : 0x00;
+		for (byte i = _bytes_per_row - 1; i; i--)
 		{
-			_pScreen[index] = _pScreen[index-1];
+			_pScreen[index] = _pScreen[index - 1];
 			index--;
 		}
 		_pScreen[index] = temp;
+		c += _bytes_per_row;
 	}
 }
 
 void DotMatrix::moveBitInByteNega(bool recycle)
 {
-	for (word index = 0; index<_bytes_length; index++)
+	for (word index = 0; index < _bytes_length; index++)
 	{
 		bool temp = _pScreen[index] & 0x01;
-		_pScreen[index]>>=1;
-		if (recycle && temp) _pScreen[index] |= 0x80;
+		_pScreen[index] >>= 1;
+		if (recycle && temp)
+			_pScreen[index] |= 0x80;
 	}
 }
 
 void DotMatrix::moveBitInBytePosi(bool recycle)
 {
-	for (word index = 0; index<_bytes_length; index++)
+	for (word index = 0; index < _bytes_length; index++)
 	{
 		bool temp = _pScreen[index] & 0x80;
-		_pScreen[index]<<=1;
-		if (recycle && temp) _pScreen[index] |= 0x01;
+		_pScreen[index] <<= 1;
+		if (recycle && temp)
+			_pScreen[index] |= 0x01;
 	}
 }
 
-void DotMatrix::move(Direction d, boolean recycle)
+void DotMatrix::setMoveDirection(Direction d)
 {
 	switch (d)
 	{
 	case BIT_IN_COL_NEGA:
-		this->moveBitInColNega(recycle);
+		_funMoveDirection = &DotMatrix::moveBitInColNega;
 		break;
 	case BIT_IN_COL_POSI:
-		this->moveBitInColPosi(recycle);
+		_funMoveDirection = &DotMatrix::moveBitInColPosi;
 		break;
 	case BIT_IN_ROW_NEGA:
-		this->moveBitInRowNega(recycle);
+		_funMoveDirection = &DotMatrix::moveBitInRowNega;
 		break;
 	case BIT_IN_ROW_POSI:
-		this->moveBitInRowPosi(recycle);
+		_funMoveDirection = &DotMatrix::moveBitInRowPosi;
 		break;
 	case BYTE_IN_COL_NEGA:
-		this->moveByteInColNega(recycle);
+		_funMoveDirection = &DotMatrix::moveByteInColNega;
 		break;
 	case BYTE_IN_COL_POSI:
-		this->moveByteInColPosi(recycle);
+		_funMoveDirection = &DotMatrix::moveByteInColPosi;
 		break;
 	case BIT_IN_BYTE_NEGA:
-		this->moveBitInByteNega(recycle);
+		_funMoveDirection = &DotMatrix::moveBitInByteNega;
 		break;
 	case BIT_IN_BYTE_POSI:
-		this->moveBitInBytePosi(recycle);
+		_funMoveDirection = &DotMatrix::moveBitInBytePosi;
 		break;
 	}
+}
+
+void DotMatrix::move(bool recycle)
+{
+	(this->*_funMoveDirection)(recycle);
 }
 
 byte DotMatrix::reverseByte(byte c)
@@ -363,7 +368,7 @@ byte DotMatrix::reverseByte(byte c)
 	byte r = 0x00;
 
 	r |= pgm_read_byte_near(REVERSE + (c & 0x0f)) << 4;
-	r |= pgm_read_byte_near(REVERSE + (c  >> 4)) & 0x0f;
+	r |= pgm_read_byte_near(REVERSE + (c >> 4)) & 0x0f;
 
 	return r;
 }

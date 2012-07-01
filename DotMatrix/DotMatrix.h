@@ -41,7 +41,7 @@ public:
 
 	void clear(byte c = 0x00);
 	void setByte(word index, byte value);
-	void setByte(byte col, byte row, byte value);
+	void putByte(byte col, byte row, byte value);
 
 	void reverseDot(byte col, byte row);
 	void setDot(byte col, byte row, boolean b = true);
@@ -62,7 +62,8 @@ public:
 		BIT_IN_BYTE_POSI
 	};
 
-	void move(Direction d, boolean recycle = false);
+	void move(bool recycle = false);
+	void setMoveDirection(Direction d);
 
 	byte * output() const;
 	byte countCol() const;
@@ -80,6 +81,7 @@ private:
 	word _bytes_length;
 
 	byte * _pScreen;
+	void (DotMatrix::*_funMoveDirection)(bool);
 
 	word getIndex(byte col, byte row) const;
 
