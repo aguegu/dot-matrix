@@ -21,6 +21,12 @@
 #define COMMAND	false
 #define DATA	true
 
+#ifndef PIN_WRITE
+#define pinSet(pin)	*portOutputRegister(digitalPinToPort(pin)) |= digitalPinToBitMask(pin)
+#define pinClear(pin)	*portOutputRegister(digitalPinToPort(pin)) &= ~digitalPinToBitMask(pin)
+#define pinWrite(pin, val) ( (val) ? pinSet(pin) : pinClear(pin))
+#endif
+
 class Driver_PCD8544_Basic
 {
 
@@ -50,11 +56,6 @@ private:
 	const uint8_t _pin_dc;
 	const uint8_t _pin_din;
 	const uint8_t _pin_sclk;
-
-
-
-
-
 };
 
 #endif /* DRIVER_PCD8544_H_ */

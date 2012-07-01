@@ -24,7 +24,7 @@ DotMatrix::DotMatrix(byte colCount, byte rowCount)
 	_bytes_per_row = _col_count / 8;
 	_bytes_length = _bytes_per_row * _row_count;
 
-	_pScreen = (byte *) malloc(sizeof(byte) * _bytes_length);
+	_pScreen = (byte *) malloc(sizeof(byte) * (_bytes_length + 1));
 	setMoveDirection(this->BYTE_IN_COL_POSI);
 }
 
@@ -190,43 +190,43 @@ void DotMatrix::putByte(byte col, byte row, byte value)
 
 void DotMatrix::moveBitInColNega(bool recycle)
 {
-	for (byte r = 0; r < _row_count; r++)
+	byte *p = _pScreen;
+	for (byte r = _row_count; r; r--)
 	{
-		word index = r * _bytes_per_row;
-		boolean b0 = bitRead(_pScreen[index], 0);
-		for (byte i = 1; i < _bytes_per_row; i++)
+		bool b0 = bitRead(*p, 0);
+		for (byte i = _bytes_per_row - 1; i--;)
 		{
-			boolean b = bitRead(_pScreen[index + 1], 0);
-			_pScreen[index] >>= 1;
-			bitWrite(_pScreen[index], 7, b);
-			index++;
+			boolean b = bitRead(*(p+1), 0);
+			*p >>= 1;
+			bitWrite(*p, 7, b);
+			p++;
 		}
 
-		_pScreen[index] >>= 1;
+		*p >>= 1;
+		if (recycle) bitWrite(*p, 7, b0);
 
-		if (recycle)
-			bitWrite(_pScreen[index], 7, b0);
+		p++;
 	}
 }
 
 void DotMatrix::moveBitInColPosi(bool recycle)
 {
-	for (byte r = 0; r < _row_count; r++)
+	byte *p = _pScreen + _bytes_per_row - 1;
+	for (byte r = _row_count; r--;)
 	{
-		word index = r * _bytes_per_row + _bytes_per_row - 1;
-		boolean b0 = bitRead(_pScreen[index], 7);
-		for (byte i = 1; i < _bytes_per_row; i++)
+		boolean b0 = bitRead(*p, 7);
+		for (byte i = _bytes_per_row - 1; i--;)
 		{
-			boolean b = bitRead(_pScreen[index - 1], 7);
-			_pScreen[index] <<= 1;
-			bitWrite(_pScreen[index], 0, b);
-			index--;
+			boolean b = bitRead(*(p-1), 7);
+			*p <<= 1;
+			bitWrite(*p, 0, b);
+			p--;
 		}
 
-		_pScreen[index] <<= 1;
+		*p <<= 1;
+		if (recycle) bitWrite(*p, 0, b0);
 
-		if (recycle)
-			bitWrite(_pScreen[index], 0, b0);
+		p += _bytes_per_row + _bytes_per_row - 1;
 	}
 }
 
@@ -235,58 +235,57 @@ void DotMatrix::moveBitInRowNega(bool recycle)
 	byte pTemp[_bytes_per_row];
 	memcpy(pTemp, _pScreen, _bytes_per_row);
 
-	memcpy(_pScreen, _pScreen + _bytes_per_row, _bytes_length -_bytes_per_row);
+	memcpy(_pScreen, _pScreen + _bytes_per_row, _bytes_length - _bytes_per_row);
 
-	recycle ? memcpy(_pScreen + _bytes_length - _bytes_per_row, pTemp,_bytes_per_row)
-			:memset(_pScreen + _bytes_length - _bytes_per_row, 0x00, _bytes_per_row);
+	recycle ?
+			memcpy(_pScreen + _bytes_length - _bytes_per_row, pTemp,
+					_bytes_per_row) :
+			memset(_pScreen + _bytes_length - _bytes_per_row, 0x00,
+					_bytes_per_row);
 }
 
 void DotMatrix::moveBitInRowPosi(bool recycle)
 {
 	byte pTemp[_bytes_per_row];
-	memcpy(pTemp, _pScreen+_bytes_length-_bytes_per_row, _bytes_per_row);
+	memcpy(pTemp, _pScreen + _bytes_length - _bytes_per_row, _bytes_per_row);
 
-	memmove(_pScreen + _bytes_per_row, _pScreen, _bytes_length - _bytes_per_row);
+	memmove(_pScreen + _bytes_per_row, _pScreen,
+			_bytes_length - _bytes_per_row);
 
-	recycle ? memcpy(_pScreen, pTemp,_bytes_per_row)
-				:memset(_pScreen, 0x00, _bytes_per_row);
+	recycle ?
+			memcpy(_pScreen, pTemp, _bytes_per_row) :
+			memset(_pScreen, 0x00, _bytes_per_row);
 }
 
 void DotMatrix::moveByteInColNega(bool recycle)
 {
 	byte * p = _pScreen;
-	for (byte r = _row_count; r; r--)
+	for (byte r = _row_count; r--;)
 	{
 		byte temp = recycle ? *p : 0x00;
-		for (byte i = _bytes_per_row - 1; i; i--)
-		{
-			*(p) = *(p + 1);
-			p++;
-		}
-		*(p++) = temp;
+		memcpy(p, p + 1, _bytes_per_row - 1);
+
+		p += _bytes_per_row;
+		*(p - 1) = temp;
 	}
 }
 
 void DotMatrix::moveByteInColPosi(bool recycle)
 {
-	byte *p = _pScreen + _bytes_per_row - 1;
-	for (byte r = _row_count; r; r--)
+	byte *p = _pScreen;
+	for (byte r = _row_count; r--;)
 	{
-		byte temp = recycle ? *p : 0x00;
-		for (byte i = _bytes_per_row - 1; i; i--)
-		{
-			*p = *(p - 1);
-			p--;
-		}
+		byte temp = recycle ? *(p + _bytes_per_row - 1) : 0x00;
+		memmove(p + 1, p, _bytes_per_row - 1);
 		*p = temp;
-		p += _bytes_per_row + _bytes_per_row - 1;
+		p += _bytes_per_row;
 	}
 }
 
 void DotMatrix::moveBitInByteNega(bool recycle)
 {
 	byte *p = _pScreen;
-	for (word index = _bytes_length; index; index--, p++)
+	for (word index = _bytes_length; index--; p++)
 	{
 		bool temp = *p & 0x01;
 		*p >>= 1;
@@ -298,7 +297,7 @@ void DotMatrix::moveBitInByteNega(bool recycle)
 void DotMatrix::moveBitInBytePosi(bool recycle)
 {
 	byte *p = _pScreen;
-	for (word index = _bytes_length; index; index--, p++)
+	for (word index = _bytes_length; index--; p++)
 	{
 		bool temp = *p & 0x80;
 		*p <<= 1;

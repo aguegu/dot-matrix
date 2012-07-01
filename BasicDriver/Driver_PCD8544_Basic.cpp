@@ -15,9 +15,10 @@
 
 #include "Driver_PCD8544_Basic.h"
 
-Driver_PCD8544_Basic::Driver_PCD8544_Basic
-	(uint8_t pin_sce, uint8_t pin_rst, uint8_t pin_dc, uint8_t pin_din, uint8_t pin_sclk)
-	:_pin_sce(pin_sce), _pin_rst(pin_rst), _pin_dc(pin_dc), _pin_din(pin_din), _pin_sclk(pin_sclk)
+Driver_PCD8544_Basic::Driver_PCD8544_Basic(uint8_t pin_sce, uint8_t pin_rst,
+		uint8_t pin_dc, uint8_t pin_din, uint8_t pin_sclk) :
+		_pin_sce(pin_sce), _pin_rst(pin_rst), _pin_dc(pin_dc), _pin_din(
+				pin_din), _pin_sclk(pin_sclk)
 {
 	// TODO Auto-generated constructor stub
 	pinMode(_pin_sce, OUTPUT);
@@ -34,36 +35,34 @@ Driver_PCD8544_Basic::~Driver_PCD8544_Basic()
 
 void Driver_PCD8544_Basic::sendMsbFirst(byte c, bool b)
 {
-	digitalWrite(_pin_sce, LOW);
+	pinClear(_pin_sce);
 
-	digitalWrite(_pin_dc, b);
+	pinWrite(_pin_dc, b);
 
-	for(byte i=0; i<8; i++)
+	for (byte i = 8; i--;)
 	{
-		digitalWrite(_pin_din, bitRead(c, 7));
-		digitalWrite(_pin_sclk, LOW);
-		digitalWrite(_pin_sclk, HIGH);
+		pinWrite(_pin_din, bitRead(c, 7));
+		pinClear(_pin_sclk);
+		pinSet(_pin_sclk);
 		c <<= 1;
 	}
-
-	digitalWrite(_pin_sce, HIGH);
+	pinSet(_pin_sce);
 }
 
 void Driver_PCD8544_Basic::sendLsbFirst(byte c, bool b)
 {
-	digitalWrite(_pin_sce, LOW);
+	pinClear(_pin_sce);
 
-	digitalWrite(_pin_dc, b);
+	pinWrite(_pin_dc, b);
 
-	for(byte i=0; i<8; i++)
+	for (byte i = 8; i--;)
 	{
-		digitalWrite(_pin_din, bitRead(c, 0));
-		digitalWrite(_pin_sclk, LOW);
-		digitalWrite(_pin_sclk, HIGH);
+		pinWrite(_pin_din, bitRead(c, 0));
+		pinClear(_pin_sclk);
+		pinSet(_pin_sclk);
 		c >>= 1;
 	}
-
-	digitalWrite(_pin_sce, HIGH);
+	pinSet(_pin_sce);
 }
 
 void Driver_PCD8544_Basic::init()
@@ -78,9 +77,12 @@ void Driver_PCD8544_Basic::init()
 	this->configureDisplay();
 }
 
-void Driver_PCD8544_Basic::configureFunction(bool active, bool vertical_addressing, bool extend_command)
+void Driver_PCD8544_Basic::configureFunction(bool active,
+		bool vertical_addressing, bool extend_command)
 {
-	this->sendMsbFirst(0x20 | (active? 0x00 : 0x04) | (vertical_addressing? 0x02:0x00) | (extend_command? 0x01:0x00), COMMAND);
+	this->sendMsbFirst(
+			0x20 | (active ? 0x00 : 0x04) | (vertical_addressing ? 0x02 : 0x00)
+					| (extend_command ? 0x01 : 0x00), COMMAND);
 }
 
 void Driver_PCD8544_Basic::configureHardware(byte tc, byte bias, byte vop)
@@ -94,7 +96,9 @@ void Driver_PCD8544_Basic::configureHardware(byte tc, byte bias, byte vop)
 
 void Driver_PCD8544_Basic::configureDisplay(bool display_on, bool reverse)
 {
-	this->sendMsbFirst(0x08 | (display_on? 0x04:0x00) | (reverse? 0x01:0x00), COMMAND);
+	this->sendMsbFirst(
+			0x08 | (display_on ? 0x04 : 0x00) | (reverse ? 0x01 : 0x00),
+			COMMAND);
 }
 
 void Driver_PCD8544_Basic::setRamAddress(byte x, byte y)
