@@ -22,9 +22,9 @@ void DotPattern::print()
 {
 	word index = 0;
 	byte row = _row;
-	for (byte r = _row_count; r; r--)
+	for (byte r = _row_count; r--;)
 	{
-		for (byte col = _col, c = _byte_in_row; c; c--)
+		for (byte col = _col, c = _byte_in_row; c--;)
 		{
 			byte k = DotMatrix::reverseByte(pgm_read_byte_near(_pattern + index++));
 			_dm.putByte(col, row, k);

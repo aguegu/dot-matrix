@@ -56,6 +56,7 @@ private:
 	byte _row;
 	byte _index;
 	boolean _vertical;
+	word _indent;
 };
 
 #endif /* DOTFONT_H_ */

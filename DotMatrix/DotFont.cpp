@@ -68,6 +68,8 @@ void DotFont::setChar(char chr)
 		_index = _pattern_length;
 	else
 		_index = chr - _pattern_indent;
+
+	_indent = _index * _unit_width;
 }
 
 void DotFont::setVertical(boolean vertical)
@@ -86,8 +88,8 @@ void DotFont::clear(bool on) const
 	if (_vertical)
 		_dm.setRect(_col, _row, _col + _unit_width, _row + _unit_height, on);
 	else
-		_dm.setRect(_row, _dm.countRow() - _col - 1, _row + _unit_height,
-				_dm.countRow() - _col - 1 - _unit_width, on);
+		_dm.setRect(_row, this->getMaxRow() - _col, _row + _unit_height,
+				this->getMaxCol() - _col - _unit_width, on);
 }
 
 void DotFont::print() const
@@ -103,7 +105,7 @@ void DotFont::showH() const
 	{
 		for (byte r = 0; r < _unit_height; r++)
 		{
-			if (boolean b = bitRead(pgm_read_byte_near(_pattern + _unit_width * _index + c), r))
+			if (boolean b = bitRead(pgm_read_byte_near(_pattern + _indent + c), r))
 				_dm.setDot(_row + r, _dm.countRow() - _col - 1 - c, b);
 		}
 	}
@@ -115,7 +117,7 @@ void DotFont::showV() const
 	{
 		for (byte r = 0; r < _unit_height; r++)
 		{
-			if (boolean b = bitRead(pgm_read_byte_near(_pattern + _unit_width * _index + c), r))
+			if (boolean b = bitRead(pgm_read_byte_near(_pattern + _indent + c), r))
 				_dm.setDot(_col + c, _row + r, b);
 		}
 	}
@@ -128,8 +130,8 @@ byte DotFont::calcFontRealWidth() const
 
 	byte i = _unit_width - 1;
 
-	while (pgm_read_byte_near(_pattern + _unit_width * _index + i) == 0 && i)
-		i--;
+	while (pgm_read_byte_near(_pattern + _indent + i) == 0 && i--);
+
 	return i + 1;
 }
 
