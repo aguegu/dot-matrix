@@ -17,6 +17,14 @@ void setup()
 	cube.sendBrightness(0xff);
 }
 
+void animationBgLed()
+{
+	static byte value = 0x00;
+	cube.sendGlobal(0x00);
+	cube.sendBgLed(value++);
+	if (value == 4) value = 0;
+}
+
 void animationFlash()
 {
 	static byte value = 0xff;
@@ -91,6 +99,7 @@ void callAnimationInModes(void (*p)(), uint16_t span, uint16_t times,
 
 void loop()
 {
+	callAnimation(animationBgLed, 0x400, 0x08, 0x00, Controller_A3D8_Basic::XYZ);
 	callAnimation(animationFlash, 0xF0, 0x08, 0x00, Controller_A3D8_Basic::XYZ);
 	callAnimation(animationBreathe, 0x08, 0xff * 4, 0xff, Controller_A3D8_Basic::XYZ);
 	callAnimationInModes(animationFacetScan, 0x80, 0x08, 0x00);
