@@ -1,20 +1,25 @@
 #include "DotMatrixTest.h"
-#include "Controller_A3D8_Basic.h"
+
+#include "DotMatrix3D.h"
+#include "Controller_A3D8.h"
 
 extern HardwareSerial Serial;
 
-const byte length = 64;
-byte * pScreen;
-
-Controller_A3D8_Basic cube(Serial);
+DotMatrix3D dm(1);
+Controller_A3D8 cube(dm, Serial);
 
 void setup()
 {
 	//pScreen = (byte *) malloc(sizeof(byte) * length);
-	pScreen = new byte(length);
 	Serial.begin(57600);
 	cube.sendMode(Controller_A3D8_Basic::XYZ);
 	cube.sendBrightness(0xff);
+
+	dm.clear(0x00);
+
+	for (byte i = 0; i < 4; i++)
+		dm.setDot(0, 0, i);
+
 }
 
 void animationFlash()
@@ -55,18 +60,18 @@ void animationBlockScan()
 	if (value == 0xff)
 		value = 0x00;
 }
+
 void animationRiseZ()
 {
-	for (byte i = 0; i < length; i++)
-		pScreen[i] <<= 1;
-
+	dm.setMoveDirection(DotMatrix::BIT_IN_ROW_NEGA);
+	dm.move(false);
 	for (byte i = 0; i < random(4); i++)
 	{
 		byte x = random(8);
-		byte y = random(8);
-		pScreen[8 * y + x] |= 0x01;
+		byte z = random(8);
+		dm.setDot(x, 7, z);
 	}
-	cube.sendBatch(pScreen, length);
+	cube.putDM();
 }
 
 void callAnimation(void (*p)(), uint16_t span, uint16_t times, byte init_value,
@@ -92,9 +97,10 @@ void callAnimationInModes(void (*p)(), uint16_t span, uint16_t times,
 void loop()
 {
 	callAnimation(animationFlash, 0xF0, 0x08, 0x00, Controller_A3D8_Basic::XYZ);
-	callAnimation(animationBreathe, 0x08, 0xff * 4, 0xff, Controller_A3D8_Basic::XYZ);
+	callAnimation(animationBreathe, 0x08, 0xff * 4, 0xff,
+			Controller_A3D8_Basic::XYZ);
 	callAnimationInModes(animationFacetScan, 0x80, 0x08, 0x00);
 	callAnimationInModes(animationBlockScan, 0x80, 0x08, 0x00);
-	callAnimationInModes(animationRiseZ,0x40, 0x60, 0x00);
+	callAnimationInModes(animationRiseZ, 0x40, 0x60, 0x00);
 }
 

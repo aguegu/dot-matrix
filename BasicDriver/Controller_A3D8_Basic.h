@@ -31,7 +31,12 @@ public:
 
 private:
 	HardwareSerial & _sp;
+
+protected:
 	const byte _length;
+
+
+
 };
 
 #endif /* CONTROLLERA3D8_H_ */

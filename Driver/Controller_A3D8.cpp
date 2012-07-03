@@ -5,16 +5,20 @@
  *      Author: Agu
  */
 
-#include "ControllerA3D8.h"
+#include "Controller_A3D8.h"
 
-Controller_A3D8::Controller_A3D8()
+Controller_A3D8::Controller_A3D8(DotMatrix3D & dm, HardwareSerial & sp, unsigned long baud_rate)
+:Controller_A3D8_Basic(sp, baud_rate, dm.countBytes()), _dm(dm)
 {
-	// TODO Auto-generated constructor stub
 
 }
 
 Controller_A3D8::~Controller_A3D8()
 {
-	// TODO Auto-generated destructor stub
+
 }
 
+void Controller_A3D8::putDM()
+{
+	this->sendBatch(_dm.output(), _length);
+}

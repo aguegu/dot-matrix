@@ -13,17 +13,11 @@
 class DotMatrix3D: public DotMatrix
 {
 public:
-	DotMatrix3D(byte x_count, byte y_count, byte z_count);
+	DotMatrix3D(byte block_count);
 	virtual ~DotMatrix3D();
-	void setDot(byte x, byte y, byte z, bool on);
+	void setDot(byte x, byte y, byte z, bool on = true);
 
 private:
-	byte _x_count;
-	byte _y_count;
-	byte _z_count;
-
-	byte _x_block_count;
-	byte _y_block_count;
 
 	byte _block_count;
 
