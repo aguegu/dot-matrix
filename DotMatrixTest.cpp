@@ -1,3 +1,23 @@
+/*
+ *	Basic animation sample on arduino managing 3D8S 8x8x8 led cubic display
+ *	by connecting the serial port on 3D8S board (P2)
+ *
+ *	P2.1 -> VCC (5V)
+ *	P2.2 -> #1 (TX)
+ *	P2.3 -> #0 (RX)
+ *	P2.4 -> GND (0V)
+ *
+ *	Disconnection would be needed when upload the sketch to arduino.
+ *
+ *	Author: Weihong Guan
+ *	Blog: http://aguegu.net
+ *	E-mail: weihong.guan@gmail.com
+ *
+ *	Code license: Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)
+ *	http://creativecommons.org/licenses/by-nc-sa/3.0/
+ *	source host: https://github.com/aguegu/dot-matrix
+ */
+
 #include "DotMatrixTest.h"
 #include "Controller_A3D8_Basic.h"
 
