@@ -1,48 +1,25 @@
-/*
- *	Basic animation sample on arduino managing 3D8S 8x8x8 led cubic display
- *	by connecting the serial port on 3D8S board (P2)
- *
- *	P2.1 -> VCC (5V)
- *	P2.2 -> #1 (TX)
- *	P2.3 -> #0 (RX)
- *	P2.4 -> GND (0V)
- *
- *	Disconnection would be needed when upload the sketch to arduino.
- *
- *	Author: Weihong Guan
- *	Blog: http://aguegu.net
- *	E-mail: weihong.guan@gmail.com
- *
- *	Code license: Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)
- *	http://creativecommons.org/licenses/by-nc-sa/3.0/
- *	source host: https://github.com/aguegu/dot-matrix
- */
-
 #include "DotMatrixTest.h"
-#include "Controller_A3D8_Basic.h"
+
+#include "DotMatrix3D.h"
+#include "Controller_A3D8.h"
 
 extern HardwareSerial Serial;
 
-const byte length = 64;
-byte * pScreen;
-
-Controller_A3D8_Basic cube(Serial);
+DotMatrix3D dm(1);
+Controller_A3D8 cube(dm, Serial);
 
 void setup()
 {
 	//pScreen = (byte *) malloc(sizeof(byte) * length);
-	pScreen = new byte(length);
 	Serial.begin(57600);
 	cube.sendMode(Controller_A3D8_Basic::XYZ);
 	cube.sendBrightness(0xff);
-}
 
-void animationBgLed()
-{
-	static byte value = 0x00;
-	cube.sendGlobal(0x00);
-	cube.sendBgLed(value++);
-	if (value == 4) value = 0;
+	dm.clear(0x00);
+
+	for (byte i = 0; i < 4; i++)
+		dm.setDot(0, 0, i);
+
 }
 
 void animationFlash()
@@ -83,18 +60,49 @@ void animationBlockScan()
 	if (value == 0xff)
 		value = 0x00;
 }
-void animationRiseZ()
-{
-	for (byte i = 0; i < length; i++)
-		pScreen[i] <<= 1;
 
+void animationFlowZPosi()
+{
+	dm.setMoveDirection(DotMatrix3D::Z_POSI);
+	dm.move(false);
 	for (byte i = 0; i < random(4); i++)
 	{
 		byte x = random(8);
 		byte y = random(8);
-		pScreen[8 * y + x] |= 0x01;
+		dm.setDot(x, y, 0);
 	}
-	cube.sendBatch(pScreen, length);
+	cube.putDM();
+}
+
+void animationMoveSide()
+{
+	static byte k = 0;
+
+	if (k == 0)
+		dm.clear(0x01);
+
+	byte index;
+
+	for (word i = dm.countBytes(); i;)
+	{
+		i--;
+		byte temp = dm.getByte(i) & 0x81;
+		dm.setByte(i, ((dm.getByte(i) & 0x7e) << 1) | temp);
+	}
+
+	if (bitRead(dm.orValue(),0) == true)
+	{
+		do
+		{
+			index = random(64);
+		} while (dm.getByte(index) != 0x01);
+		dm.setByte(index, 0x02);
+	}
+
+	cube.putDM();
+
+	if (++k == 72)
+		k = 0;
 }
 
 void callAnimation(void (*p)(), uint16_t span, uint16_t times, byte init_value,
@@ -119,11 +127,14 @@ void callAnimationInModes(void (*p)(), uint16_t span, uint16_t times,
 
 void loop()
 {
-	callAnimation(animationBgLed, 0x400, 0x08, 0x00, Controller_A3D8_Basic::XYZ);
-	callAnimation(animationFlash, 0xF0, 0x08, 0x00, Controller_A3D8_Basic::XYZ);
-	callAnimation(animationBreathe, 0x08, 0xff * 4, 0xff, Controller_A3D8_Basic::XYZ);
-	callAnimationInModes(animationFacetScan, 0x80, 0x08, 0x00);
-	callAnimationInModes(animationBlockScan, 0x80, 0x08, 0x00);
-	callAnimationInModes(animationRiseZ,0x40, 0x60, 0x00);
+//	callAnimation(animationFlash, 0xF0, 0x08, 0x00, Controller_A3D8_Basic::XYZ);
+//	callAnimation(animationBreathe, 0x08, 0xff * 4, 0xff,
+//			Controller_A3D8_Basic::XYZ);
+//	callAnimationInModes(animationFacetScan, 0x80, 0x08, 0x00);
+//	callAnimationInModes(animationBlockScan, 0x80, 0x08, 0x00);
+//	callAnimationInModes(animationFlowZPosi, 0x40, 0x60, 0x00);
+	callAnimationInModes(animationMoveSide, 0x40, 72, 0x00);
+
+
 }
 

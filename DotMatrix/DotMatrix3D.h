@@ -17,6 +17,18 @@ public:
 	virtual ~DotMatrix3D();
 	void setDot(byte x, byte y, byte z, bool on = true);
 
+	enum Direction3D
+	{
+		Z_NEGA,
+		Z_POSI,
+		Y_NEGA,
+		Y_POSI,
+		X_NEGA,
+		X_POSI,
+	};
+
+	void setMoveDirection(Direction3D direction);
+
 private:
 
 	byte _block_count;

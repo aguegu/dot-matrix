@@ -42,6 +42,7 @@ public:
 	void clear(byte c = 0x00);
 	void setByte(word index, byte value);
 	void putByte(byte col, byte row, byte value);
+	byte getByte(word index);
 
 	void reverseDot(byte col, byte row);
 	void setDot(byte col, byte row, boolean b = true);
@@ -73,17 +74,10 @@ public:
 
 	static byte reverseByte(byte c);
 
-private:
+	byte orValue();
+	byte andValue();
 
-	byte _col_count;
-	byte _row_count;
-	byte _bytes_per_row;
-	word _bytes_length;
-
-	byte * _pScreen;
-	void (DotMatrix::*_funMoveDirection)(bool);
-
-	word getIndex(byte col, byte row) const;
+protected:
 
 	void moveBitInColNega(bool recycle);
 	void moveBitInColPosi(bool recycle);
@@ -95,6 +89,25 @@ private:
 
 	void moveBitInByteNega(bool recycle);
 	void moveBitInBytePosi(bool recycle);
+
+	void (DotMatrix::*_funMoveDirection)(bool);
+
+
+
+
+private:
+
+	byte _col_count;
+	byte _row_count;
+	byte _bytes_per_row;
+	word _bytes_length;
+
+	byte * _pScreen;
+
+
+	word getIndex(byte col, byte row) const;
+
+
 };
 
 #endif /* DOTMATRIX_H_ */
