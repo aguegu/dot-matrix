@@ -36,13 +36,10 @@ public:
 	void sendBrightness(byte brightness);
 	void sendBgLed(byte bg_led_configure);
 
-private:
-	HardwareSerial & _sp;
-
 protected:
+
+	HardwareSerial & _sp;
 	const byte _length;
-
-
 
 };
 

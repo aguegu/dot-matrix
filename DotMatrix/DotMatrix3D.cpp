@@ -24,8 +24,6 @@ void DotMatrix3D::setDot(byte x, byte y, byte z, bool on)
 		return;
 
 	byte col = this->convertCol(x, z);
-
-	//DotMatrix::setDot(block_id * BLOCK_COLUMN_COUNT + col_x + col_y * BLOCK_EDGE_LENGTH, on);
 	this->DotMatrix::setDot(col, y, on);
 }
 

@@ -18,6 +18,7 @@ public:
 	virtual ~Controller_A3D8();
 
 	void putDM();
+	void putDMrevZ();
 private:
 	DotMatrix & _dm;
 };
