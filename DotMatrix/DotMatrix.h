@@ -92,9 +92,6 @@ protected:
 
 	void (DotMatrix::*_funMoveDirection)(bool);
 
-
-
-
 private:
 
 	byte _col_count;

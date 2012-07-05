@@ -57,4 +57,49 @@ void DotMatrix3D::setMoveDirection(Direction3D d)
 	}
 }
 
+void DotMatrix3D::rotate(byte index, bool recycle, bool clockwise)
+{
+	if (index > 3)
+		return;
+
+	byte length = pgm_read_byte_near(ROLL_LENGTH+index);
+	byte indent = 0;
+	for (byte i=0;i<index;i++)
+	{
+		indent += pgm_read_byte_near(ROLL_LENGTH+i);
+	}
+
+	if (clockwise)
+	{
+		byte temp = recycle ? this->getByte(pgm_read_byte_near(ROLL_INDEX+indent)) : 0x00;
+		for (byte i = 1; i < length; i++)
+		{
+			this->setByte(pgm_read_byte_near(ROLL_INDEX+indent+i-1),
+					this->getByte(pgm_read_byte_near(ROLL_INDEX+indent+i)));
+		}
+		this->setByte(pgm_read_byte_near(ROLL_INDEX+indent+length-1), temp);
+	}
+	else
+	{
+		byte temp = recycle ? this->getByte(pgm_read_byte_near(ROLL_INDEX+indent+length-1)) : 0x00;
+		for (byte i = length-1; i; i--)
+		{
+			this->setByte(pgm_read_byte_near(ROLL_INDEX+indent+i),
+					this->getByte(pgm_read_byte_near(ROLL_INDEX+indent+i-1)));
+		}
+		this->setByte(pgm_read_byte_near(ROLL_INDEX+indent), temp);
+	}
+
+}
+
+void DotMatrix3D::rotateSync(bool recycle, bool clockwise)
+{
+	static byte step = 0;
+	for (byte i=0;i<4;i++)
+	{
+		if(pgm_read_byte_near(ROLL_STEP+i) & _BV(step))
+			this->rotate(i,recycle,clockwise);
+	}
+	if (++step==7) step=0;
+}
 

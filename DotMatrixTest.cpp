@@ -12,6 +12,15 @@ Controller_A3D8 cube(dm, Serial);
 
 byte * cache;
 
+const uint8_t PROGMEM PATTERN_LOVE[] =
+{ 0x00, 0x81, 0x81, 0xFF, // I
+		0x38, 0xFC, 0xFE, 0x3F, //heart
+		0x00, 0xFF, 0xFF, 0x01, // U
+		};
+
+const uint8_t PROGMEM PATTERN_ARROW[] =
+{ 0x08, 0x14, 0x22, 0x77, 0x14, 0x14, 0x14, 0x14, 0x14, 0x1c, };
+
 void setup()
 {
 	delay(0x200);
@@ -226,7 +235,8 @@ void animationWaveRotate()
 
 	byte i = k / 7;
 
-	dm.setLine(cache[i%4],cache[(i+1)%4],cache[(i+2)%4],cache[(i+3)%4]);
+	dm.setLine(cache[i % 4], cache[(i + 1) % 4], cache[(i + 2) % 4],
+			cache[(i + 3) % 4]);
 
 	cube.putDM();
 
@@ -235,6 +245,107 @@ void animationWaveRotate()
 
 	cube.putDM();
 
+}
+
+void animationDance()
+{
+	static char x = 4, y = 4;
+
+	dm.setMoveDirection(DotMatrix3D::Z_POSI);
+	dm.move();
+
+	char vx = random(3) - 1;
+	char vy = random(3) - 1;
+
+	x += vx;
+	y += vy;
+
+	if (x >= 8 || x < 0)
+	{
+		x -= vx + vx;
+	}
+
+	if (y >= 8 || y < 0)
+	{
+		y -= vy + vy;
+	}
+
+	dm.setDot(x, y, 0);
+	cube.putDM();
+}
+
+void animationRotateArrow()
+{
+	static byte k = 0;
+	dm.rotate(0, false, false);
+	if (k < 10)
+		dm.setByte(0, pgm_read_byte_near(PATTERN_ARROW+k));
+	cube.putDM();
+	if (++k == 28)
+		k = 0;
+}
+
+void animationRotateLove()
+{
+	static byte k = 0;
+
+	if (k % 56 == 0)
+	{
+		for (byte i = 0; i < 4; i++)
+		{
+			byte value = DotMatrix::reverseByte(
+					pgm_read_byte_near(PATTERN_LOVE+(k/56)*4+i));
+			dm.setByte(0x20 + i, value);
+			dm.setByte(0x27 - i, value);
+			dm.setByte(0x18 + i, value);
+			dm.setByte(0x1f - i, value);
+		}
+	}
+
+	dm.rotateSync(true, true);
+
+	cube.putDM();
+
+	if (++k == 28 * 6)
+		k = 0;
+
+}
+
+void animationOneByOne()
+{
+	static bool b = true;
+	byte col, row;
+
+	if (b)
+	{
+		if (dm.andValue() != 0xff)
+		{
+			do
+			{
+				col = random(64);
+				row = random(8);
+			} while (dm.getDot(col, row) == true);
+			dm.DotMatrix::setDot(col, row, true);
+		}
+		else
+			b = false;
+	}
+	else
+	{
+		if (dm.orValue())
+		{
+			do
+			{
+				col = random(64);
+				row = random(8);
+			} while (dm.getDot(col, row) == false);
+			dm.DotMatrix::setDot(col, row, false);
+		}
+		else
+			b = true;
+	}
+
+	cube.putDM();
 }
 
 void callAnimation(void (*p)(), uint16_t span, uint16_t times, byte init_value,
@@ -262,17 +373,32 @@ void loop()
 	callAnimation(animationFlash, 0xF0, 0x08, 0x00, Controller_A3D8_Basic::XYZ);
 	callAnimation(animationBreathe, 0x08, 0xff * 4, 0xff,
 			Controller_A3D8_Basic::XYZ);
-	callAnimationInModes(animationFacetScan, 0x80, 0x08, 0x00);
-	callAnimationInModes(animationBlockScan, 0x80, 0x08, 0x00);
-	callAnimationInModes(animationFlowZPosi, 0x40, 0x60, 0x00);
+	callAnimationInModes(animationFacetScan, 0x40, 0x08, 0x00);
+	callAnimationInModes(animationBlockScan, 0x40, 0x08, 0x00);
+	callAnimationInModes(animationFlowZPosi, 0x40, 0x40, 0x00);
 	callAnimationInModes(animationMoveSide, 0x30, 144, 0x00);
 	callAnimationInModes(animationMoveSideQuick, 0x40, 0x10, 0x01);
 	callAnimationInModes(animationWave2D, 0x40, 14 * 4, 0x00);
-	callAnimation(animationWave3D, 0x40, 14 * 8, 0x00, Controller_A3D8_Basic::ZXY);
+	callAnimation(animationWave3D, 0x40, 14 * 8, 0x00,
+			Controller_A3D8_Basic::ZXY);
 
 	callAnimation(animationWaveRotate, 0x20, 14 * 8, 0x00,
 			Controller_A3D8_Basic::XYZ);
 	callAnimation(animationWaveRotate, 0x20, 14 * 8, 0x00,
-				Controller_A3D8_Basic::YZX);
+			Controller_A3D8_Basic::YZX);
+
+	callAnimation(animationDance, 0x20, 0x80, 0x00, Controller_A3D8_Basic::ZXY);
+
+	callAnimation(animationRotateArrow, 0x20, 28 * 3, 0x00,
+			Controller_A3D8_Basic::YZX);
+
+	callAnimation(animationRotateArrow, 0x30, 28 * 3, 0x00,
+			Controller_A3D8_Basic::ZXY);
+
+	callAnimation(animationRotateLove, 0x30, 28 * 6, 0x00,
+			Controller_A3D8_Basic::ZXY);
+
+	callAnimation(animationOneByOne, 0x10, 0x400, 0x00,
+			Controller_A3D8_Basic::XYZ);
 }
 
