@@ -382,6 +382,9 @@ void loop()
 	callAnimation(animationWave3D, 0x40, 14 * 8, 0x00,
 			Controller_A3D8_Basic::ZXY);
 
+	callAnimation(animationWaveShake, 0x40, 14 * 8, 0x00,
+				Controller_A3D8_Basic::XYZ);
+
 	callAnimation(animationWaveRotate, 0x20, 14 * 8, 0x00,
 			Controller_A3D8_Basic::XYZ);
 	callAnimation(animationWaveRotate, 0x20, 14 * 8, 0x00,
