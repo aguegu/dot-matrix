@@ -37,47 +37,35 @@ void setup()
 
 }
 
-void animationFlash()
+void animationFlash(word k)
 {
-	static byte value = 0xff;
+	byte value = k & 0x01 ? 0xff : 0x00;
 	cube.sendGlobal(value);
-	value = ~value;
 }
 
-void animationBreathe()
+void animationBreathe(word k)
 {
-	static byte brightness = 0xff;
-	static bool increase = false;
+	k = k % 0x200;
+	byte brightness = k < 0x100 ? 0xff - k : k - 0xff;
 
 	cube.sendGlobal(0xff);
-	cube.sendBrightness(increase ? ++brightness : --brightness);
-
-	if (brightness == 0xff)
-		increase = false;
-
-	if (brightness == 0x00)
-		increase = true;
+	cube.sendBrightness(brightness);
 }
 
-void animationFacetScan()
+void animationFacetScan(word k)
 {
-	static byte value = 0x01;
+	byte value = _BV(k%8);
 	cube.sendGlobal(value);
-	value <<= 1;
-	if (value == 0x00)
-		value = 0x01;
 }
 
-void animationBlockScan()
+void animationBlockScan(word k)
 {
-	static byte value = 0x00;
-	value = (value << 1) + 0x01;
+	k = k % 8;
+	byte value = _BV(k+1) - 1;
 	cube.sendGlobal(value);
-	if (value == 0xff)
-		value = 0x00;
 }
 
-void animationFlowZPosi()
+void animationFlowZPosi(word k)
 {
 	dm.setMoveDirection(DotMatrix3D::Z_POSI);
 	dm.move(false);
@@ -90,10 +78,9 @@ void animationFlowZPosi()
 	cube.putDM();
 }
 
-void animationMoveSide()
+void animationMoveSide(word k)
 {
-	static byte k = 0;
-
+	k %= 144;
 	if (k == 0 || k == 72)
 		dm.clear(0x01);
 
@@ -117,16 +104,13 @@ void animationMoveSide()
 
 	k < 72 ? cube.putDM() : cube.putDMrevZ();
 
-	if (++k == 144)
-		k = 0;
 }
 
-void animationMoveSideQuick()
+void animationMoveSideQuick(word k)
 {
-	static byte k = 0;
-	static bool b = true;
+	k %= 16;
 
-	if (k == 0)
+	if (k % 8 == 0)
 	{
 		for (byte i = 0; i < BYTE_LENGTH; i++)
 		{
@@ -134,7 +118,7 @@ void animationMoveSideQuick()
 		}
 	}
 
-	if (b)
+	if (k < 8)
 		for (byte i = 0; i < BYTE_LENGTH; i++)
 		{
 			byte temp = dm.getByte(i);
@@ -152,35 +136,24 @@ void animationMoveSideQuick()
 	}
 
 	cube.putDM();
-	k++;
-	if (k == 8 || k == 16)
-		b = !b;
-	if (k == 16)
-		k = 0;
-
 }
 
-void animationWave2D()
+void animationWave2D(word k)
 {
-	static byte k = 0;
-	static bool b = false;
+	k %= 16;
+	byte value = k < 8 ? k : 15 - k;
 
 	dm.setMoveDirection(DotMatrix3D::Y_POSI);
 	dm.move(false);
 
-	dm.setByte(k, 0xff);
+	dm.setByte(value, 0xff);
 	cube.putDM();
-
-	if (k == 7 || k == 0)
-		b = !b;
-
-	b ? k++ : k--;
 }
 
-void animationWave3D()
+void animationWave3D(word k)
 {
-	static byte k = 0;
-	static bool b = false;
+	k %= 16;
+	byte value = k < 8 ? k : 15 - k;
 
 	for (byte i = 0; i < 8; i++)
 		cache[i] = dm.getByte(i);
@@ -194,36 +167,26 @@ void animationWave3D()
 	for (byte i = 7; i; i--)
 		dm.setByte(i, dm.getByte(i - 1));
 
-	dm.setByte(0x00, _BV(k));
-	if (k == 7 || k == 0)
-		b = !b;
+	dm.setByte(0x00, _BV(value));
 
 	cube.putDM();
-	b ? k++ : k--;
 }
 
-void animationWaveShake()
+void animationWaveShake(word k)
 {
-	static byte k = 0;
-	static bool b = false;
+	k %= 16;
+	byte value = k < 8 ? k : 15 - k;
 
 	dm.setMoveDirection(DotMatrix3D::X_POSI);
 	dm.move(false);
-	dm.setLine(0, k, 7, 7 - k);
+	dm.setLine(0, value, 7, 7 - value);
 
 	cube.putDM();
-
-	if (k == 7 || k == 0)
-		b = !b;
-
-	cube.putDM();
-	b ? k++ : k--;
 }
 
-void animationWaveRotate()
+void animationWaveRotate(word k)
 {
-	static byte k = 0;
-
+	k %= 28;
 	dm.setMoveDirection(DotMatrix3D::X_POSI);
 	dm.move(false);
 
@@ -239,17 +202,18 @@ void animationWaveRotate()
 			cache[(i + 3) % 4]);
 
 	cube.putDM();
-
-	if (++k == 28)
-		k = 0;
-
-	cube.putDM();
-
 }
 
-void animationDance()
+void animationDance(word k)
 {
-	static char x = 4, y = 4;
+	if (k == 0)
+	{
+		cache[0] = 0;
+		cache[1] = 0;
+	}
+
+	char x = cache[0];
+	char y = cache[1];
 
 	dm.setMoveDirection(DotMatrix3D::Z_POSI);
 	dm.move();
@@ -270,24 +234,26 @@ void animationDance()
 		y -= vy + vy;
 	}
 
+	cache[0] = x;
+	cache[1] = y;
+
 	dm.setDot(x, y, 0);
 	cube.putDM();
 }
 
-void animationRotateArrow()
+void animationRotateArrow(word k)
 {
-	static byte k = 0;
+	k %= 28;
 	dm.rotate(0, false, false);
 	if (k < 10)
 		dm.setByte(0, pgm_read_byte_near(PATTERN_ARROW+k));
 	cube.putDM();
-	if (++k == 28)
-		k = 0;
+
 }
 
-void animationRotateLove()
+void animationRotateLove(word k)
 {
-	static byte k = 0;
+	k %= 28 * 6;
 
 	if (k % 56 == 0)
 	{
@@ -305,62 +271,48 @@ void animationRotateLove()
 	dm.rotateSync(true, true);
 
 	cube.putDM();
-
-	if (++k == 28 * 6)
-		k = 0;
-
 }
 
-void animationOneByOne()
+void animationOneByOne(word k)
 {
-	static bool b = true;
+	if (k % 512 == 0)	dm.clear(0x00);
+
 	byte col, row;
 
-	if (b)
+	if (dm.andValue() != 0xff)
 	{
-		if (dm.andValue() != 0xff)
+		do
 		{
-			do
-			{
-				col = random(64);
-				row = random(8);
-			} while (dm.getDot(col, row) == true);
-			dm.DotMatrix::setDot(col, row, true);
-		}
-		else
-			b = false;
-	}
-	else
-	{
-		if (dm.orValue())
-		{
-			do
-			{
-				col = random(64);
-				row = random(8);
-			} while (dm.getDot(col, row) == false);
-			dm.DotMatrix::setDot(col, row, false);
-		}
-		else
-			b = true;
+			col = random(64);
+			row = random(8);
+		} while (dm.getDot(col, row) == true);
+		dm.DotMatrix::setDot(col, row, true);
 	}
 
-	cube.putDM();
+	k /= 512;
+	if (k & 0x01)
+		cube.putReverseDM();
+	else
+		cube.putDM();
 }
 
-void callAnimation(void (*p)(), uint16_t span, uint16_t times, byte init_value,
+void callAnimation(void (*p)(word), word span, word times, byte init_value,
 		Controller_A3D8_Basic::InputMode mode)
 {
+	static word frame_id = 0;
+
 	cube.sendMode(mode);
 	dm.clear(init_value);
+
 	while (times--)
 	{
-		(*p)();
+		(*p)(frame_id++);
 		delay(span);
 	}
+	frame_id = 0;
 }
 
-void callAnimationInModes(void (*p)(), uint16_t span, uint16_t times,
+void callAnimationInModes(void (*p)(word), word span, word times,
 		byte init_value)
 {
 	for (byte i = 0; i < 3; i++)
@@ -370,38 +322,48 @@ void callAnimationInModes(void (*p)(), uint16_t span, uint16_t times,
 
 void loop()
 {
-	callAnimation(animationFlash, 0xF0, 0x08, 0x00, Controller_A3D8_Basic::XYZ);
-	callAnimation(animationBreathe, 0x08, 0xff * 4, 0xff,
-			Controller_A3D8_Basic::XYZ);
-	callAnimationInModes(animationFacetScan, 0x40, 0x08, 0x00);
-	callAnimationInModes(animationBlockScan, 0x40, 0x08, 0x00);
-	callAnimationInModes(animationFlowZPosi, 0x40, 0x40, 0x00);
-	callAnimationInModes(animationMoveSide, 0x30, 144, 0x00);
-	callAnimationInModes(animationMoveSideQuick, 0x40, 0x10, 0x01);
-	callAnimationInModes(animationWave2D, 0x40, 14 * 4, 0x00);
-	callAnimation(animationWave3D, 0x40, 14 * 8, 0x00,
-			Controller_A3D8_Basic::ZXY);
+	/*
+	 callAnimation(animationFlash, 0xF0, 0x08, 0x00, Controller_A3D8_Basic::XYZ);
 
-	callAnimation(animationWaveShake, 0x40, 14 * 8, 0x00,
-				Controller_A3D8_Basic::XYZ);
+	 callAnimation(animationBreathe, 0x08, 0xff * 4, 0xff, Controller_A3D8_Basic::XYZ);
 
-	callAnimation(animationWaveRotate, 0x20, 14 * 8, 0x00,
-			Controller_A3D8_Basic::XYZ);
-	callAnimation(animationWaveRotate, 0x20, 14 * 8, 0x00,
-			Controller_A3D8_Basic::YZX);
+	 callAnimationInModes(animationFacetScan, 0x40, 0x08, 0x00);
+	 callAnimationInModes(animationBlockScan, 0x40, 0x08, 0x00);
 
-	callAnimation(animationDance, 0x20, 0x80, 0x00, Controller_A3D8_Basic::ZXY);
+	 callAnimationInModes(animationFlowZPosi, 0x40, 0x40, 0x00);
 
-	callAnimation(animationRotateArrow, 0x20, 28 * 3, 0x00,
-			Controller_A3D8_Basic::YZX);
+	 callAnimationInModes(animationMoveSide, 0x30, 144, 0x00);
 
-	callAnimation(animationRotateArrow, 0x30, 28 * 3, 0x00,
-			Controller_A3D8_Basic::ZXY);
+	 callAnimationInModes(animationMoveSideQuick, 0x40, 0x10, 0x01);
+
+	 callAnimationInModes(animationWave2D, 0x40, 14 * 4, 0x00);
+
+	 callAnimation(animationWave3D, 0x40, 14 * 8, 0x00,
+	 Controller_A3D8_Basic::ZXY);
+
+	 callAnimation(animationWaveShake, 0x40, 14 * 8, 0x00,
+	 Controller_A3D8_Basic::XYZ);
+
+	 callAnimation(animationWaveRotate, 0x20, 14 * 8, 0x00,
+	 Controller_A3D8_Basic::XYZ);
+
+	 callAnimation(animationWaveRotate, 0x20, 14 * 8, 0x00,
+	 Controller_A3D8_Basic::YZX);
+
+	 callAnimation(animationDance, 0x20, 0x80, 0x00, Controller_A3D8_Basic::ZXY);
+
+	 callAnimation(animationRotateArrow, 0x20, 28 * 3, 0x00,
+	 Controller_A3D8_Basic::YZX);
+
+	 callAnimation(animationRotateArrow, 0x30, 28 * 3, 0x00,
+	 Controller_A3D8_Basic::ZXY);
+
 
 	callAnimation(animationRotateLove, 0x30, 28 * 6, 0x00,
 			Controller_A3D8_Basic::ZXY);
+	*/
+	 callAnimation(animationOneByOne, 0x10, 0x400, 0x00,
+	 Controller_A3D8_Basic::XYZ);
 
-	callAnimation(animationOneByOne, 0x10, 0x400, 0x00,
-			Controller_A3D8_Basic::XYZ);
 }
 

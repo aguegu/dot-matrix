@@ -19,6 +19,8 @@ public:
 
 	void putDM();
 	void putDMrevZ();
+	void putReverseDM();
+
 private:
 	DotMatrix & _dm;
 };
