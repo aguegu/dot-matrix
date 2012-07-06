@@ -322,48 +322,30 @@ void callAnimationInModes(void (*p)(word), word span, word times,
 
 void loop()
 {
-	/*
-	 callAnimation(animationFlash, 0xF0, 0x08, 0x00, Controller_A3D8_Basic::XYZ);
+	callAnimation(animationFlash, 0xF0, 0x08, 0x00, Controller_A3D8_Basic::XYZ);
+	callAnimation(animationBreathe, 0x08, 0xff * 4, 0xff, Controller_A3D8_Basic::XYZ);
+	callAnimationInModes(animationFacetScan, 0x40, 0x08, 0x00);
+	callAnimationInModes(animationBlockScan, 0x40, 0x08, 0x00);
+	callAnimationInModes(animationFlowZPosi, 0x40, 0x40, 0x00);
 
-	 callAnimation(animationBreathe, 0x08, 0xff * 4, 0xff, Controller_A3D8_Basic::XYZ);
+	callAnimationInModes(animationMoveSide, 0x30, 144, 0x00);
+	callAnimationInModes(animationMoveSideQuick, 0x40, 0x10, 0x01);
 
-	 callAnimationInModes(animationFacetScan, 0x40, 0x08, 0x00);
-	 callAnimationInModes(animationBlockScan, 0x40, 0x08, 0x00);
+	callAnimationInModes(animationWave2D, 0x40, 14 * 4, 0x00);
+	callAnimation(animationWave3D, 0x40, 14 * 8, 0x00, Controller_A3D8_Basic::ZXY);
+	callAnimation(animationWaveShake, 0x40, 14 * 8, 0x00, Controller_A3D8_Basic::XYZ);
 
-	 callAnimationInModes(animationFlowZPosi, 0x40, 0x40, 0x00);
+	callAnimation(animationWaveRotate, 0x20, 14 * 8, 0x00, Controller_A3D8_Basic::XYZ);
+	callAnimation(animationWaveRotate, 0x20, 14 * 8, 0x00, Controller_A3D8_Basic::YZX);
 
-	 callAnimationInModes(animationMoveSide, 0x30, 144, 0x00);
+	callAnimation(animationDance, 0x20, 0x80, 0x00, Controller_A3D8_Basic::ZXY);
 
-	 callAnimationInModes(animationMoveSideQuick, 0x40, 0x10, 0x01);
+	callAnimation(animationRotateArrow, 0x20, 28 * 3, 0x00, Controller_A3D8_Basic::YZX);
+	callAnimation(animationRotateArrow, 0x30, 28 * 3, 0x00, Controller_A3D8_Basic::ZXY);
 
-	 callAnimationInModes(animationWave2D, 0x40, 14 * 4, 0x00);
+	callAnimation(animationRotateLove, 0x30, 28 * 6, 0x00, Controller_A3D8_Basic::ZXY);
 
-	 callAnimation(animationWave3D, 0x40, 14 * 8, 0x00,
-	 Controller_A3D8_Basic::ZXY);
-
-	 callAnimation(animationWaveShake, 0x40, 14 * 8, 0x00,
-	 Controller_A3D8_Basic::XYZ);
-
-	 callAnimation(animationWaveRotate, 0x20, 14 * 8, 0x00,
-	 Controller_A3D8_Basic::XYZ);
-
-	 callAnimation(animationWaveRotate, 0x20, 14 * 8, 0x00,
-	 Controller_A3D8_Basic::YZX);
-
-	 callAnimation(animationDance, 0x20, 0x80, 0x00, Controller_A3D8_Basic::ZXY);
-
-	 callAnimation(animationRotateArrow, 0x20, 28 * 3, 0x00,
-	 Controller_A3D8_Basic::YZX);
-
-	 callAnimation(animationRotateArrow, 0x30, 28 * 3, 0x00,
-	 Controller_A3D8_Basic::ZXY);
-
-
-	callAnimation(animationRotateLove, 0x30, 28 * 6, 0x00,
-			Controller_A3D8_Basic::ZXY);
-	*/
-	 callAnimation(animationOneByOne, 0x10, 0x400, 0x00,
-	 Controller_A3D8_Basic::XYZ);
+	callAnimation(animationOneByOne, 0x10, 0x400, 0x00, Controller_A3D8_Basic::XYZ);
 
 }
 

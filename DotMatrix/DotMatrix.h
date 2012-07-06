@@ -2,7 +2,6 @@
  DotMatrix.h
  DotMatrix Class for modeling on the Dot Matrix, providing methods like dot control, draw rectangle, line
  Created on: 2012-01-16
- Updated on: 2012-05-14
 
  library for Arduino for Dot Matrix Display, support driver by 74HC595 and 74HC138, ST7920, HD47780
  Author: Weihong Guan
