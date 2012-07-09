@@ -9,16 +9,13 @@
 #define DRIVER_595_138_BASIC_H_
 
 #include "Arduino.h"
-
-#ifndef PIN_WRITE
-#define pinSet(pin)	*portOutputRegister(digitalPinToPort(pin)) |= digitalPinToBitMask(pin)
-#define pinClear(pin)	*portOutputRegister(digitalPinToPort(pin)) &= ~digitalPinToBitMask(pin)
-#define pinWrite(pin, val) ( (val) ? pinSet(pin) : pinClear(pin))
-#endif
+#include "Driver_74HC595.h"
+#include "Driver_74HC138.h"
 
 class Driver_595_138_Basic
 {
 public:
+
 	Driver_595_138_Basic(uint8_t pin_C_IN, uint8_t pin_C_SH,
 			uint8_t pin_R_A2, uint8_t pin_R_A1, uint8_t pin_R_A0);
 	virtual ~Driver_595_138_Basic();
