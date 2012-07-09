@@ -17,10 +17,11 @@
 #ifndef DRIVER_595_138_H_
 #define DRIVER_595_138_H_
 
-#include "Driver_595_138_Basic.h"
+#include "Driver_74HC138.h"
+#include "Driver_74HC595.h"
 #include "DotMatrix.h"
 
-class Driver_595_138:public Driver_595_138_Basic
+class Driver_595_138
 {
 public:
 
@@ -31,11 +32,10 @@ public:
 
 protected:
 
-	const uint8_t _pin_595_OE;
-	const uint8_t _pin_595_ST;
-	const uint8_t _pin_138_OE;
-
 	const DotMatrix & _dm;
+
+	Driver_74HC595 chip_col;
+	Driver_74HC138 chip_row;
 
 	byte _row_count;
 	byte _bytes_per_row;

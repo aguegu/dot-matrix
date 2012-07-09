@@ -19,15 +19,10 @@
 Driver_595_138::Driver_595_138(DotMatrix & dm, uint8_t pin_C_IN,
 		uint8_t pin_C_OE, uint8_t pin_C_ST, uint8_t pin_C_SH, uint8_t pin_R_OE,
 		uint8_t pin_R_A2, uint8_t pin_R_A1, uint8_t pin_R_A0, uint16_t scan_span)
-	:Driver_595_138_Basic(pin_C_IN, pin_C_SH, pin_R_A2, pin_R_A1, pin_R_A0),
-	 _pin_595_OE(pin_C_OE), _pin_595_ST(pin_C_ST), _pin_138_OE(pin_R_OE), _dm(dm)
+		:_dm(dm), chip_col(pin_C_IN, pin_C_SH, pin_C_ST, pin_C_OE), chip_row(pin_R_A2, pin_R_A1, pin_R_A0, pin_R_OE)
 {
 	this->setSize();
 	this->setSpeed(scan_span);
-
-	pinMode(_pin_595_OE, OUTPUT);
-	pinMode(_pin_595_ST, OUTPUT);
-	pinMode(_pin_138_OE, OUTPUT);
 }
 
 Driver_595_138::~Driver_595_138()
@@ -42,18 +37,16 @@ void Driver_595_138::display(byte times) const
 		byte *p = _dm.output();
 		for (byte r = 0; r < _row_count; r++)
 		{
-			setColFromLSB(p, _bytes_per_row);
-
+			chip_col.shiftSendFromLSB(p, _bytes_per_row);
 			p += _bytes_per_row;
 
-			pinClear(_pin_138_OE);
+			chip_row.setOE(false);
 
-			pinClear(_pin_595_ST);
-			pinSet(_pin_595_ST);
+			chip_col.shiftLatch();
 
-			setRow(r);
+			chip_row.setValue(r);
 
-			pinSet(_pin_138_OE);
+			chip_row.setOE(true);
 
 			delayMicroseconds(_scan_span);
 		}

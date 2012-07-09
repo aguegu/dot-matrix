@@ -22,14 +22,14 @@ Driver_74HC138::~Driver_74HC138()
 
 }
 
-void Driver_74HC138::setRow(byte r) const
+void Driver_74HC138::setValue(byte r) const
 {
 	pinWrite(_pin_A0, r & 0x01);
 	pinWrite(_pin_A1, r & 0x02);
 	pinWrite(_pin_A2, r & 0x04);
 }
 
-void Driver_74HC138::setValue(bool on) const
+void Driver_74HC138::setOE(bool on) const
 {
 	pinWrite(_pin_OE, on);
 }
