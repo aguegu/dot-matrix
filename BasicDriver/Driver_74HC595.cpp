@@ -62,8 +62,8 @@ void Driver_74HC595::shiftSendFromMSB(byte * p, byte length) const
 
 void Driver_74HC595::shiftLatch() const
 {
-	pinClear(_pin_ST);
 	pinSet(_pin_ST);
+	pinClear(_pin_ST);
 }
 
 void Driver_74HC595::setOE(bool on) const
