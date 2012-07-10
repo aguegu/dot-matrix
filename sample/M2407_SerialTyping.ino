@@ -1,6 +1,6 @@
 /*
 	Created on: 2012-01-25
-	Updated on: 2012-06-03
+	Updated on: 2012-07-09
 	Author: Weihong Guan
 	Blog: http://aguegu.net
 	E-mail: weihong.guan@gmail.com
@@ -35,11 +35,13 @@ void setup()
 
 	dmd.setSpeed(0x800);
 	Serial.begin(9600);
+
+	dm.setMoveDirection(DotMatrix::BIT_IN_COL_POSI);
 }
 
 void loop()
 {
-	dm.move(DotMatrix::BIT_IN_BYTE_POSI, true);
+	dm.move(true);
 	dmd.display(0x20);
 }
 
