@@ -7,23 +7,22 @@
 
 #include "Driver_1818_138.h"
 
-Driver_1818_138::Driver_1818_138(DotMatrix & dm, uint8_t pin_62726_DS,
-		uint8_t pin_62726_OE, uint8_t pin_62726_ST, uint8_t pin_62726_SH,
-		uint8_t pin_138_A0, uint8_t pin_138_A1, uint8_t pin_138_A2,
-		uint8_t pin_brightness, uint16_t scan_speed) :
-		Driver_595_138_Basic(pin_62726_DS, pin_62726_SH, pin_138_A2, pin_138_A1,
-				pin_138_A0), _dm(dm), _pin_62726_OE(pin_62726_OE), _pin_62726_ST(
-				pin_62726_ST), _pin_brightness(pin_brightness)
-
+Driver_1818_138::Driver_1818_138(DotMatrix & dm, uint8_t pin_62726_DS, uint8_t pin_62726_OE,
+		uint8_t pin_62726_ST, uint8_t pin_62726_SH, uint8_t pin_138_A2,
+		uint8_t pin_138_A1, uint8_t pin_138_A0, uint8_t pin_brightness,
+		uint16_t scan_speed):
+		_dm(dm),
+		chip_col(pin_62726_DS, pin_62726_SH, pin_62726_ST,pin_62726_OE, pin_brightness),
+		chip_row(pin_138_A2, pin_138_A1, pin_138_A0, 255)
 {
-	pinMode(_pin_62726_OE, OUTPUT);
-	pinMode(_pin_62726_ST, OUTPUT);
-
-	pinMode(_pin_brightness, OUTPUT);
-
 	this->setBrightness();
 	this->setSpeed(scan_speed);
 	this->setSize();
+}
+
+Driver_1818_138::~Driver_1818_138()
+{
+
 }
 
 void Driver_1818_138::setSpeed(uint16_t scan_span)
@@ -40,7 +39,7 @@ void Driver_1818_138::setSize()
 
 void Driver_1818_138::setBrightness(byte brg)
 {
-	analogWrite(_pin_brightness, brg);
+	chip_col.setBrightness(brg);
 }
 
 void Driver_1818_138::setCol(byte row) const
@@ -48,11 +47,7 @@ void Driver_1818_138::setCol(byte row) const
 	byte * p = _dm.output();
 	p += _byte_per_row * row;
 
-	for (byte i = 0; i < _word_per_row; i++)
-	{
-		this->shiftSendFromLSB(*p++);
-		this->shiftSendFromMSB(*p++);
-	}
+	chip_col.shiftSendFromLSB(p, _byte_per_row);
 }
 
 void Driver_1818_138::display(byte times) const
@@ -63,13 +58,10 @@ void Driver_1818_138::display(byte times) const
 		{
 			this->setCol(r);
 
-			digitalWrite(_pin_62726_OE, HIGH);
-
-			digitalWrite(_pin_62726_ST, HIGH);
-			digitalWrite(_pin_62726_ST, LOW);
-			this->setRow(r);
-
-			digitalWrite(_pin_62726_OE, LOW);
+			chip_col.setOE(true);
+			chip_col.shiftLatch();
+			chip_row.setValue(r);
+			chip_col.setOE(false);
 
 			delayMicroseconds(_scan_span);
 		}

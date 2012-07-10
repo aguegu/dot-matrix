@@ -7,25 +7,20 @@
 
 #include "Driver_3D8.h"
 
-Driver_3D8::~Driver_3D8()
-{
-
-}
-
 Driver_3D8::Driver_3D8(DotMatrix & dm, uint8_t pin_62726_DS,
 		uint8_t pin_62726_OE, uint8_t pin_62726_ST, uint8_t pin_62726_SH,
 		uint8_t pin_138_A2, uint8_t pin_138_A1, uint8_t pin_138_A0,
-		uint8_t pin_brightness, uint16_t scan_speed) :
-		_dm(dm), chip_col(pin_62726_DS, pin_62726_SH, pin_62726_ST,
-				pin_62726_OE, pin_brightness), chip_row(pin_138_A2, pin_138_A1,
-				pin_138_A0, 255)
+		uint8_t pin_brightness, uint16_t scan_speed)
+:Driver_1818_138(dm, pin_62726_DS, pin_62726_OE, pin_62726_ST, pin_62726_SH,
+		pin_138_A2, pin_138_A1, pin_138_A0, pin_brightness, scan_speed)
+
+{
+	this->setMode();
+}
+
+Driver_3D8::~Driver_3D8()
 {
 
-	this->setMode();
-
-	this->setBrightness();
-	this->setSpeed(scan_speed);
-	this->setSize();
 }
 
 void Driver_3D8::setMode(byte mode)
@@ -42,23 +37,6 @@ void Driver_3D8::setMode(byte mode)
 		_setCol = &Driver_3D8::setColxyz;
 		break;
 	}
-}
-
-void Driver_3D8::setSpeed(uint16_t scan_span)
-{
-	_scan_span = scan_span;
-}
-
-void Driver_3D8::setSize()
-{
-	_row_count = _dm.countRow();
-	_byte_per_row = _dm.countBytePerRow();
-	_word_per_row = _byte_per_row / 2;
-}
-
-void Driver_3D8::setBrightness(byte brg)
-{
-	chip_col.setBrightness(brg);
 }
 
 void Driver_3D8::setColxyz(byte row) const
