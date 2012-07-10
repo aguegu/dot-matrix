@@ -273,7 +273,6 @@ void animationRotateArrow(word k)
 	if (k < 10)
 		dm.setByte(0, pgm_read_byte_near(PATTERN_ARROW+k));
 	cube.putDM();
-
 }
 
 void animationRotateLove(word k)

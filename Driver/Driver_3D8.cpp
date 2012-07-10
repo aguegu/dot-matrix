@@ -7,12 +7,14 @@
 
 #include "Driver_3D8.h"
 
-Driver_3D8::Driver_3D8(DotMatrix & dm, uint8_t pin_din, uint8_t pin_clk, uint8_t pin_latch, uint8_t pin_en, uint8_t pin_rext,
-		uint8_t pin_a2, uint8_t pin_a1, uint8_t pin_a0, uint16_t scan_speed)
-:Driver_1818_138(dm, pin_din, pin_clk, pin_latch, pin_en, pin_rext,
-		pin_a2, pin_a1, pin_a0, 255, scan_speed)
+Driver_3D8::Driver_3D8(DotMatrix & dm, uint8_t pin_din, uint8_t pin_clk,
+		uint8_t pin_latch, uint8_t pin_en, uint8_t pin_rext, uint8_t pin_a2,
+		uint8_t pin_a1, uint8_t pin_a0, uint16_t scan_speed) :
+		Driver_1818_138(dm, pin_din, pin_clk, pin_latch, pin_en, pin_rext,
+				pin_a2, pin_a1, pin_a0, 255, scan_speed)
 
 {
+
 	this->setMode();
 }
 
@@ -21,14 +23,14 @@ Driver_3D8::~Driver_3D8()
 
 }
 
-void Driver_3D8::setMode(byte mode)
+void Driver_3D8::setMode(ScanMode mode)
 {
 	switch (mode)
 	{
-	case 1:
+	case ZXY:
 		_setCol = &Driver_3D8::setColzxy;
 		break;
-	case 2:
+	case YZX:
 		_setCol = &Driver_3D8::setColyzx;
 		break;
 	default:
@@ -65,10 +67,32 @@ void Driver_3D8::display(byte times) const
 
 void Driver_3D8::setColzxy(byte row) const
 {
+	byte * p = _dm.output();
+	for (byte j = 0; j < _word_per_row; j++)
+	{
+		for (byte i = 8; i--;)
+		{
+			chip_col.setDS(bitRead(*(p++), row));
+			chip_col.shiftClock();
+		}
+
+		p += _byte_per_row;
+
+		for (byte i = 8; i--;)
+		{
+			chip_col.setDS(bitRead(*(--p), row));
+			chip_col.shiftClock();
+		}
+		p += _byte_per_row;
+	}
+}
+
+void Driver_3D8::setColyzx(byte row) const
+{
 	byte *p = _dm.output() + row;
 	for (byte j = 0; j < _byte_per_row; j++) // z
 	{
-		for (byte i = 8; i--; )
+		for (byte i = 8; i--;)
 		{
 			if (j & 0x01)
 				p -= _byte_per_row;
@@ -78,27 +102,6 @@ void Driver_3D8::setColzxy(byte row) const
 				p += _byte_per_row;
 		}
 	}
-}
 
-void Driver_3D8::setColyzx(byte row) const
-{
-	byte * p = _dm.output();
-	for (byte j = 0; j < _word_per_row; j++)
-	{
-		for (byte i = 8; i--; )
-		{
-			chip_col.setDS(bitRead(*(p++), row));
-			chip_col.shiftClock();
-		}
-
-		p += _byte_per_row;
-
-		for (byte i = 8; i--; )
-		{
-			chip_col.setDS(bitRead(*(--p), row));
-			chip_col.shiftClock();
-		}
-		p += _byte_per_row;
-	}
 }
 

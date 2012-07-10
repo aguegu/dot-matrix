@@ -17,10 +17,15 @@ public:
 	Driver_3D8(DotMatrix & dm, uint8_t pin_din, uint8_t pin_clk, uint8_t pin_latch, uint8_t pin_en, uint8_t pin_rext,
 			uint8_t pin_a2, uint8_t pin_a1, uint8_t pin_a0, uint16_t scan_speed = 0x600);
 
+	enum ScanMode
+	{
+		XYZ = 0x00, YZX = 0x01, ZXY = 0x02, OLD = 0x03
+	};
+
 
 	void display(byte times = 0x01) const;
 
-	void setMode(byte mode = 0);
+	void setMode(ScanMode mode = XYZ);
 
 	virtual ~Driver_3D8();
 
