@@ -1,8 +1,16 @@
 /*
- * Driver3D8.cpp
+ * 	Driver3D8.cpp
+ *
+ *	A3D8 (3D8S) 8x8x8 cubic led display driver
  *
  *  Created on: 2012-6-14
- *      Author: agu
+ *	Author: Weihong Guan
+ *	Blog: http://aguegu.net
+ *	E-mail: weihong.guan@gmail.com
+ *
+ *	Code license: Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)
+ *	http://creativecommons.org/licenses/by-nc-sa/3.0/
+ *	source host: https://github.com/aguegu/dot-matrix
  */
 
 #include "Driver_3D8.h"

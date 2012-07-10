@@ -1,8 +1,16 @@
 /*
- * Driver1818138.cpp
+ * 	Driver_1818_138.cpp
+ *
+ *	DotMatrix driver for led matrix driven by 74HC138 and TB62726(TM1818)
  *
  *  Created on: 2012-5-28
- *      Author: Agu
+ *	Author: Weihong Guan
+ *	Blog: http://aguegu.net
+ *	E-mail: weihong.guan@gmail.com
+ *
+ *	Code license: Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)
+ *	http://creativecommons.org/licenses/by-nc-sa/3.0/
+ *	source host: https://github.com/aguegu/dot-matrix
  */
 
 #include "Driver_1818_138.h"
