@@ -15,10 +15,8 @@
 class Driver_1818_138
 {
 public:
-	Driver_1818_138(DotMatrix & dm, uint8_t pin_62726_DS, uint8_t pin_62726_OE,
-			uint8_t pin_62726_ST, uint8_t pin_62726_SH, uint8_t pin_138_A2,
-			uint8_t pin_138_A1, uint8_t pin_138_A0, uint8_t pin_brightness,
-			uint16_t scan_speed = 0x600);
+	Driver_1818_138(DotMatrix & dm, uint8_t pin_din, uint8_t pin_clk, uint8_t pin_latch, uint8_t pin_en, uint8_t pin_rext,
+			uint8_t pin_a2, uint8_t pin_a1, uint8_t pin_a0, uint8_t pin_oe, uint16_t scan_speed = 0x600);
 
 	void setSpeed(uint16_t scan_span);
 	void setSize();

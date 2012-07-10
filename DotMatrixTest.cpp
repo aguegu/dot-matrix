@@ -3,8 +3,7 @@
 #include "Driver_3D8.h"
 
 DotMatrix3D dm(1);
-//Driver_3D8 cube(dm, A3, 8, 9, 10, 3, 4, 5, 11);
-Driver_3D8 cube(dm, 9, 8, 17, 10, 5, 4, 3, 11);
+Driver_3D8 cube(dm, 9, 10, 17, 8, 11, 5, 4, 3);
 
 void setup()
 {

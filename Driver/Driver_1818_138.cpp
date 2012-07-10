@@ -7,13 +7,11 @@
 
 #include "Driver_1818_138.h"
 
-Driver_1818_138::Driver_1818_138(DotMatrix & dm, uint8_t pin_62726_DS, uint8_t pin_62726_OE,
-		uint8_t pin_62726_ST, uint8_t pin_62726_SH, uint8_t pin_138_A2,
-		uint8_t pin_138_A1, uint8_t pin_138_A0, uint8_t pin_brightness,
-		uint16_t scan_speed):
+Driver_1818_138::Driver_1818_138(DotMatrix & dm, uint8_t pin_din, uint8_t pin_clk, uint8_t pin_latch, uint8_t pin_en, uint8_t pin_rext,
+		uint8_t pin_a2, uint8_t pin_a1, uint8_t pin_a0, uint8_t pin_oe, uint16_t scan_speed):
 		_dm(dm),
-		chip_col(pin_62726_DS, pin_62726_SH, pin_62726_ST,pin_62726_OE, pin_brightness),
-		chip_row(pin_138_A2, pin_138_A1, pin_138_A0, 255)
+		chip_col(pin_din, pin_clk, pin_latch,pin_en, pin_rext),
+		chip_row(pin_a2, pin_a1, pin_a0, pin_oe)
 {
 	this->setBrightness();
 	this->setSpeed(scan_speed);

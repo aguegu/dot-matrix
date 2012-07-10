@@ -7,12 +7,10 @@
 
 #include "Driver_3D8.h"
 
-Driver_3D8::Driver_3D8(DotMatrix & dm, uint8_t pin_62726_DS,
-		uint8_t pin_62726_OE, uint8_t pin_62726_ST, uint8_t pin_62726_SH,
-		uint8_t pin_138_A2, uint8_t pin_138_A1, uint8_t pin_138_A0,
-		uint8_t pin_brightness, uint16_t scan_speed)
-:Driver_1818_138(dm, pin_62726_DS, pin_62726_OE, pin_62726_ST, pin_62726_SH,
-		pin_138_A2, pin_138_A1, pin_138_A0, pin_brightness, scan_speed)
+Driver_3D8::Driver_3D8(DotMatrix & dm, uint8_t pin_din, uint8_t pin_clk, uint8_t pin_latch, uint8_t pin_en, uint8_t pin_rext,
+		uint8_t pin_a2, uint8_t pin_a1, uint8_t pin_a0, uint16_t scan_speed)
+:Driver_1818_138(dm, pin_din, pin_clk, pin_latch, pin_en, pin_rext,
+		pin_a2, pin_a1, pin_a0, 255, scan_speed)
 
 {
 	this->setMode();
