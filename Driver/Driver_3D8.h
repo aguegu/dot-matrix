@@ -8,10 +8,11 @@
 #ifndef DRIVER_3D8_H_
 #define DRIVER_3D8_H_
 
-#include "Driver_595_138_Basic.h"
 #include "DotMatrix.h"
+#include "Driver_TB62726.h"
+#include "Driver_74HC138.h"
 
-class Driver_3D8: public Driver_595_138_Basic
+class Driver_3D8
 {
 public:
 	Driver_3D8(DotMatrix & dm, uint8_t pin_62726_DS, uint8_t pin_62726_OE,
@@ -32,11 +33,9 @@ public:
 private:
 
 	const DotMatrix & _dm;
+	Driver_TB62726 chip_col;
+	Driver_74HC138 chip_row;
 
-	const uint8_t _pin_62726_OE;
-	const uint8_t _pin_62726_ST;
-
-	const uint8_t _pin_brightness;
 
 	word _scan_span;
 

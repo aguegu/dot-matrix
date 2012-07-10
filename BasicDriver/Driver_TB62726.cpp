@@ -28,8 +28,8 @@ void Driver_TB62726::shiftSendFromLSB(byte *p, byte length) const
 {
 	for (byte i = length >> 1; i; i--)
 	{
-		this->Driver_74HC595::shiftSendFromLSB(~*(p++));
-		this->Driver_74HC595::shiftSendFromMSB(~*(p++));
+		this->Driver_74HC595::shiftSendFromLSB(*(p++));
+		this->Driver_74HC595::shiftSendFromMSB(*(p++));
 	}
 }
 
@@ -37,7 +37,7 @@ void Driver_TB62726::shiftSendFromMSB(byte *p, byte length) const
 {
 	for (byte i = length >> 1; i; i--)
 	{
-		this->Driver_74HC595::shiftSendFromMSB(~*(p++));
-		this->Driver_74HC595::shiftSendFromLSB(~*(p++));
+		this->Driver_74HC595::shiftSendFromMSB(*(p++));
+		this->Driver_74HC595::shiftSendFromLSB(*(p++));
 	}
 }

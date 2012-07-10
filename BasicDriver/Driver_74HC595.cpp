@@ -22,15 +22,25 @@ Driver_74HC595::~Driver_74HC595()
 	// TODO Auto-generated destructor stub
 }
 
+void Driver_74HC595::setDS(bool high) const
+{
+	pinWrite(_pin_DS, high);
+}
+
+void Driver_74HC595::shiftClock() const
+{
+	pinSet(_pin_SH);
+	pinClear(_pin_SH);
+}
+
 void Driver_74HC595::shiftSendFromLSB(byte c) const
 {
 	byte i = BIT_IN_BYTE;
 
 	while (i--)
 	{
-		pinWrite(_pin_DS, c & 0x01);
-		pinClear(_pin_SH);
-		pinSet(_pin_SH);
+		this->setDS(c & 0x01);
+		this->shiftClock();
 		c >>= 1;
 	}
 }
@@ -41,9 +51,8 @@ void Driver_74HC595::shiftSendFromMSB(byte c) const
 
 	while (i--)
 	{
-		pinWrite(_pin_DS, c & 0x80);
-		pinClear(_pin_SH);
-		pinSet(_pin_SH);
+		this->setDS(c & 0x80);
+		this->shiftClock();
 		c <<= 1;
 	}
 }

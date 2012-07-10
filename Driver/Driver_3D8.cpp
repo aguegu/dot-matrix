@@ -7,26 +7,19 @@
 
 #include "Driver_3D8.h"
 
-
 Driver_3D8::~Driver_3D8()
 {
 
 }
 
-
 Driver_3D8::Driver_3D8(DotMatrix & dm, uint8_t pin_62726_DS,
 		uint8_t pin_62726_OE, uint8_t pin_62726_ST, uint8_t pin_62726_SH,
 		uint8_t pin_138_A2, uint8_t pin_138_A1, uint8_t pin_138_A0,
 		uint8_t pin_brightness, uint16_t scan_speed) :
-		Driver_595_138_Basic(pin_62726_DS, pin_62726_SH, pin_138_A2, pin_138_A1,
-				pin_138_A0), _dm(dm), _pin_62726_OE(pin_62726_OE), _pin_62726_ST(
-				pin_62726_ST), _pin_brightness(pin_brightness)
-
+		_dm(dm), chip_col(pin_62726_DS, pin_62726_SH, pin_62726_ST,
+				pin_62726_OE, pin_brightness), chip_row(pin_138_A2, pin_138_A1,
+				pin_138_A0, 255)
 {
-	pinMode(_pin_62726_OE, OUTPUT);
-	pinMode(_pin_62726_ST, OUTPUT);
-
-	pinMode(_pin_brightness, OUTPUT);
 
 	this->setMode();
 
@@ -37,7 +30,7 @@ Driver_3D8::Driver_3D8(DotMatrix & dm, uint8_t pin_62726_DS,
 
 void Driver_3D8::setMode(byte mode)
 {
-	switch(mode)
+	switch (mode)
 	{
 	case 1:
 		_setCol = &Driver_3D8::setColzxy;
@@ -48,7 +41,6 @@ void Driver_3D8::setMode(byte mode)
 	default:
 		_setCol = &Driver_3D8::setColxyz;
 		break;
-
 	}
 }
 
@@ -66,7 +58,7 @@ void Driver_3D8::setSize()
 
 void Driver_3D8::setBrightness(byte brg)
 {
-	analogWrite(_pin_brightness, brg);
+	chip_col.setBrightness(brg);
 }
 
 void Driver_3D8::setColxyz(byte row) const
@@ -74,11 +66,7 @@ void Driver_3D8::setColxyz(byte row) const
 	byte * p = _dm.output();
 	p += _byte_per_row * row;
 
-	for (byte i = 0; i < _word_per_row; i++)
-	{
-		this->shiftSendFromLSB(*p++);
-		this->shiftSendFromMSB(*p++);
-	}
+	chip_col.shiftSendFromLSB(p, _byte_per_row);
 }
 
 void Driver_3D8::display(byte times) const
@@ -87,16 +75,12 @@ void Driver_3D8::display(byte times) const
 	{
 		for (byte r = 0; r < _row_count; r++)
 		{
-			//this->setColxyz(r);
 			(this->*_setCol)(r);
 
-			pinSet(_pin_62726_OE);
-
-			pinSet(_pin_62726_ST);
-			pinClear(_pin_62726_ST);
-			this->setRow(r);
-
-			pinClear(_pin_62726_OE);
+			chip_col.setOE(true);
+			chip_col.shiftLatch();
+			chip_row.setValue(r);
+			chip_col.setOE(false);
 
 			delayMicroseconds(_scan_span);
 		}
@@ -106,44 +90,39 @@ void Driver_3D8::display(byte times) const
 void Driver_3D8::setColzxy(byte row) const
 {
 	byte *p = _dm.output() + row;
-	for (byte j = 0; j < 8; j++) // z
+	for (byte j = 0; j < _byte_per_row; j++) // z
 	{
-		for (byte i = 0; i < 8; i++) // y
+		for (byte i = 8; i--; )
 		{
-			if (j&0x01)	p-=8;
-			pinWrite(_pin_595_DS, bitRead(*p, j));
-
-			pinClear(_pin_595_SH);
-			pinSet(_pin_595_SH);
-			if (!(j&0x01)) p+=8;
-			//byte * p = _dm.output() + 8*((j&0x01)?(7-i):i)+ row;
+			if (j & 0x01)
+				p -= _byte_per_row;
+			chip_col.setDS(bitRead(*p, j));
+			chip_col.shiftClock();
+			if (!(j & 0x01))
+				p += _byte_per_row;
 		}
 	}
 }
 
 void Driver_3D8::setColyzx(byte row) const
 {
-	//word length = _dm.countBytes();
 	byte * p = _dm.output();
-	for (byte j = 0; j < 4; j++)
+	for (byte j = 0; j < _word_per_row; j++)
 	{
-		for (byte i = 0; i < 8; i++) // x
+		for (byte i = 8; i--; )
 		{
-			pinWrite(_pin_595_DS, bitRead(*(p++), row));
-			pinClear(_pin_595_SH);
-			pinSet(_pin_595_SH);
+			chip_col.setDS(bitRead(*(p++), row));
+			chip_col.shiftClock();
 		}
 
-		p += 8;
+		p += _byte_per_row;
 
-		for (byte i = 0; i < 8; i++)
+		for (byte i = 8; i--; )
 		{
-			digitalWrite(_pin_595_DS, bitRead(*(--p), row));
-			digitalWrite(_pin_595_SH, LOW);
-			digitalWrite(_pin_595_SH, HIGH);
+			chip_col.setDS(bitRead(*(--p), row));
+			chip_col.shiftClock();
 		}
-		p += 8;
+		p += _byte_per_row;
 	}
 }
-
 

@@ -27,6 +27,8 @@ public:
 	void shiftSendFromMSB(byte *p, byte length) const;
 	void shiftLatch() const;
 	void setOE(bool on = true) const;
+	void setDS(bool high) const;
+	void shiftClock() const;
 
 private:
 	const uint8_t _pin_DS;
