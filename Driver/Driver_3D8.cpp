@@ -52,7 +52,7 @@ void Driver_3D8::setColxyz(byte row) const
 	byte * p = _dm.output();
 	p += _byte_per_row * row;
 
-	chip_col.shiftSendFromLSB(p, _byte_per_row);
+	chip_col.shiftSendCoupleFromLSB(p, _byte_per_row);
 }
 
 void Driver_3D8::display(byte times) const

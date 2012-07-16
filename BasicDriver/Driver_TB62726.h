@@ -18,6 +18,7 @@ public:
 	void setBrightness(byte brg);
 	void shiftSendFromLSB(byte *p, byte length) const;
 	void shiftSendFromMSB(byte *p, byte length) const;
+	void shiftSendCoupleFromLSB(byte *p, byte length) const;
 private:
 	const uint8_t _pin_rext;
 };
