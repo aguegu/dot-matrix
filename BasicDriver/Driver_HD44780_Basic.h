@@ -27,7 +27,7 @@ class HD44780_Basic
 {
 public:
 	HD44780_Basic(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7,
-			byte col_count = 16, byte row_count = 2);
+			byte row_count = 2, byte col_count = 16);
 	virtual ~HD44780_Basic();
 
 	void init();
@@ -52,8 +52,8 @@ public:
 
 protected:
 
-	byte _row_count;
-	byte _col_count;
+	const byte _row_count;
+	const byte _col_count;
 	byte _cache_length;
 	char * _cache;
 

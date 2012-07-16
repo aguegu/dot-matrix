@@ -31,8 +31,8 @@ const uint8_t PROGMEM HD44780_ROW_ADDRESS[] = { 0x00, 0x40, 0x10, 0x50 };
 
 HD44780_Basic::HD44780_Basic(uint8_t pin_rs, uint8_t pin_en,
 		uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7,
-		byte col_count, byte row_count)
-		:  _pin_rs(pin_rs), _pin_en(pin_en)
+		byte row_count, byte col_count)
+		:  _row_count(row_count), _col_count(col_count), _pin_rs(pin_rs), _pin_en(pin_en)
 {
 	_pin_dt[0] = pin_d4;
 	_pin_dt[1] = pin_d5;
@@ -44,9 +44,6 @@ HD44780_Basic::HD44780_Basic(uint8_t pin_rs, uint8_t pin_en,
 
 	for (byte i = 0; i < 4; i++)
 		pinMode(_pin_dt[i], OUTPUT);
-
-	_col_count = col_count;
-	_row_count = row_count;
 
 	_cache_length = _row_count * _col_count + 1;
 	_cache = (char *) malloc(sizeof(char) * _cache_length);
