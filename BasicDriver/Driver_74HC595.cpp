@@ -22,6 +22,14 @@ Driver_74HC595::~Driver_74HC595()
 	// TODO Auto-generated destructor stub
 }
 
+void Driver_74HC595::setShiftMode(byte mode)
+{
+	if (mode)
+		_shiftSend = &Driver_74HC595::shiftSendFromMSB;
+	else
+		_shiftSend = &Driver_74HC595::shiftSendFromLSB;
+}
+
 void Driver_74HC595::setDS(bool high) const
 {
 	pinWrite(_pin_DS, high);

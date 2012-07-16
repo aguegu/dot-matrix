@@ -21,8 +21,8 @@ public:
 	Driver_74HC595(uint8_t pin_DS, uint8_t pin_SH, uint8_t pin_ST, uint8_t pin_OE);
 	virtual ~Driver_74HC595();
 
-	void shiftSendFromLSB(byte c) const;
-	void shiftSendFromMSB(byte c) const;
+	void setShiftMode(byte mode = LSBFIRST);
+
 	void shiftSendFromLSB(byte *p, byte length) const;
 	void shiftSendFromMSB(byte *p, byte length) const;
 	void shiftLatch() const;
@@ -30,11 +30,18 @@ public:
 	void setDS(bool high) const;
 	void shiftClock() const;
 
+protected:
+
+	void shiftSendFromLSB(byte c) const;
+	void shiftSendFromMSB(byte c) const;
+
 private:
 	const uint8_t _pin_DS;
 	const uint8_t _pin_SH;
 	const uint8_t _pin_ST;
 	const uint8_t _pin_OE;
+
+	void (Driver_74HC595::*_shiftSend)(byte c) const;
 };
 
 #endif /* DRIVER_74HC595_H_ */
