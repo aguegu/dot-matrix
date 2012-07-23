@@ -77,7 +77,7 @@ void Driver_74HC595::shiftSend(byte * p, byte length) const
 void Driver_74HC595::shiftSendRev(byte * p, byte length) const
 {
 	for (byte i = length; i--;)
-		(this->*_shiftSend)(~*(p++));
+		(this->*_shiftSend)(~(*(p++)));
 }
 
 void Driver_74HC595::shiftLatch() const

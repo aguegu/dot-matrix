@@ -31,7 +31,7 @@ public:
 		XYZ = 0x00, YZX = 0x01, ZXY = 0x02, OLD = 0x03
 	};
 
-	void display(byte times = 0x01);
+	void display(byte times = 0x01) const;
 
 	void setMode(ScanMode mode = XYZ);
 
@@ -39,11 +39,11 @@ public:
 
 private:
 
-	void (Driver_3D8::*_setCol)(byte row);
+	void (Driver_3D8::*_setCol)(byte row) const;
 
-	void setColxyz(byte row);
-	void setColzxy(byte row);
-	void setColyzx(byte row);
+	void setColxyz(byte row) const;
+	void setColzxy(byte row) const;
+	void setColyzx(byte row) const;
 };
 
 #endif /* DRIVER3D8_H_ */
