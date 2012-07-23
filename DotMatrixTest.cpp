@@ -16,29 +16,49 @@
  *
  */
 
-#include "Driver_74HC595.h"
+#include "Driver_74HC595_SPI.h"
 
-Driver_74HC595 chip(4, 7, 6, 5);
-byte cache[4];
+Driver_74HC595_SPI chip(SPI, 8, 9);
+
+#define SECTION_COUNT 4
+#define BW 0x20
+
+byte led_count = SECTION_COUNT * 8;
+word cache_count = SECTION_COUNT * BW;
+
+byte *cache = (byte *) malloc(sizeof(byte) * cache_count);
+
+void setBW(byte *p, byte index, byte bw)
+{
+	for (byte i = 0; i < BW && i < bw; i++)
+	{
+		p[i * SECTION_COUNT + index / 8] |= _BV(index % 8);
+	}
+}
 
 void setup()
 {
 	chip.setOE(false);
+	memset(cache, 0x00, cache_count);
 
+//	setBW(cache, 31, 0x0f);
+//	setBW(cache, 30, 0x01);
+
+	for (byte i = 0; i < led_count; i++)
+	{
+		setBW(cache, i, 0);
+	}
 }
 
 void loop()
 {
-	static byte tmp = 0x01;
-
-	memset(cache, tmp, 4);
-
-	chip.shiftSendRev(cache, 4);
+	static word indent = 0;
+	chip.shiftSend(cache + indent, 4);
 	chip.shiftLatch();
 
-	tmp <<= 1;
+	delay(0x80);
 
-	delay(10);
-
-	if (tmp == 0x00) tmp = 0x01;
+	indent += SECTION_COUNT;
+	if (indent == cache_count)
+		indent = 0x00;
 }

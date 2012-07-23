@@ -18,8 +18,8 @@ public:
 	Driver_74HC595_SPI(SPIClass & spi, uint8_t pin_ST, uint8_t pin_OE);
 	virtual ~Driver_74HC595_SPI();
 
-	void shiftSendFromLSB(byte *p, byte length) const;
-	void shiftSendFromMSB(byte *p, byte length) const;
+	void setShiftSendMode(byte mode = LSBFIRST);
+	void shiftSend(byte *p, byte length) const;
 
 	void shiftLatch() const;
 	void setOE(bool on) const;

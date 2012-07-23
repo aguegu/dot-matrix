@@ -13,8 +13,9 @@ Driver_74HC595_SPI::Driver_74HC595_SPI(SPIClass & spi, uint8_t pin_ST, uint8_t p
 	pinMode(pin_ST, OUTPUT);
 	pinMode(pin_OE, OUTPUT);
 
-	_spi.setBitOrder(LSBFIRST);
-	_spi.setDataMode(SPI_MODE2);
+	this->setShiftSendMode();
+	_spi.setDataMode(SPI_MODE0);
+	_spi.setClockDivider(SPI_CLOCK_DIV2);
 	_spi.begin();
 }
 
@@ -23,16 +24,14 @@ Driver_74HC595_SPI::~Driver_74HC595_SPI()
 
 }
 
-void Driver_74HC595_SPI::shiftSendFromLSB(byte *p, byte length) const
+void Driver_74HC595_SPI::setShiftSendMode(byte mode)
 {
-	_spi.setBitOrder(LSBFIRST);
-	while(length--)
-		_spi.transfer(~*(p++));
+	_spi.setBitOrder(mode);
 }
 
-void Driver_74HC595_SPI::shiftSendFromMSB(byte *p, byte length) const
+
+void Driver_74HC595_SPI::shiftSend(byte *p, byte length) const
 {
-	_spi.setBitOrder(MSBFIRST);
 	while(length--)
 		_spi.transfer(~*(p++));
 }
