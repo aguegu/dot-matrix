@@ -48,15 +48,16 @@ void Driver_1818_138::setBrightness(byte brg)
 	chip_col.setBrightness(brg);
 }
 
-void Driver_1818_138::setCol(byte row) const
+void Driver_1818_138::setCol(byte row)
 {
+	chip_col.setShiftMode(LSBFIRST);
 	byte * p = _dm.output();
 	p += _byte_per_row * row;
 
-	chip_col.shiftSendFromLSB(p, _byte_per_row);
+	chip_col.shiftSend(p, _byte_per_row);
 }
 
-void Driver_1818_138::display(byte times) const
+void Driver_1818_138::display(byte times)
 {
 	while (times--)
 	{

@@ -30,14 +30,16 @@ Driver_595_138::~Driver_595_138()
 
 }
 
-void Driver_595_138::display(byte times) const
+void Driver_595_138::display(byte times)
 {
+	chip_col.setShiftMode();
+
 	while (times--)
 	{
 		byte *p = _dm.output();
 		for (byte r = 0; r < _row_count; r++)
 		{
-			chip_col.shiftSendFromLSB(p, _bytes_per_row);
+			chip_col.shiftSendRev(p, _bytes_per_row);
 			p += _bytes_per_row;
 
 			chip_row.setOE(false);

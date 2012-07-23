@@ -47,7 +47,7 @@ void Driver_3D8::setMode(ScanMode mode)
 	}
 }
 
-void Driver_3D8::setColxyz(byte row) const
+void Driver_3D8::setColxyz(byte row)
 {
 	byte * p = _dm.output();
 	p += _byte_per_row * row;
@@ -55,7 +55,7 @@ void Driver_3D8::setColxyz(byte row) const
 	chip_col.shiftSendCoupleFromLSB(p, _byte_per_row);
 }
 
-void Driver_3D8::display(byte times) const
+void Driver_3D8::display(byte times)
 {
 	while (times--)
 	{
@@ -73,42 +73,43 @@ void Driver_3D8::display(byte times) const
 	}
 }
 
-void Driver_3D8::setColzxy(byte row) const
+void Driver_3D8::setColzxy(byte row)
 {
+	chip_col.setShiftMode(LSBFIRST);
 	byte * p = _dm.output();
 	for (byte j = 0; j < _word_per_row; j++)
 	{
-		for (byte i = 8; i--;)
-		{
-			chip_col.setDS(bitRead(*(p++), row));
-			chip_col.shiftClock();
-		}
-
-		p += _byte_per_row;
+		byte cache[2];
+		byte *p2 = p + _byte_per_row + _byte_per_row;
 
 		for (byte i = 8; i--;)
 		{
-			chip_col.setDS(bitRead(*(--p), row));
-			chip_col.shiftClock();
+			bitWrite(cache[0], i, bitRead(*(p++), row));
+			bitWrite(cache[1], i, bitRead(*(--p2), row));
 		}
 		p += _byte_per_row;
+		chip_col.shiftSend(cache, 2);
 	}
 }
 
-void Driver_3D8::setColyzx(byte row) const
+void Driver_3D8::setColyzx(byte row)
 {
+	chip_col.setShiftMode(MSBFIRST);
 	byte *p = _dm.output() + row;
 	for (byte j = 0; j < _byte_per_row; j++) // z
 	{
+		byte cache;
+
 		for (byte i = 8; i--;)
 		{
 			if (j & 0x01)
 				p -= _byte_per_row;
-			chip_col.setDS(bitRead(*p, j));
-			chip_col.shiftClock();
+			bitWrite(cache, i, bitRead(*p, j));
 			if (!(j & 0x01))
 				p += _byte_per_row;
 		}
+
+		chip_col.shiftSend(&cache, 1);
 	}
 }
 

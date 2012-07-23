@@ -15,6 +15,8 @@ Driver_74HC595::Driver_74HC595(uint8_t pin_DS, uint8_t pin_SH, uint8_t pin_ST,
 	pinMode(_pin_SH, OUTPUT);
 	pinMode(_pin_ST, OUTPUT);
 	pinMode(_pin_OE, OUTPUT);
+
+	this->setShiftMode();
 }
 
 Driver_74HC595::~Driver_74HC595()
@@ -65,16 +67,17 @@ void Driver_74HC595::shiftSendFromMSB(byte c) const
 	}
 }
 
-void Driver_74HC595::shiftSendFromLSB(byte * p, byte length) const
+void Driver_74HC595::shiftSend(byte * p, byte length) const
 {
-	for (byte i = length; i; i--)
-		this->shiftSendFromLSB(~*(p++));
+	for (byte i = length; i--;)
+		(this->*_shiftSend)(*(p++));
+
 }
 
-void Driver_74HC595::shiftSendFromMSB(byte * p, byte length) const
+void Driver_74HC595::shiftSendRev(byte * p, byte length) const
 {
-	for (byte i = length; i; i--)
-		this->shiftSendFromMSB(~*(p++));
+	for (byte i = length; i--;)
+		(this->*_shiftSend)(~*(p++));
 }
 
 void Driver_74HC595::shiftLatch() const

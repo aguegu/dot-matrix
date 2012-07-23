@@ -304,6 +304,7 @@ void loop()
 	callAnimationInModes(animationMoveSideQuick, 0x04, 0x10, 0x01);
 
 	callAnimationInModes(animationWave2D, 0x04, 14 * 4, 0x00);
+
 	callAnimation(animationWave3D, 0x02, 14 * 16, 0x00, Driver_3D8::ZXY);
 	callAnimation(animationWaveShake, 0x02, 14 * 16, 0x00, Driver_3D8::XYZ);
 
@@ -316,4 +317,5 @@ void loop()
 	callAnimation(animationRotateArrow, 0x04, 28 * 3, 0x00, Driver_3D8::ZXY);
 
 	callAnimation(animationRotateLove, 0x04, 28 * 6, 0x00, Driver_3D8::ZXY);
+
 }

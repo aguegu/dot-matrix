@@ -30,7 +30,7 @@ public:
 	void setSize();
 	void setBrightness(byte brg = 0xff);
 
-	void display(byte times = 0x01) const;
+	void display(byte times = 0x01);
 
 	virtual ~Driver_1818_138();
 
@@ -46,7 +46,7 @@ protected:
 	byte _word_per_row;
 	byte _byte_per_row;
 
-	void setCol(byte row) const;
+	void setCol(byte row);
 };
 
 #endif /* DRIVER1818138_H_ */
