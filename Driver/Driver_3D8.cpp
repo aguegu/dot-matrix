@@ -110,6 +110,5 @@ void Driver_3D8::setColyzx(byte row) const
 				p += _byte_per_row;
 		}
 	}
-
 }
 
