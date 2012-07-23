@@ -23,7 +23,7 @@
 #define BYTE_LENGTH 64
 
 DotMatrix3D dm(1);
-Driver_3D8 cube(dm, 9, 10, 17, 8, 11, 5, 4, 3);
+Driver_3D8 cube(dm, 9, 10, A3, 8, 11, 5, 4, 3);
 byte * cache;
 
 uint8_t led_top = 6;
