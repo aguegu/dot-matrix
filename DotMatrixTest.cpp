@@ -1,11 +1,5 @@
 /*
- *  A3D8_master.ino
- *
- *	animation with the support of dot-matrix library
- *	master animation sample on arduino managing 3D8S 8x8x8 led cubic display
- *  The onboard arduino uno does both animation calc and led driving
- *
- *  Created on: 2012-7-11
+ *  Created on: 2012-7-24
  *	Author: Weihong Guan
  *	Blog: http://aguegu.net
  *	E-mail: weihong.guan@gmail.com
@@ -21,48 +15,178 @@
 Driver_74HC595_SPI chip(SPI, 8, 9);
 
 #define SECTION_COUNT 4
-#define BW 0x1f
+#define LED_PER_SECTION 8
+#define BW_SPAN	0x1f
 
-byte led_count = SECTION_COUNT * 8;
-word cache_count = SECTION_COUNT * BW;
+const byte led_count = SECTION_COUNT * LED_PER_SECTION;
 
-byte *cache = (byte *) malloc(sizeof(byte) * cache_count);
-
-void setBW(byte *p, byte index, byte bw)
-{
-	for (byte i = 0; i < BW && i < bw; i++)
-	{
-		p[i * SECTION_COUNT + index / 8] |= _BV(index % 8);
-	}
-}
+byte *pCache;
 
 void setup()
 {
 	chip.setOE(false);
-	memset(cache, 0x00, cache_count);
 
-//	setBW(cache, 31, 0x0f);
-//	setBW(cache, 30, 0x01);
+	pCache = (byte *) malloc(sizeof(byte) * SECTION_COUNT);
 
-	for (byte i = 0; i < led_count; i++)
+}
+
+void display(byte* pBW, byte times = 1, byte length = led_count)
+{
+	while (times--)
 	{
-		setBW(cache, i, i);
+		for (byte bw = 1; bw < BW_SPAN; bw++)
+		{
+			memset(pCache, 0, SECTION_COUNT);
+			for (byte i = 0; i < length; i++)
+			{
+				if (bw <= pBW[i])
+					pCache[i >> 3] |= _BV(i&0x07);
+			}
+
+			chip.shiftSend(pCache, SECTION_COUNT);
+			chip.shiftLatch();
+		}
 	}
+}
+
+void animationBreatheWhole(byte times = 0x10)
+{
+	byte *pBW;
+	pBW = (byte *) malloc(sizeof(byte) * led_count);
+
+	while (times--)
+	{
+		byte i = 1;
+		while (i < BW_SPAN)
+		{
+			memset(pBW, i, led_count);
+			display(pBW, 0x8);
+			i++;
+		}
+		while (--i)
+		{
+			memset(pBW, i, led_count);
+			display(pBW, 0x8);
+		}
+	}
+	free(pBW);
+}
+
+void roll(byte * p, byte length, bool up, bool recycle, byte new_value = 0x00)
+{
+	if (up)
+	{
+		byte temp = recycle ? *(p + length - 1) : new_value;
+		memmove(p + 1, p, length - 1);
+		*p = temp;
+
+	}
+	else
+	{
+		byte tmp = recycle ? *p : new_value;
+		memcpy(p, p + 1, length - 1);
+		*(p + length - 1) = tmp;
+	}
+
+}
+
+void animationMeteor(byte times = 0x10)
+{
+	byte *pBW = (byte *) malloc(sizeof(byte) * led_count);
+	memset(pBW, 0, led_count);
+
+	pBW[0] = 0x1f;
+	pBW[1] = 0x08;
+	for (byte i = 2; i < 0x0a; i++)
+		pBW[i] = 1;
+
+	while (times--)
+	{
+		roll(pBW, led_count, false, true);
+
+		display(pBW, 0x10);
+	}
+	free(pBW);
+}
+
+void animationRiderBreathe(byte times = 0x10)
+{
+	byte *pBW = (byte *) malloc(sizeof(byte) * led_count);
+	memset(pBW, 0, led_count);
+	byte half_length = led_count >> 1;
+
+	while (times--)
+	{
+		byte j = 0;
+		while (j < half_length)
+		{
+			for (byte i = 0; i < half_length; i++)
+			{
+				pBW[half_length - 1 - i] = j > i ? (j - i) : 0;
+				pBW[half_length + i] = j > i ? (j - i) : 0;
+			}
+			display(pBW, 0x10);
+			j++;
+		}
+		while (j)
+		{
+			for (byte i = 0; i < half_length; i++)
+			{
+				pBW[half_length - 1 - i] = j > i ? (j - i) : 0;
+				pBW[half_length + i] = j > i ? (j - i) : 0;
+			}
+			display(pBW, 0x10);
+			j--;
+		}
+	}
+
+	free(pBW);
+}
+
+void funDemoRider(byte times = 0x10)
+{
+	byte *pBW = (byte *) malloc(sizeof(byte) * led_count);
+	memset(pBW, 0x01, led_count);
+	pBW[0] = 0x1f;
+
+	byte tmp[7] =
+	{ 0x1a, 0x1a, 0x1a, 0x10, 0x08, 0x04, 0x02 };
+
+	while (times--)
+	{
+		while (*(pBW) - 0x1f)
+		{
+			display(pBW, 0x08);
+			roll(pBW, led_count, false, false, 0x01);
+		}
+
+		for (byte i = 0; i < 7; i++)
+		{
+			display(pBW, 0x08);
+			roll(pBW, led_count, true, false, tmp[i]);
+		}
+
+		while (*(pBW + led_count - 1) - 0x1f)
+		{
+			display(pBW, 0x08);
+			roll(pBW, led_count, true, false, 0x01);
+		}
+
+		for (byte i = 0; i < 7; i++)
+		{
+			display(pBW, 0x08);
+			roll(pBW, led_count, false, false, tmp[i]);
+		}
+
+	}
+
+	free(pBW);
 }
 
 void loop()
 {
-	word k = 0x2000;
-
-	while(k--)
-	for(byte i=BW, *p = cache; i--;)
-	{
-		chip.shiftSend(p, SECTION_COUNT);
-		chip.shiftLatch();
-		p+= SECTION_COUNT;
-
-		//delayMicroseconds(0x100);
-	}
-
-	//delayMicroseconds(0x80);
+//	animationBreatheWhole(0x04);
+//	animationMeteor(0xe0);
+//	animationRiderBreathe(0x10);
+	funDemoRider();
 }
