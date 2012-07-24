@@ -21,7 +21,7 @@
 Driver_74HC595_SPI chip(SPI, 8, 9);
 
 #define SECTION_COUNT 4
-#define BW 0x20
+#define BW 0x1f
 
 byte led_count = SECTION_COUNT * 8;
 word cache_count = SECTION_COUNT * BW;
@@ -46,19 +46,23 @@ void setup()
 
 	for (byte i = 0; i < led_count; i++)
 	{
-		setBW(cache, i, 0);
+		setBW(cache, i, i);
 	}
 }
 
 void loop()
 {
-	static word indent = 0;
-	chip.shiftSend(cache + indent, 4);
-	chip.shiftLatch();
+	word k = 0x2000;
 
-	delay(0x80);
+	while(k--)
+	for(byte i=BW, *p = cache; i--;)
+	{
+		chip.shiftSend(p, SECTION_COUNT);
+		chip.shiftLatch();
+		p+= SECTION_COUNT;
 
-	indent += SECTION_COUNT;
-	if (indent == cache_count)
-		indent = 0x00;
+		//delayMicroseconds(0x100);
+	}
+
+	//delayMicroseconds(0x80);
 }
