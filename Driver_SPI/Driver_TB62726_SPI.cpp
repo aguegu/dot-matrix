@@ -24,7 +24,7 @@ Driver_TB62726_SPI::~Driver_TB62726_SPI()
 
 }
 
-void Driver_TB62726_SPI::shiftSendCoupleFromLSB(byte *p, byte length)
+void Driver_TB62726_SPI::shiftSendCoupleFromLSB(byte *p, byte length) const
 {
 	for (byte i = length >> 1; i--;)
 	{

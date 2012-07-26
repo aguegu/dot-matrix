@@ -19,7 +19,7 @@ public:
 	virtual ~Driver_TB62726_SPI();
 
 	void setBrightness(byte brg);
-	void shiftSendCoupleFromLSB(byte *p, byte length);
+	void shiftSendCoupleFromLSB(byte *p, byte length) const;
 
 private:
 
