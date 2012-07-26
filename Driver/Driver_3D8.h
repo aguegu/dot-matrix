@@ -17,9 +17,9 @@
 #define DRIVER_3D8_H_
 
 #include "DotMatrix.h"
-#include "Driver_1818_138.h"
+#include "Driver_62726_138.h"
 
-class Driver_3D8: public Driver_1818_138
+class Driver_3D8: public Driver_62726_138
 {
 public:
 	Driver_3D8(DotMatrix & dm, uint8_t pin_din, uint8_t pin_clk,
