@@ -30,10 +30,16 @@ void Driver_74HC595_SPI::setShiftSendMode(byte mode)
 }
 
 
-void Driver_74HC595_SPI::shiftSend(byte *p, byte length) const
+void Driver_74HC595_SPI::shiftSendRev(byte *p, byte length) const
 {
 	while(length--)
 		_spi.transfer(~*(p++));
+}
+
+void Driver_74HC595_SPI::shiftSend(byte *p, byte length) const
+{
+	while(length--)
+		_spi.transfer(*(p++));
 }
 
 void Driver_74HC595_SPI::shiftLatch() const

@@ -20,9 +20,11 @@ public:
 
 	void setShiftSendMode(byte mode = LSBFIRST);
 	void shiftSend(byte *p, byte length) const;
+	void shiftSendRev(byte *p, byte length) const;
 
 	void shiftLatch() const;
 	void setOE(bool on) const;
+
 private:
 
 	const SPIClass & _spi;
