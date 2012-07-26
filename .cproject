@@ -42,7 +42,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/Driver}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/BasicDriver}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/SPI}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/SPIDriver}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/Driver_SPI}&quot;"/>
 								</option>
 								<option id="it.baeyens.avreclipse.compiler.option.def.1485111403" name="Define Syms (-D)" superClass="it.baeyens.avreclipse.compiler.option.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__IN_ECLIPSE__=1"/>
@@ -68,7 +68,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/Font}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/BasicDriver}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/SPI}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/SPIDriver}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/Driver_SPI}&quot;"/>
 								</option>
 								<option id="it.baeyens.avreclipse.cppcompiler.option.def.479432623" name="Define Syms (-D)" superClass="it.baeyens.avreclipse.cppcompiler.option.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__IN_ECLIPSE__=1"/>

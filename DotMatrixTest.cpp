@@ -18,12 +18,12 @@
 
 #include "DotMatrixTest.h"
 #include "DotMatrix3D.h"
-#include "Driver_3D8.h"
+#include "Driver_3D8_SPI.h"
 
 #define BYTE_LENGTH 64
 
 DotMatrix3D dm(1);
-Driver_3D8 cube(dm, 9, 10, A3, 8, 11, 5, 4, 3);
+Driver_3D8_SPI cube(dm, SPI, A3, 8, 9, 5, 4, 3);
 byte * cache;
 
 uint8_t led_top = 6;
@@ -47,7 +47,7 @@ void setup()
 	digitalWrite(led_top, HIGH);
 	digitalWrite(led_bottom, HIGH);
 
-	TCCR2B = (TCCR2B & 0xf8) | 0x02;
+	TCCR1B = (TCCR1B & 0xf8) | 0x02;
 	cache = new byte(BYTE_LENGTH);
 	dm.clear(0x00);
 	cube.setBrightness(0xff);
@@ -270,7 +270,7 @@ void animationRotateLove(word k)
 }
 
 void callAnimation(void (*p)(word), word span, word times, byte init_value,
-		Driver_3D8::ScanMode mode)
+		Driver_3D8_SPI::ScanMode mode)
 {
 	static word frame_id = 0;
 
@@ -289,13 +289,14 @@ void callAnimationInModes(void (*p)(word), word span, word times,
 		byte init_value)
 {
 	for (byte i = 0; i < 3; i++)
-		callAnimation(p, span, times, init_value, (Driver_3D8::ScanMode) i);
+		callAnimation(p, span, times, init_value, (Driver_3D8_SPI::ScanMode) i);
 }
 
 void loop()
 {
-	callAnimation(animationFlash, 0x10, 0x08, 0x00, Driver_3D8::XYZ);
-	callAnimation(animationBreathe, 0x01, 0xff * 2, 0xff, Driver_3D8::XYZ);
+
+	callAnimation(animationFlash, 0x10, 0x08, 0x00, Driver_3D8_SPI::XYZ);
+	callAnimation(animationBreathe, 0x01, 0xff * 2, 0xff, Driver_3D8_SPI::XYZ);
 	callAnimationInModes(animationFacetScan, 0x08, 0x08, 0x00);
 	callAnimationInModes(animationBlockScan, 0x08, 0x08, 0x00);
 	callAnimationInModes(animationFlowZPosi, 0x04, 0x40, 0x00);
@@ -305,17 +306,17 @@ void loop()
 
 	callAnimationInModes(animationWave2D, 0x04, 14 * 4, 0x00);
 
-	callAnimation(animationWave3D, 0x02, 14 * 16, 0x00, Driver_3D8::ZXY);
-	callAnimation(animationWaveShake, 0x02, 14 * 16, 0x00, Driver_3D8::XYZ);
+	callAnimation(animationWave3D, 0x02, 14 * 16, 0x00, Driver_3D8_SPI::ZXY);
+	callAnimation(animationWaveShake, 0x02, 14 * 16, 0x00, Driver_3D8_SPI::XYZ);
 
-	callAnimation(animationWaveRotate, 0x02, 14 * 8, 0x00, Driver_3D8::XYZ);
-	callAnimation(animationWaveRotate, 0x02, 14 * 8, 0x00, Driver_3D8::YZX);
+	callAnimation(animationWaveRotate, 0x02, 14 * 8, 0x00, Driver_3D8_SPI::XYZ);
+	callAnimation(animationWaveRotate, 0x02, 14 * 8, 0x00, Driver_3D8_SPI::YZX);
 
-	callAnimation(animationDance, 0x02, 0x80, 0x00, Driver_3D8::ZXY);
+	callAnimation(animationDance, 0x02, 0x80, 0x00, Driver_3D8_SPI::ZXY);
 
-	callAnimation(animationRotateArrow, 0x04, 28 * 3, 0x00, Driver_3D8::YZX);
-	callAnimation(animationRotateArrow, 0x04, 28 * 3, 0x00, Driver_3D8::ZXY);
+	callAnimation(animationRotateArrow, 0x04, 28 * 3, 0x00, Driver_3D8_SPI::YZX);
+	callAnimation(animationRotateArrow, 0x04, 28 * 3, 0x00, Driver_3D8_SPI::ZXY);
 
-	callAnimation(animationRotateLove, 0x04, 28 * 6, 0x00, Driver_3D8::ZXY);
+	callAnimation(animationRotateLove, 0x04, 28 * 6, 0x00, Driver_3D8_SPI::ZXY);
 
 }
