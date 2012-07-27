@@ -48,7 +48,7 @@ void setup()
 	digitalWrite(led_bottom, HIGH);
 
 	TCCR1B = (TCCR1B & 0xf8) | 0x02;
-	cache = new byte(BYTE_LENGTH);
+	cache = (byte *)malloc(sizeof(byte) * BYTE_LENGTH);
 	dm.clear(0x00);
 	cube.setBrightness(0xff);
 }

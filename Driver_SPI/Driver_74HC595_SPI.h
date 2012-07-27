@@ -27,10 +27,10 @@ public:
 	void setOE(bool on) const;
 
 protected:
+
 	const SPIClass & _spi;
 
 private:
-
 
 	const uint8_t _pin_ST;
 	const uint8_t _pin_OE;
