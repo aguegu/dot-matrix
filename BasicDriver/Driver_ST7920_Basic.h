@@ -18,6 +18,7 @@
 #define DRIVER_ST7920_BASIC_H_
 
 #include "Arduino.h"
+#include "PinWrite.h"
 
 class ST7920_Basic
 {

@@ -198,7 +198,7 @@ byte DotMatrix::getByte(word index)
 void DotMatrix::moveBitInColNega(bool recycle)
 {
 	byte *p = _pScreen;
-	for (byte r = _row_count; r; r--)
+	for (byte r = _row_count; r--;)
 	{
 		bool b0 = bitRead(*p, 0);
 		for (byte i = _bytes_per_row - 1; i--;)
@@ -357,9 +357,9 @@ byte DotMatrix::reverseByte(byte c)
 byte DotMatrix::orValue()
 {
 	byte c = 0x00;
-	for (word i = _bytes_length; i;)
+	for (word i = _bytes_length; i--;)
 	{
-		c |= _pScreen[--i];
+		c |= _pScreen[i];
 	}
 
 	return c;
@@ -368,9 +368,9 @@ byte DotMatrix::orValue()
 byte DotMatrix::andValue()
 {
 	byte c = 0xff;
-	for (word i = _bytes_length; i;)
+	for (word i = _bytes_length; i--;)
 	{
-		c &= _pScreen[--i];
+		c &= _pScreen[i];
 	}
 
 	return c;
