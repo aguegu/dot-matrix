@@ -17,6 +17,7 @@
 #define DRIVER_HD44780_BASIC_H_
 
 #include "Arduino.h"
+#include "pinWrite.h"
 
 #ifdef PROGMEM
   #undef PROGMEM
@@ -67,7 +68,7 @@ private:
 	void initHardware() const;
 
 	void setDT(byte c, bool b) const;
-	void pulseEn(void) const;
+	inline void pulseEn(void) const;
 	void setData(byte c) const;
 
 	void writeCmd(byte) const;
