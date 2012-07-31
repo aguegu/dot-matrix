@@ -46,7 +46,7 @@ public:
 	void putChar(byte address, char c) const;
 	void putCache() const;
 
-	void setCache(byte value = 0x00);
+	void setCache(byte value = 0x20);
 	void setCache(byte index, byte value);
 	void printf(const char *__fmt, ...);
 	void printf(byte index, const char *__fmt, ...);
@@ -60,7 +60,7 @@ private:
 	void initHardware() const;
 
 	void setDT(byte c, bool b) const;
-	void pulseEn(void) const;
+	inline void pulseEn(void) const;
 	void setData(byte c) const;
 
 	void writeCmd(byte) const;
