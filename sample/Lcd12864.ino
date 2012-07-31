@@ -63,7 +63,6 @@ void setup()
 	dm.setLine(126, 40, 110, 40);
 	dm.setLine(120, 48, 110, 40);
 
-
 	dmd.putDM();
 }
 

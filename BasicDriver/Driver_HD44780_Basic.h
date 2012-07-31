@@ -17,7 +17,7 @@
 #define DRIVER_HD44780_BASIC_H_
 
 #include "Arduino.h"
-#include "pinWrite.h"
+//#include "pinWrite.h"
 
 #ifdef PROGMEM
   #undef PROGMEM
@@ -51,24 +51,16 @@ public:
 	void printf(const char *__fmt, ...);
 	void printf(byte index, const char *__fmt, ...);
 
-protected:
-
-	const byte _row_count;
-	const byte _col_count;
-	byte _cache_length;
-	char * _cache;
-
 private:
 
 	const uint8_t _pin_rs;
 	const uint8_t _pin_en;
 	uint8_t _pin_dt[4];
 
-
 	void initHardware() const;
 
 	void setDT(byte c, bool b) const;
-	inline void pulseEn(void) const;
+	void pulseEn(void) const;
 	void setData(byte c) const;
 
 	void writeCmd(byte) const;
@@ -76,6 +68,15 @@ private:
 
 	void configureInput(bool ac = true, bool screen_move = false) const;
 	void configureFunction(bool interface8 = false, bool doubleline = true, bool font5x10 = false) const;
+
+protected:
+
+	const byte _row_count;
+	const byte _col_count;
+	byte _cache_length;
+	char * _cache;
+
+
 };
 
 #endif /* DRIVER_HD44780_BASIC_H_ */

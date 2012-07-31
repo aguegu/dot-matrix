@@ -35,7 +35,7 @@ HD44780_WithoutDotMatrix::HD44780_WithoutDotMatrix(uint8_t pin_rs, uint8_t pin_e
 		byte col_count, byte row_count)
 		: HD44780_Basic(pin_rs, pin_en, pin_d4, pin_d5, pin_d6, pin_d7, col_count, row_count)
 {
-	this->init();
+//	this->init();
 }
 
 HD44780_WithoutDotMatrix::~HD44780_WithoutDotMatrix()

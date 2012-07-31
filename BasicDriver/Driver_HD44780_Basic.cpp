@@ -32,7 +32,7 @@ const uint8_t PROGMEM HD44780_ROW_ADDRESS[] = { 0x00, 0x40, 0x10, 0x50 };
 HD44780_Basic::HD44780_Basic(uint8_t pin_rs, uint8_t pin_en,
 		uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7,
 		byte row_count, byte col_count)
-		:  _row_count(row_count), _col_count(col_count), _pin_rs(pin_rs), _pin_en(pin_en)
+		:   _pin_rs(pin_rs), _pin_en(pin_en), _row_count(row_count), _col_count(col_count)
 {
 	_pin_dt[0] = pin_d4;
 	_pin_dt[1] = pin_d5;
@@ -59,8 +59,10 @@ HD44780_Basic::~HD44780_Basic()
 void HD44780_Basic::initHardware() const
 {
 	delayMicroseconds(50000);
-	pinClear(_pin_rs);
-	pinClear(_pin_en);
+	digitalWrite(_pin_rs, LOW);
+	digitalWrite(_pin_en, LOW);
+//	pinClear(_pin_rs);
+//	pinClear(_pin_en);
 
 	this->setDT(0x30, true);
 	delayMicroseconds(4500);
@@ -87,7 +89,7 @@ void HD44780_Basic::setDT(byte c, bool b) const
 		c >>= 4;
 
 	for (byte i = 0; i < 4; i++)
-		pinWrite(_pin_dt[i], bit_is_set(c, i));
+		digitalWrite(_pin_dt[i], bit_is_set(c, i));//pinWrite(_pin_dt[i], bit_is_set(c, i));
 
 	this->pulseEn();
 }
@@ -100,20 +102,25 @@ void HD44780_Basic::setData(byte c) const
 
 void HD44780_Basic::pulseEn(void) const
 {
-	pinSet(_pin_en);
-	pinClear(_pin_en);
+	digitalWrite(_pin_en, LOW);
+	digitalWrite(_pin_en, HIGH);
+	digitalWrite(_pin_en, LOW);
+//	pinSet(_pin_en);
+//	pinClear(_pin_en);
 	delayMicroseconds(100);
 }
 
 void HD44780_Basic::writeCmd(byte command) const
 {
-	pinClear(_pin_rs);
+//	pinClear(_pin_rs);
+	digitalWrite(_pin_rs, LOW);
 	this->setData(command);
 }
 
 void HD44780_Basic::writeData(byte data) const
 {
-	pinSet(_pin_rs);
+//	pinSet(_pin_rs);
+	digitalWrite(_pin_rs, HIGH);
 	this->setData(data);
 }
 
@@ -205,13 +212,13 @@ void HD44780_Basic::setCursor(byte address) const // 0x80
 ////////////////////
 void HD44780_Basic::putString(byte address, char *p, byte length) const
 {
-	byte i;
+	char *pp = p;
 
 	this->setCursor(address);
 
-	for (i = 0; i < length; i++)
+	while(length--)
 	{
-		this->writeData(p[i]);
+		this->writeData(*pp++);
 	}
 }
 
@@ -272,5 +279,4 @@ void HD44780_Basic::setCache(byte index, byte value)
 }
 
 //////////////////////
-
 

@@ -9,4 +9,5 @@
 #define pinSet(pin)	*portOutputRegister(digitalPinToPort(pin)) |= digitalPinToBitMask(pin)
 #define pinClear(pin)	*portOutputRegister(digitalPinToPort(pin)) &= ~digitalPinToBitMask(pin)
 #define pinWrite(pin, val) ( (val) ? pinSet(pin) : pinClear(pin))
+
 #endif
