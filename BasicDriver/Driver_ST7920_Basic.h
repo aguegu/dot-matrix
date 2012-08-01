@@ -49,8 +49,8 @@ private:
 	uint8_t _pin_d[4];
 
 	void initPin();
-	void pulseEn();
-	void setDB2(byte c, bool high);
+	inline void pulseEn();
+	inline void setDB2(byte c, bool high);
 
 	void setCgRam(byte value);
 

@@ -26,7 +26,6 @@ public:
 	DotFont(DotMatrix & dm);
 	virtual ~DotFont();
 
-	void print() const;
 	void setPattern(const uint8_t * pattern, const uint8_t * pattern_state);
 	void setChar(char chr);
 	void setVertical(boolean direction = true);
@@ -42,8 +41,9 @@ public:
 
 private:
 
-	void showH() const;
-	void showV() const;
+	void print() const;
+	void printH() const;
+	void printV() const;
 
 	DotMatrix & _dm;
 	const uint8_t *_pattern;

@@ -169,15 +169,14 @@ void ST7920_Basic::pulseEn()
 {
 	pinSet(_pin_en);
 	pinClear(_pin_en);
-	delayMicroseconds(100);
+	//delayMicroseconds(0x20);
 }
 
 void ST7920_Basic::printWord(char *p)
 {
 	while (*p)
 	{
-		this->writeData(*p);
-		p++;
+		this->writeData(*p++);
 	}
 }
 

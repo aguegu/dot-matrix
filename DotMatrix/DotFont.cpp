@@ -81,6 +81,7 @@ void DotFont::postAt(byte col, byte row)
 {
 	_col = col;
 	_row = row;
+	this->print();
 }
 
 void DotFont::clear(bool on) const
@@ -96,10 +97,10 @@ void DotFont::print() const
 {
 	if (_index == _pattern_length) this->clear(false);
 	else
-		_vertical ? showV():showH();
+		_vertical ? printV():printH();
 }
 
-void DotFont::showH() const
+void DotFont::printH() const
 {
 	for (byte c = 0; c < _unit_width; c++)
 	{
@@ -111,7 +112,7 @@ void DotFont::showH() const
 	}
 }
 
-void DotFont::showV() const
+void DotFont::printV() const
 {
 	for (byte c = 0; c < _unit_width && c+_col < _dm.countCol(); c++)
 	{

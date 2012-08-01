@@ -50,7 +50,6 @@ void DotString::postAt(byte col, byte row)
 	{
 		_df.setChar(*(p++));
 		_df.postAt(cursor, row);
-		_df.print();
 		cursor +=
 				_smart_width ? _df.calcFontRealWidth() + 1 : _df.getWidth() + 1;
 		if (cursor > (_df.getVertical()? _df.getMaxCol() : _df.getMaxRow()))
