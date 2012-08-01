@@ -17,7 +17,7 @@
 #define DRIVER_HD44780_BASIC_H_
 
 #include "Arduino.h"
-//#include "pinWrite.h"
+#include "pinWrite.h"
 
 #ifdef PROGMEM
   #undef PROGMEM
@@ -46,7 +46,7 @@ public:
 	void putChar(byte address, char c) const;
 	void putCache() const;
 
-	void setCache(byte value = 0x20);
+	void setCache(byte value = 0x00);
 	void setCache(byte index, byte value);
 	void printf(const char *__fmt, ...);
 	void printf(byte index, const char *__fmt, ...);
@@ -75,8 +75,6 @@ protected:
 	const byte _col_count;
 	byte _cache_length;
 	char * _cache;
-
-
 };
 
 #endif /* DRIVER_HD44780_BASIC_H_ */

@@ -10,11 +10,9 @@ DotMatrix dm(16, 6);
 HD44780 lcd(dm, 8, 9, 10, 11, 12, 13);
 DotFont df(dm);
 
-
-DotString ds(df,8);
-
 void setup()
 {
+	lcd.init();
 	df.setPattern(FONT_0603, FONT_0603_STATE);
 }
 

@@ -59,10 +59,9 @@ HD44780_Basic::~HD44780_Basic()
 void HD44780_Basic::initHardware() const
 {
 	delayMicroseconds(50000);
-	digitalWrite(_pin_rs, LOW);
-	digitalWrite(_pin_en, LOW);
-//	pinClear(_pin_rs);
-//	pinClear(_pin_en);
+
+	pinClear(_pin_rs);
+	pinClear(_pin_en);
 
 	this->setDT(0x30, true);
 	delayMicroseconds(4500);
@@ -89,7 +88,7 @@ void HD44780_Basic::setDT(byte c, bool b) const
 		c >>= 4;
 
 	for (byte i = 0; i < 4; i++)
-		digitalWrite(_pin_dt[i], bit_is_set(c, i));//pinWrite(_pin_dt[i], bit_is_set(c, i));
+		pinWrite(_pin_dt[i], bit_is_set(c, i));//pinWrite(_pin_dt[i], bit_is_set(c, i));
 
 	this->pulseEn();
 }
@@ -102,25 +101,20 @@ void HD44780_Basic::setData(byte c) const
 
 void HD44780_Basic::pulseEn(void) const
 {
-	digitalWrite(_pin_en, LOW);
-	digitalWrite(_pin_en, HIGH);
-	digitalWrite(_pin_en, LOW);
-//	pinSet(_pin_en);
-//	pinClear(_pin_en);
+	pinSet(_pin_en);
+	pinClear(_pin_en);
 	delayMicroseconds(100);
 }
 
 void HD44780_Basic::writeCmd(byte command) const
 {
-//	pinClear(_pin_rs);
-	digitalWrite(_pin_rs, LOW);
+	pinClear(_pin_rs);
 	this->setData(command);
 }
 
 void HD44780_Basic::writeData(byte data) const
 {
-//	pinSet(_pin_rs);
-	digitalWrite(_pin_rs, HIGH);
+	pinSet(_pin_rs);
 	this->setData(data);
 }
 
