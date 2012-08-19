@@ -17,7 +17,7 @@
 #define DRIVER_HD44780_BASIC_H_
 
 #include "Arduino.h"
-#include "pinWrite.h"
+#include "PinWrite.h"
 
 #ifdef PROGMEM
   #undef PROGMEM
