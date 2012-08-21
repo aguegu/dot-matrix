@@ -27,10 +27,10 @@ public:
 	virtual ~DotFont();
 
 	void setPattern(const uint8_t * pattern, const uint8_t * pattern_state);
-	void setChar(char chr);
-	void setVertical(boolean direction = true);
-	void postAt(byte col, byte row);
-	void clear(bool on = false) const;
+	void setChar(const char chr);
+	void setVertical(const boolean vertial = true);
+	void postAt(const byte col, const byte row);
+	void clear(const bool on = false) const;
 
 	byte calcFontRealWidth() const;
 	byte getWidth() const;

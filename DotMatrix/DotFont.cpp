@@ -62,7 +62,7 @@ void DotFont::setPattern(const uint8_t * pattern, const uint8_t * pattern_state)
 	_pattern_length = pgm_read_byte_near(pattern_state + 3);
 }
 
-void DotFont::setChar(char chr)
+void DotFont::setChar(const char chr)
 {
 	if (chr < _pattern_indent || chr >= _pattern_indent + _pattern_length)
 		_index = _pattern_length;
@@ -72,19 +72,19 @@ void DotFont::setChar(char chr)
 	_indent = _index * _unit_width;
 }
 
-void DotFont::setVertical(boolean vertical)
+void DotFont::setVertical(const boolean vertical)
 {
 	_vertical = vertical;
 }
 
-void DotFont::postAt(byte col, byte row)
+void DotFont::postAt(const byte col, const byte row)
 {
 	_col = col;
 	_row = row;
 	this->print();
 }
 
-void DotFont::clear(bool on) const
+void DotFont::clear(const bool on) const
 {
 	if (_vertical)
 		_dm.setRect(_col, _row, _col + _unit_width, _row + _unit_height, on);

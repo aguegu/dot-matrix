@@ -33,8 +33,8 @@ void ST7920_Basic::initPin()
 	pinMode(_pin_rs, OUTPUT);
 	pinMode(_pin_en, OUTPUT);
 
-	for (byte i = 0; i < 4; i++)
-		pinMode(_pin_d[i], OUTPUT);
+	for (byte i = 4; i;)
+		pinMode(_pin_d[--i], OUTPUT);
 
 	pinClear(_pin_en);
 }

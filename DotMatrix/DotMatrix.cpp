@@ -140,9 +140,7 @@ word DotMatrix::getIndex(byte col, byte row) const
 byte DotMatrix::getDot(byte col, byte row) const
 {
 	word i = getIndex(col, row);
-	boolean b = bitRead(_pScreen[i], (col & 0x07));
-
-	return b;
+	return bitRead(_pScreen[i], (col & 0x07));
 }
 
 byte * DotMatrix::output() const
@@ -189,7 +187,6 @@ void DotMatrix::putByte(byte col, byte row, byte value)
 byte DotMatrix::getByte(word index)
 {
 	return index >= _bytes_length? 0:_pScreen[index];
-
 }
 
 void DotMatrix::moveBitInColNega(bool recycle)
