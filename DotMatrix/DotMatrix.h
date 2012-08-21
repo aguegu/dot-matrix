@@ -45,7 +45,7 @@ public:
 
 	void reverseDot(byte col, byte row);
 	void setDot(byte col, byte row, boolean b = true);
-	boolean getDot(byte col, byte row) const;
+	byte getDot(byte col, byte row) const;
 
 	void setLine(byte cA, byte rA, byte cB, byte rB, bool on = true);
 	void setRect(byte cA, byte rA, byte cB, byte rB, bool on = true);

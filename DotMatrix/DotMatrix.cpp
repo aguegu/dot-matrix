@@ -40,17 +40,14 @@ void DotMatrix::clear(byte c)
 
 void DotMatrix::reverseDot(byte col, byte row)
 {
-	if (getDot(col, row))
-		setDot(col, row, false);
-	else
-		setDot(col, row, true);
+	this->setDot(col, row, !getDot(col, row));
 }
 
 void DotMatrix::setDot(byte col, byte row, boolean b)
 {
 	word i = getIndex(col, row);
 
-	bitWrite(_pScreen[i], (col & 0x07), b);
+	bitWrite(*(_pScreen+i), (col & 0x07), b);
 }
 
 void DotMatrix::setLine(byte cA, byte rA, byte cB, byte rB, bool on)
@@ -140,7 +137,7 @@ word DotMatrix::getIndex(byte col, byte row) const
 	return index < _bytes_length ? index : 0;
 }
 
-boolean DotMatrix::getDot(byte col, byte row) const
+byte DotMatrix::getDot(byte col, byte row) const
 {
 	word i = getIndex(col, row);
 	boolean b = bitRead(_pScreen[i], (col & 0x07));
