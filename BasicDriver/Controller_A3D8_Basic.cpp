@@ -42,7 +42,7 @@ void Controller_A3D8_Basic::sendColumn(byte col, byte value)
 void Controller_A3D8_Basic::sendBatch(const byte *p, byte length)
 {
 	_sp.write(0xf2);
-	_sp.write(p, min(_length, length));
+	_sp.Print::write(p, min(_length, length));
 }
 
 void Controller_A3D8_Basic::sendMode(InputMode mode)
