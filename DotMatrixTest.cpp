@@ -1,20 +1,27 @@
 #include "DotMatrixTest.h"
 
-#include "Driver_74HC595.h"
+#include "DotMatrix.h"
+#include "Driver_3W1608.h"
+#include "DotFont.h"
+#include "DotString.h"
 
-Driver_74HC595 chip(11, 13, 9, 8);
-byte pCache[3];
+#include "Font0703.h"
+
+
+DotMatrix dm(16,8);
+Driver_3W1608 dmd(dm);
 
 void setup()
 {
-	pCache[0] = 0xfe;
-	pCache[1] = 0xff;
-	pCache[2] = 0x01;
+	dm.clear();
+	DotFont df(dm);
+	df.setPattern(FONT_0703, FONT_0703_STATE);
+	DotString ds(df, 8, true);
+	ds.printf("boxz");
+	ds.postAt(0,1);
 }
 
 void loop()
 {
-	chip.shiftSend(pCache,3);
-	chip.shiftLatch();
-	delay(0x100);
+	dmd.display();
 }
