@@ -1,35 +1,20 @@
 #include "DotMatrixTest.h"
 
-#include "Driver_HD44780.h"
-#include "DotMatrix.h"
-#include "Font0603.h"
-#include "DotFont.h"
-#include "DotString.h"
+#include "Driver_74HC595.h"
 
-DotMatrix dm(16, 6);
-HD44780 lcd(dm, 8, 9, 10, 11, 12, 13);
-DotFont df(dm);
+Driver_74HC595 chip(11, 13, 9, 8);
+byte pCache[3];
 
 void setup()
 {
-	lcd.init();
-	df.setPattern(FONT_0603, FONT_0603_STATE);
+	pCache[0] = 0xfe;
+	pCache[1] = 0xff;
+	pCache[2] = 0x01;
 }
 
 void loop()
 {
-	static int i = 0;
-
-	dm.clear();
-
-	DotString ds(df, 8);
-	ds.printf("%4d", i);
-	ds.postAt(0,0);
-	lcd.convertDotMatrixToCache();
-
-	//lcd.printf("Hello, World.");
-	lcd.putCache();
-	i++;
-
-	delay(100);
+	chip.shiftSend(pCache,3);
+	chip.shiftLatch();
+	delay(0x100);
 }

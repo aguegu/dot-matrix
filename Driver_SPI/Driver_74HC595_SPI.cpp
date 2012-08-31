@@ -48,7 +48,7 @@ void Driver_74HC595_SPI::shiftLatch() const
 	pinClear(_pin_ST);
 }
 
-void Driver_74HC595_SPI::setOE(bool on) const
+void Driver_74HC595_SPI::setOE(bool high) const
 {
-	pinWrite(_pin_OE, on);
+	pinWrite(_pin_OE, high);
 }

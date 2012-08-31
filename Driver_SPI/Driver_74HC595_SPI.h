@@ -24,7 +24,7 @@ public:
 	void shiftSendRev(byte *p, byte length) const;
 
 	void shiftLatch() const;
-	void setOE(bool on) const;
+	void setOE(bool high) const;
 
 protected:
 
