@@ -1,36 +1,19 @@
 #include "DotMatrixTest.h"
 
+#include "Driver_Dual595.h"
+#include "DotMatrix.h"
+
+DotMatrix dm(24, 24);
+Driver_Dual595 dmd(dm, 9, 8, 7, 6, 5);
+
 void setup()
 {
-	pinMode(5, OUTPUT);
-	pinMode(6, OUTPUT);
-	pinMode(7, OUTPUT);
-	pinMode(8, OUTPUT);
-	pinMode(9, OUTPUT);
-
-	digitalWrite(5, LOW);
-//	digitalWrite(8, LOW);
-
+	dm.clear();
+	dm.setByte(0, 0x0f);
 }
 
 void loop()
 {
-	static byte i = 0;
-	digitalWrite(8, i % 24);
-	digitalWrite(9, HIGH);
-	digitalWrite(7, HIGH);
-	digitalWrite(7, LOW);
-
-	digitalWrite(6, HIGH);
-	digitalWrite(6, LOW);
-	delay(500);
-
-	i++;
-
-	if (i == 24)
-	{
-		i = 0;
-		delay(1500);
-	}
-
+	dmd.display();
+	//delay(200);
 }
