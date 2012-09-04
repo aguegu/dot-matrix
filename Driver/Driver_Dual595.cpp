@@ -18,9 +18,8 @@ Driver_Dual595::Driver_Dual595(uint8_t pin_col, uint8_t pin_row,
 	pinMode(_pin_st, OUTPUT);
 	pinMode(_pin_oe, OUTPUT);
 
-	pinWrite(_pin_oe, LOW);
-
-
+	this->setBrightness();
+	this->setScanSpan();
 }
 
 Driver_Dual595::~Driver_Dual595()
@@ -43,14 +42,15 @@ void Driver_Dual595::shiftClock() const
 void Driver_Dual595::display() const
 {
 	byte *p = _dm.output();
+	const uint8_t * p_row_address = DUAL595_ROW_ADDRESS;
 
-	for (byte r = 0; r < 24; r++)
+	for (byte r = 0; r < DUAL595_WIDTH; r++)
 	{
-		byte *p2 = p + pgm_read_byte_near(DUAL595_ROW_ADDRESS+r);
-		for (byte i = 0, j = 0; i < 3; i++)
+		byte *p2 = p + pgm_read_byte_near(p_row_address++);
+		for (byte i = 3, j = 0; i--;)
 		{
 			byte tmp = *p2;
-			for (byte c = 0; c < 8; c++, j++)
+			for (byte c = 8; c--; j++)
 			{
 				pinWrite(_pin_col, tmp&0x01);
 				pinWrite(_pin_row, j!=r);
@@ -61,11 +61,21 @@ void Driver_Dual595::display() const
 			p2++;
 		}
 		this->shiftLatch();
-		delayMicroseconds(0x100);
+		delayMicroseconds(_scan_span);
 	}
 }
 
 DotMatrix & Driver_Dual595::getDotMatrix()
 {
 	return _dm;
+}
+
+void Driver_Dual595::setBrightness(byte brightness)
+{
+	analogWrite(_pin_oe, brightness);
+}
+
+void Driver_Dual595::setScanSpan(byte scan_span)
+{
+	_scan_span = scan_span;
 }

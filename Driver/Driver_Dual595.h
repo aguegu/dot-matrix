@@ -12,6 +12,8 @@
 #include "PinWrite.h"
 #include "DotMatrix.h"
 
+#define DUAL595_WIDTH	24
+
 class Driver_Dual595
 {
 public:
@@ -20,6 +22,9 @@ public:
 	virtual ~Driver_Dual595();
 	void display() const;
 	DotMatrix & getDotMatrix();
+
+	void setBrightness(byte brightness=0x70);
+	void setScanSpan(byte scan_span= 0xa0);
 
 private:
 
@@ -30,6 +35,8 @@ private:
 	const uint8_t _pin_sh;
 	const uint8_t _pin_st;
 	const uint8_t _pin_oe;
+
+	uint16_t _scan_span;
 
 	inline void shiftLatch() const;
 	inline void shiftClock() const;
