@@ -7,9 +7,9 @@
 
 #include "Driver_Dual595.h"
 
-Driver_Dual595::Driver_Dual595(DotMatrix & dm, uint8_t pin_col, uint8_t pin_row,
+Driver_Dual595::Driver_Dual595(uint8_t pin_col, uint8_t pin_row,
 		uint8_t pin_sh, uint8_t pin_st, uint8_t pin_oe) :
-		_dm(dm), _pin_col(pin_col), _pin_row(pin_row), _pin_sh(pin_sh), _pin_st(
+		_dm(48, 12), _pin_col(pin_col), _pin_row(pin_row), _pin_sh(pin_sh), _pin_st(
 				pin_st), _pin_oe(pin_oe)
 {
 	pinMode(_pin_col, OUTPUT);
@@ -19,6 +19,7 @@ Driver_Dual595::Driver_Dual595(DotMatrix & dm, uint8_t pin_col, uint8_t pin_row,
 	pinMode(_pin_oe, OUTPUT);
 
 	pinWrite(_pin_oe, LOW);
+
 
 }
 
@@ -45,9 +46,10 @@ void Driver_Dual595::display() const
 
 	for (byte r = 0; r < 24; r++)
 	{
+		byte *p2 = p + pgm_read_byte_near(DUAL595_ROW_ADDRESS+r);
 		for (byte i = 0, j = 0; i < 3; i++)
 		{
-			byte tmp = *p;
+			byte tmp = *p2;
 			for (byte c = 0; c < 8; c++, j++)
 			{
 				pinWrite(_pin_col, tmp&0x01);
@@ -56,9 +58,14 @@ void Driver_Dual595::display() const
 				this->shiftClock();
 				tmp >>= 1;
 			}
-			p++;
+			p2++;
 		}
 		this->shiftLatch();
 		delayMicroseconds(0x100);
 	}
+}
+
+DotMatrix & Driver_Dual595::getDotMatrix()
+{
+	return _dm;
 }

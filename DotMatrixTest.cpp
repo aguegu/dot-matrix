@@ -2,15 +2,25 @@
 
 #include "Driver_Dual595.h"
 #include "DotMatrix.h"
+#include "DotFont.h"
+#include "DotString.h"
 
-DotMatrix dm(24, 24);
-Driver_Dual595 dmd(dm, 9, 8, 7, 6, 5);
+#include "Font0703.h"
+
+Driver_Dual595 dmd(9, 8, 7, 6, 5);
+DotMatrix dm = dmd.getDotMatrix();
 
 void setup()
 {
 	dm.clear(0x00);
-	for (byte i = 0; i < dm.countBytes(); i++)
-		dm.setByte(i, i);
+	DotFont df(dm);
+	df.setPattern(FONT_0703, FONT_0703_STATE);
+	DotString ds(df, 16, true);
+	ds.printf("aGuegu.net");
+	dm.setRect(0,0,47,11);
+	dm.setRect(1,1,46,10, false);
+
+	ds.postAt(4, 3);
 }
 
 void loop()
