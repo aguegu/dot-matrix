@@ -52,6 +52,9 @@
 								<option id="it.baeyens.avreclipse.compiler.option.language.ubitfields.10704290" name="bitfields are unsigned (-funsigned-bitfields)" superClass="it.baeyens.avreclipse.compiler.option.language.ubitfields" value="false" valueType="boolean"/>
 								<option id="it.baeyens.avreclipse.compiler.option.std.683877028" name="Language Standard" superClass="it.baeyens.avreclipse.compiler.option.std" value="it.baeyens.avreclipse.compiler.option.std.default" valueType="enumerated"/>
 								<option id="it.baeyens.avreclipse.compiler.option.otherflags.138599099" name="Other flags" superClass="it.baeyens.avreclipse.compiler.option.otherflags" value="-g" valueType="string"/>
+								<option id="it.baeyens.avreclipse.compiler.option.undef.1412900664" name="Undefine Syms (-U)" superClass="it.baeyens.avreclipse.compiler.option.undef" valueType="undefDefinedSymbols">
+									<listOptionValue builtIn="false" value="__AVR_ATmega328P__"/>
+								</option>
 								<inputType id="it.baeyens.avreclipse.compiler.winavr.input.472891441" name="C Source Files" superClass="it.baeyens.avreclipse.compiler.winavr.input"/>
 							</tool>
 							<tool command="avr-g++" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} -x c++ ${INPUTS}" errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="it.baeyens.avreclipse.tool.cppcompiler.app.release.265767624" name="AVR C++ Compiler" superClass="it.baeyens.avreclipse.tool.cppcompiler.app.release">
@@ -78,6 +81,9 @@
 								<option id="it.baeyens.avreclipse.cppcompiler.option.language.uchar.1159028291" name="char is unsigned (-funsigned-char)" superClass="it.baeyens.avreclipse.cppcompiler.option.language.uchar" value="false" valueType="boolean"/>
 								<option id="it.baeyens.avreclipse.cppcompiler.option.language.ubitfields.1912413953" name="bitfields are unsigned (-funsigned-bitfields)" superClass="it.baeyens.avreclipse.cppcompiler.option.language.ubitfields" value="false" valueType="boolean"/>
 								<option id="it.baeyens.avreclipse.cppcompiler.option.otherflags.840937360" name="Other flags" superClass="it.baeyens.avreclipse.cppcompiler.option.otherflags" value="-g" valueType="string"/>
+								<option id="it.baeyens.avreclipse.cppcompiler.option.undef.1432419178" name="Undefine Syms (-U)" superClass="it.baeyens.avreclipse.cppcompiler.option.undef" valueType="undefDefinedSymbols">
+									<listOptionValue builtIn="false" value="__AVR_ATmega328P__"/>
+								</option>
 								<inputType id="it.baeyens.avreclipse.cppcompiler.input.1732456011" superClass="it.baeyens.avreclipse.cppcompiler.input"/>
 							</tool>
 							<tool id="it.baeyens.avreclipse.tool.linker.winavr.app.release.1782124606" name="AVR C Linker" superClass="it.baeyens.avreclipse.tool.linker.winavr.app.release"/>
