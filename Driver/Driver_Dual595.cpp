@@ -7,10 +7,10 @@
 
 #include "Driver_Dual595.h"
 
-Driver_Dual595::Driver_Dual595(DotMatrix dm, uint8_t pin_col, uint8_t pin_row, uint8_t pin_sh,
-		uint8_t pin_st, uint8_t pin_oe) :
-		_dm(dm), _pin_col(pin_col), _pin_row(pin_row), _pin_sh(pin_sh), _pin_st(pin_st), _pin_oe(
-				pin_oe)
+Driver_Dual595::Driver_Dual595(DotMatrix & dm, uint8_t pin_col, uint8_t pin_row,
+		uint8_t pin_sh, uint8_t pin_st, uint8_t pin_oe) :
+		_dm(dm), _pin_col(pin_col), _pin_row(pin_row), _pin_sh(pin_sh), _pin_st(
+				pin_st), _pin_oe(pin_oe)
 {
 	pinMode(_pin_col, OUTPUT);
 	pinMode(_pin_row, OUTPUT);
@@ -45,17 +45,20 @@ void Driver_Dual595::display() const
 
 	for (byte r = 0; r < 24; r++)
 	{
-		for (byte c = 0; c < 24; c++)
+		for (byte i = 0, j = 0; i < 3; i++)
 		{
-			//pinWrite(_pin_col, !((*p) & _BV(c%8)));
-			pinWrite(_pin_col, bitRead((*p),4));
-			//pinWrite(_pin_col, HIGH);
-			pinWrite(_pin_row, c!=r);	// row on when it is LOW
-			this->shiftClock();
+			byte tmp = *p;
+			for (byte c = 0; c < 8; c++, j++)
+			{
+				pinWrite(_pin_col, tmp&0x01);
+				pinWrite(_pin_row, j!=r);
+				// row on when it is LOW
+				this->shiftClock();
+				tmp >>= 1;
+			}
+			p++;
 		}
 		this->shiftLatch();
-		delay(0x100);
+		delayMicroseconds(0x100);
 	}
-
-
 }

@@ -15,7 +15,7 @@
 class Driver_Dual595
 {
 public:
-	Driver_Dual595(DotMatrix dm, uint8_t pin_col, uint8_t pin_row, uint8_t pin_sh, uint8_t pin_st, uint8_t pin_oe);
+	Driver_Dual595(DotMatrix & dm, uint8_t pin_col, uint8_t pin_row, uint8_t pin_sh, uint8_t pin_st, uint8_t pin_oe);
 	virtual ~Driver_Dual595();
 
 	void display() const;

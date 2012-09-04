@@ -8,8 +8,9 @@ Driver_Dual595 dmd(dm, 9, 8, 7, 6, 5);
 
 void setup()
 {
-	dm.clear();
-	dm.setByte(0, 0x0f);
+	dm.clear(0x00);
+	for (byte i = 0; i < dm.countBytes(); i++)
+		dm.setByte(i, i);
 }
 
 void loop()
