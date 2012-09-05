@@ -6,8 +6,8 @@
 #include "DotFont.h"
 #include "DotString.h"
 
-DotMatrix dm(16, 6);
-HD44780 lcd(dm, 8, 9, 10, 11, 12, 13);
+HD44780 lcd(8, 9, 10, 11, 12, 13, 4);
+DotMatrix dm = lcd.getDotMatrix();
 DotFont df(dm);
 
 void setup()
@@ -24,7 +24,7 @@ void loop()
 
 	DotString ds(df, 8);
 	ds.printf("%4d", i);
-	ds.postAt(0,0);
+	ds.postAt(0, 3);
 	lcd.convertDotMatrixToCache();
 
 	//lcd.printf("Hello, World.");

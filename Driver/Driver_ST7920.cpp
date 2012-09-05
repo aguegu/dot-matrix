@@ -15,8 +15,8 @@
 
 #include "Driver_ST7920.h"
 
-ST7920::ST7920(DotMatrix & dm, uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7)
-	:ST7920_Basic(pin_rs, pin_en, pin_d4, pin_d5, pin_d6, pin_d7), _dm(dm)
+ST7920::ST7920(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7)
+	:ST7920_Basic(pin_rs, pin_en, pin_d4, pin_d5, pin_d6, pin_d7), _dm(128, 64)
 {
 	// TODO Auto-generated constructor stub
 	this->init();
@@ -46,4 +46,9 @@ void ST7920::putDM()
 		for (byte i =  _dm.countBytePerRow(); i--;)
 			this->writeDataRev(*(p++));
 	}
+}
+
+DotMatrix & ST7920::getDotMatrix()
+{
+	return _dm;
 }
