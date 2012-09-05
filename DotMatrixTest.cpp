@@ -24,7 +24,7 @@ void loop()
 
 	DotString ds(df, 8);
 	ds.printf("%4d", i);
-	ds.postAt(0,6);
+	ds.postAt(0, 3);
 	lcd.convertDotMatrixToCache();
 
 	//lcd.printf("Hello, World.");
