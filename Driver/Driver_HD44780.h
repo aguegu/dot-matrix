@@ -25,12 +25,13 @@ class HD44780: public HD44780_Basic
 {
 public:
 
-	HD44780(DotMatrix & dm, uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7);
+	HD44780(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7, byte row_count = 2, byte col_count = 16);
 	virtual ~HD44780();
 
 	void convertDotMatrixToCache();
+	DotMatrix & getDotMatrix();
 
 private:
-	const DotMatrix & _dm;
+	DotMatrix _dm;
 };
 #endif /* Driver_HD44780.h */

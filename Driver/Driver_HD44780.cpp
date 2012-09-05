@@ -16,9 +16,8 @@
 
 #include "Driver_HD44780.h"
 
-HD44780::HD44780(DotMatrix & dm, uint8_t pin_rs, uint8_t pin_en,
-		uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7)
-		: HD44780_Basic(pin_rs, pin_en, pin_d4, pin_d5, pin_d6, pin_d7, dm.countRow() / 3, dm.countCol()), _dm(dm)
+HD44780::HD44780(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7, byte row_count, byte col_count)
+:HD44780_Basic(pin_rs, pin_en, pin_d4, pin_d5, pin_d6, pin_d7, row_count, col_count), _dm(col_count, row_count * 3)
 {
 	//this->init();
 }
@@ -43,3 +42,7 @@ void HD44780::convertDotMatrixToCache()
 	}
 }
 
+DotMatrix & HD44780::getDotMatrix()
+{
+	return _dm;
+}

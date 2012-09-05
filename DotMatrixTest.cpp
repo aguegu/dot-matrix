@@ -1,26 +1,35 @@
 #include "DotMatrixTest.h"
 
+#include "Driver_HD44780.h"
 #include "DotMatrix.h"
-#include "Driver_3W1608.h"
+#include "Font0603.h"
 #include "DotFont.h"
 #include "DotString.h"
 
-#include "Font0703.h"
-
-Driver_3W1608 dmd;
-DotMatrix dm = dmd.getDotMatrix();
+HD44780 lcd(8, 9, 10, 11, 12, 13, 4);
+DotMatrix dm = lcd.getDotMatrix();
+DotFont df(dm);
 
 void setup()
 {
-	dm.clear();
-	DotFont df(dm);
-	df.setPattern(FONT_0703, FONT_0703_STATE);
-	DotString ds(df, 8, true);
-	ds.printf("boxz");
-	ds.postAt(0,1);
+	lcd.init();
+	df.setPattern(FONT_0603, FONT_0603_STATE);
 }
 
 void loop()
 {
-	dmd.display();
+	static int i = 0;
+
+	dm.clear();
+
+	DotString ds(df, 8);
+	ds.printf("%4d", i);
+	ds.postAt(0,6);
+	lcd.convertDotMatrixToCache();
+
+	//lcd.printf("Hello, World.");
+	lcd.putCache();
+	i++;
+
+	delay(100);
 }
