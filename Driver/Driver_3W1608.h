@@ -15,12 +15,13 @@
 class Driver_3W1608
 {
 public:
-	Driver_3W1608(DotMatrix & dm);
+	Driver_3W1608();
 	virtual ~Driver_3W1608();
 	void display(byte times = 1);
 	void setSpeed(uint16_t scan_span = 0x800);
+	DotMatrix & getDotMatrix();
 private:
-	DotMatrix & _dm;
+	DotMatrix _dm;
 	Driver_74HC595_SPI chip;
 	uint16_t _scan_span;
 };

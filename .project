@@ -3,7 +3,7 @@
 	<name>aGueguLibrary</name>
 	<comment></comment>
 	<projects>
-		<project>m8L</project>
+		<project>Arduino_Uno</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
