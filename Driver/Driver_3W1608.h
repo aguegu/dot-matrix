@@ -18,7 +18,7 @@ public:
 	Driver_3W1608();
 	virtual ~Driver_3W1608();
 	void display(byte times = 1);
-	void setSpeed(uint16_t scan_span = 0x800);
+	void setScanSpan(uint16_t scan_span = 0x800);
 	DotMatrix & getDotMatrix();
 private:
 	DotMatrix _dm;

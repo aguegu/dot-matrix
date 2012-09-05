@@ -10,7 +10,7 @@
 Driver_3W1608::Driver_3W1608() :
 		_dm(16, 8), chip(SPI, 9, 8)
 {
-	this->setSpeed();
+	this->setScanSpan();
 }
 
 Driver_3W1608::~Driver_3W1608()
@@ -36,7 +36,7 @@ void Driver_3W1608::display(byte times)
 	}
 }
 
-void Driver_3W1608::setSpeed(uint16_t scan_span)
+void Driver_3W1608::setScanSpan(uint16_t scan_span)
 {
 	_scan_span = scan_span;
 }

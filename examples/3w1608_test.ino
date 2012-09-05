@@ -7,8 +7,8 @@
 
 #include "Font0703.h"
 
-DotMatrix dm(16,8);
-Driver_3W1608 dmd(dm);
+Driver_3W1608 dmd;
+DotMatrix dm = dmd.getDotMatrix();
 
 void setup()
 {
