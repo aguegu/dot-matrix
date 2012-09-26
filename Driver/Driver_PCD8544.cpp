@@ -15,8 +15,8 @@
 
 #include "Driver_PCD8544.h"
 
-Driver_PCD8544::Driver_PCD8544(DotMatrix & dm, uint8_t pin_sce, uint8_t pin_rst, uint8_t pin_dc, uint8_t pin_din, uint8_t pin_sclk)
-	:Driver_PCD8544_Basic(pin_sce, pin_rst, pin_dc, pin_din, pin_sclk), _dm(dm)
+Driver_PCD8544::Driver_PCD8544(uint8_t pin_sce, uint8_t pin_rst, uint8_t pin_dc, uint8_t pin_din, uint8_t pin_sclk)
+	:Driver_PCD8544_Basic(pin_sce, pin_rst, pin_dc, pin_din, pin_sclk), _dm(48, 84)
 {
 
 }
@@ -45,3 +45,7 @@ void Driver_PCD8544::putDM()
 	}
 }
 
+DotMatrix & Driver_PCD8544::getDM()
+{
+	return _dm;
+}

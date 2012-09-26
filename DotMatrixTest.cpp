@@ -6,10 +6,8 @@
 
 #include "Font0703.h"
 
-
-DotMatrix dm(48, 84);
-Driver_PCD8544 lcd(dm, 2, 3, 4, 5, 6);
-
+Driver_PCD8544 lcd(2, 3, 4, 5, 6);
+DotMatrix dm = lcd.getDM();
 
 void setup()
 {

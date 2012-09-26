@@ -28,12 +28,14 @@ class Driver_PCD8544:public Driver_PCD8544_Basic
 
 public:
 
-	Driver_PCD8544(DotMatrix & dm, uint8_t pin_sce, uint8_t pin_rst, uint8_t pin_dc, uint8_t pin_din, uint8_t pin_sclk);
+	Driver_PCD8544(uint8_t pin_sce, uint8_t pin_rst, uint8_t pin_dc, uint8_t pin_din, uint8_t pin_sclk);
 	virtual ~Driver_PCD8544();
 
 	void putDM();
+	DotMatrix & getDM();
+
 private:
-	const DotMatrix & _dm;
+	DotMatrix _dm;
 };
 
 #endif /* DRIVER_PCD8544_H_ */
