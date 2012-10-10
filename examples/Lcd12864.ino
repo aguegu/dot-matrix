@@ -10,8 +10,8 @@
 #include "Font0705.h"
 #include "Font0503.h"
 
-DotMatrix dm(128, 64);
-ST7920 dmd(dm, 8, 9, 10, 11, 12, 13);
+ST7920 dmd(A5, A4, A3, A2, A1, A0);
+DotMatrix dm = dmd.getDotMatrix();
 
 void setup()
 {
