@@ -5,24 +5,24 @@
 
 #include "Pattern.h"
 
-DotMatrix dm(48, 84);
-Driver_PCD8544 lcd(dm, 2, 3, 4, 5, 6);
+Driver_PCD8544 lcd(A5, A4, A3, A2, A1);
+DotMatrix dm = lcd.getDM();
 DotPattern dp(dm);
 
 void setup()
 {
-	pinMode(7, OUTPUT);
-	digitalWrite(7, HIGH);
+	pinMode(A0, OUTPUT);
+	digitalWrite(A0, HIGH);
 
 	lcd.init();
 
 	dm.clear();
 	dm.setMoveDirection(DotMatrix::BIT_IN_COL_NEGA);
-	dp.setPattern(PATTERN_CHAR,200,5);
+	dp.setPattern(PATTERN_CHAR,72,3);
 	dp.postAt(0, 0);
 	dp.print();
 
-	dp.setPattern(PATTERN_CHAR+200,200,5);
+	dp.setPattern(PATTERN_CHAR+72,72,3);
 		dp.postAt(8, 42);
 		dp.print();
 }

@@ -6,15 +6,13 @@
 
 #include "Font0703.h"
 
-
-DotMatrix dm(48, 84);
-Driver_PCD8544 lcd(dm, 2, 3, 4, 5, 6);
-
+Driver_PCD8544 lcd(A5, A4, A3, A2, A1);
+DotMatrix dm = lcd.getDM();
 
 void setup()
 {
-	pinMode(7, OUTPUT);
-	digitalWrite(7, HIGH);
+	pinMode(A0, OUTPUT);
+	digitalWrite(A0, HIGH);
 
 	lcd.init();
 

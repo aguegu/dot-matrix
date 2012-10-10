@@ -1,72 +1,55 @@
 #include "DotMatrixTest.h"
-
 #include "DotMatrix.h"
-#include "Driver_ST7920.h"
 #include "DotFont.h"
 #include "DotString.h"
+#include "Driver_PCD8544.h"
 
 #include "Font0703.h"
-#include "Font0704.h"
-#include "Font0705.h"
-#include "Font0503.h"
 
-ST7920 dmd(A5, A4, A3, A2, A1, A0);
-DotMatrix dm = dmd.getDotMatrix();
+Driver_PCD8544 lcd(A5, A4, A3, A2, A1);
+DotMatrix dm = lcd.getDM();
 
 void setup()
 {
+	pinMode(A0, OUTPUT);
+	digitalWrite(A0, HIGH);
+
+	lcd.init();
+
 	dm.clear();
+	dm.setMoveDirection(DotMatrix::BIT_IN_COL_POSI);
 
 	DotFont df(dm);
+
 	df.setPattern(FONT_0703, FONT_0703_STATE);
+	DotString ds(df, 32, true);
+
+	dm.setDot(0,0);
+
+	ds.printf("Hello, world.");
+	ds.postAt(2,0);
+
 	df.setVertical(false);
+	ds.printf("Font Display on Nokia");
+	ds.postAt(0, 0);
 
-	df.setPattern(FONT_0705, FONT_0705_STATE);
-	for (byte i = 0; i < 10; i++)
-	{
-		DotString ds(df, 32, true);
-		ds.printf("%d", i);
-		ds.postAt(i * 6, 0);
-	}
+	ds.printf("5110, driven by");
+	ds.postAt(0, 9);
 
-	df.setPattern(FONT_0503, FONT_0503_STATE);
-	for (byte i = 0; i < 10; i++)
-	{
-		DotString ds(df, 32, true);
-		ds.printf("%d", i);
-		ds.postAt(i * 6, 8);
-	}
+	ds.printf("Arduino.");
+	ds.postAt(0, 18);
 
-	df.setPattern(FONT_0704, FONT_0704_STATE);
-	df.setVertical();
-	DotString hds(df, 32, true);
-	hds.printf("%s", "Lcd12864 driven by dot-matrix");
-	hds.postAt(18, 2);
+	ds.printf("aGuegu.net");
+	ds.postAt(0, 27);
 
-	hds.printf("%s", "library for Arduino.");
-	hds.postAt(18, 12);
-
-	hds.printf("%s", "Developed by W.H. Guan");
-	hds.postAt(40, 24);
-
-	dm.setRect(32, 40, 108, 56);
-	dm.setRect(34, 42, 106, 54, false);
-
-	hds.printf("%s", "aGuegu.net");
-	hds.postAt(40, 45);
-
-	dm.setLine(20, 48, 30, 54);
-	dm.setLine(16, 54, 30, 54);
-	dm.setLine(20, 60, 30, 54);
-
-	dm.setLine(120, 32, 110, 40);
-	dm.setLine(126, 40, 110, 40);
-	dm.setLine(120, 48, 110, 40);
-
-	dmd.putDM();
+	ds.printf("%2d-%02d, %d", 5, 31, 2012);
+	ds.postAt(0, 36);
 }
 
 void loop()
 {
+	lcd.putDM();
 
+	dm.move(true);
+	delay(200);
 }
