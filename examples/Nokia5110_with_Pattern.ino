@@ -17,14 +17,12 @@ void setup()
 	lcd.init();
 
 	dm.clear();
-	dm.setMoveDirection(DotMatrix::BIT_IN_COL_NEGA);
-	dp.setPattern(PATTERN_CHAR,72,3);
+	dp.setPattern(PATTERN_CHAR, 72, 3);
 	dp.postAt(0, 0);
-	dp.print();
 
-	dp.setPattern(PATTERN_CHAR+72,72,3);
-		dp.postAt(8, 42);
-		dp.print();
+	dp.setPattern(PATTERN_CHAR + 72, 72, 3);
+	dp.postAt(8, 42);
+
 }
 
 void loop()
@@ -33,6 +31,6 @@ void loop()
 	dm.setMoveDirection(DotMatrix::BIT_IN_COL_NEGA);
 	dm.move(true);
 	dm.setMoveDirection(DotMatrix::BIT_IN_ROW_NEGA);
-		dm.move(true);
-	//delay(200);
+	dm.move(true);
+	delay(200);
 }

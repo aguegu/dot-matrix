@@ -38,6 +38,7 @@ void DotPattern::postAt(byte col, byte row)
 {
 	_col = col;
 	_row = row;
+	this->print();
 }
 
 void DotPattern::setPattern(const uint8_t * pattern, int length,
