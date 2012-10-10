@@ -16,7 +16,7 @@ class DotPattern
 public:
 	DotPattern(DotMatrix & dm);
 	virtual ~DotPattern();
-	void setPattern(const uint8_t * pattern, int length, byte byte_in_row);
+	void setPattern(uint8_t * pattern, int length, byte byte_in_row);
 	void postAt(byte col, byte row);
 
 private:
@@ -26,7 +26,7 @@ private:
 	byte _col;
 	byte _row;
 	int _length;
-	const uint8_t *_pattern;
+	uint8_t *_pattern;
 	void print();
 };
 

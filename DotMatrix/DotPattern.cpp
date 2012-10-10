@@ -20,13 +20,13 @@ DotPattern::~DotPattern()
 
 void DotPattern::print()
 {
-	word index = 0;
+	uint8_t *p = _pattern;
 	byte row = _row;
 	for (byte r = _row_count; r--;)
 	{
 		for (byte col = _col, c = _byte_in_row; c--;)
 		{
-			byte k = DotMatrix::reverseByte(pgm_read_byte_near(_pattern + index++));
+			byte k = DotMatrix::reverseByte(*(p++));
 			_dm.putByte(col, row, k);
 			col += 8;
 		}
@@ -41,7 +41,7 @@ void DotPattern::postAt(byte col, byte row)
 	this->print();
 }
 
-void DotPattern::setPattern(const uint8_t * pattern, int length,
+void DotPattern::setPattern(uint8_t * pattern, int length,
 		byte byte_in_row)
 {
 	_pattern = pattern;

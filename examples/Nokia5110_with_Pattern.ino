@@ -17,10 +17,14 @@ void setup()
 	lcd.init();
 
 	dm.clear();
-	dp.setPattern(PATTERN_CHAR, 72, 3);
+
+	byte p[72];
+	memcpy_P(p, PATTERN_CHAR, 72);
+	dp.setPattern(p, 72, 3);
 	dp.postAt(0, 0);
 
-	dp.setPattern(PATTERN_CHAR + 72, 72, 3);
+	memcpy_P(p, PATTERN_CHAR+72, 72);
+	dp.setPattern(p, 72, 3);
 	dp.postAt(8, 42);
 
 }
