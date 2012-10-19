@@ -19,6 +19,7 @@
 
 #include "Arduino.h"
 #include "PinWrite.h"
+#include "DotMatrix.h"
 
 class ST7920_Basic
 {

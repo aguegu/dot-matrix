@@ -15,8 +15,10 @@
 
 #include "Driver_PCD8544.h"
 
-Driver_PCD8544::Driver_PCD8544(uint8_t pin_sce, uint8_t pin_rst, uint8_t pin_dc, uint8_t pin_din, uint8_t pin_sclk)
-	:Driver_PCD8544_Basic(pin_sce, pin_rst, pin_dc, pin_din, pin_sclk), _dm(48, 84)
+Driver_PCD8544::Driver_PCD8544(uint8_t pin_sce, uint8_t pin_rst, uint8_t pin_dc,
+		uint8_t pin_din, uint8_t pin_sclk) :
+		Driver_PCD8544_Basic(pin_sce, pin_rst, pin_dc, pin_din, pin_sclk), _dm(
+				48, 84)
 {
 
 }
@@ -29,19 +31,19 @@ Driver_PCD8544::~Driver_PCD8544()
 void Driver_PCD8544::putDM()
 {
 	byte *p = _dm.output();
-	this->setRamAddress(0,0);
+	this->setRamAddress(0, 0);
 
-	byte j=_dm.countRow();
-	while(j--)
+	byte j = _dm.countRow();
+	while (j--)
 	{
-		p+=BYTES_PER_COLUMN;
+		p += BYTES_PER_COLUMN;
 
 		byte i = BYTES_PER_COLUMN;
 
-		while(i--)
+		while (i--)
 			this->sendLsbFirst(*(--p), DATA);
 
-		p+=BYTES_PER_COLUMN;
+		p += BYTES_PER_COLUMN;
 	}
 }
 

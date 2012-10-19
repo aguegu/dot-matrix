@@ -139,19 +139,8 @@ void ST7920_Basic::writeData(byte c)
 
 void ST7920_Basic::writeDataRev(byte c)
 {
-	pinSet(_pin_rs);
-
-	for (byte i = 0; i < 4; i++)
-		pinWrite(_pin_d[3 - i], bit_is_set(c, i));
-
-	this->pulseEn();
-
-	c >>= 4;
-
-	for (byte i = 0; i < 4; i++)
-		pinWrite(_pin_d[3 - i], bit_is_set(c, i));
-
-	this->pulseEn();
+	byte tmp = DotMatrix::reverseByte(c);
+	this->writeData(tmp);
 }
 
 void ST7920_Basic::setDB2(byte c, bool high)
