@@ -45,7 +45,6 @@ DotFont::DotFont(DotMatrix & dm) :
 		_dm(dm)
 {
 	_col = _row = _index = 0;
-
 	_vertical = true;
 }
 
@@ -96,9 +95,10 @@ void DotFont::clear(const bool on) const
 
 void DotFont::print() const
 {
-	if (_index == _pattern_length) this->clear(false);
+	if (_index == _pattern_length)
+		this->clear(false);
 	else
-		_vertical ? printV():printH();
+		_vertical ? printV() : printH();
 }
 
 void DotFont::printH() const
@@ -107,7 +107,8 @@ void DotFont::printH() const
 	{
 		for (byte r = 0; r < _unit_height; r++)
 		{
-			if (boolean b = bitRead(pgm_read_byte_near(_pattern + _indent + c), r))
+			if (boolean b =
+					bitRead(pgm_read_byte_near(_pattern + _indent + c), r))
 				_dm.setDot(_row + r, _dm.countRow() - _col - 1 - c, b);
 		}
 	}
@@ -115,11 +116,12 @@ void DotFont::printH() const
 
 void DotFont::printV() const
 {
-	for (byte c = 0; c < _unit_width && c+_col < _dm.countCol(); c++)
+	for (byte c = 0; c < _unit_width && c + _col < _dm.countCol(); c++)
 	{
 		for (byte r = 0; r < _unit_height; r++)
 		{
-			if (boolean b = bitRead(pgm_read_byte_near(_pattern + _indent + c), r))
+			if (boolean b =
+					bitRead(pgm_read_byte_near(_pattern + _indent + c), r))
 				_dm.setDot(_col + c, _row + r, b);
 		}
 	}
@@ -132,7 +134,8 @@ byte DotFont::calcFontRealWidth() const
 
 	byte i = _unit_width - 1;
 
-	while (pgm_read_byte_near(_pattern + _indent + i) == 0 && i--);
+	while (pgm_read_byte_near(_pattern + _indent + i) == 0 && i--)
+		;
 
 	return i + 1;
 }

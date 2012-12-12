@@ -47,7 +47,7 @@ void DotMatrix::setDot(byte col, byte row, boolean b)
 {
 	word i = getIndex(col, row);
 
-	bitWrite(*(_pScreen+i), 7-(col & 0x07), b);
+	bitWriteInByteRev(*(_pScreen+i), col & 0x07, b);
 }
 
 void DotMatrix::setLine(byte cA, byte rA, byte cB, byte rB, bool on)
@@ -140,7 +140,7 @@ word DotMatrix::getIndex(byte col, byte row) const
 byte DotMatrix::getDot(byte col, byte row) const
 {
 	word i = getIndex(col, row);
-	return bitReadInByte(_pScreen[i], 7-(col & 0x07));
+	return bitReadInByteRev(_pScreen[i], col & 0x07);
 }
 
 byte * DotMatrix::output() const
@@ -198,13 +198,13 @@ void DotMatrix::moveBitInColNega(bool recycle)
 		{
 			boolean b = bitReadInByte(*(p+1), 0);
 			*p >>= 1;
-			bitWrite(*p, 7, b);
+			bitWriteInByte(*p, 7, b);
 			p++;
 		}
 
 		*p >>= 1;
 		if (recycle)
-			bitWrite(*p, 7, b0);
+			bitWriteInByte(*p, 7, b0);
 
 		p++;
 	}
@@ -220,13 +220,13 @@ void DotMatrix::moveBitInColPosi(bool recycle)
 		{
 			boolean b = bitReadInByte(*(p-1), 7);
 			*p <<= 1;
-			bitWrite(*p, 0, b);
+			bitWriteInByte(*p, 0, b);
 			p--;
 		}
 
 		*p <<= 1;
 		if (recycle)
-			bitWrite(*p, 0, b0);
+			bitWriteInByte(*p, 0, b0);
 
 		p += _bytes_per_row + _bytes_per_row - 1;
 	}
