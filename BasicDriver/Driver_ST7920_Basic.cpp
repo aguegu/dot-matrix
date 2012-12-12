@@ -137,12 +137,6 @@ void ST7920_Basic::writeData(byte c)
 	setDB2(c, false);
 }
 
-void ST7920_Basic::writeDataRev(byte c)
-{
-	byte tmp = DotMatrix::reverseByte(c);
-	this->writeData(tmp);
-}
-
 void ST7920_Basic::setDB2(byte c, bool high)
 {
 	if (high)

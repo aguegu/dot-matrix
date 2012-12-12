@@ -16,6 +16,7 @@
 
 #include "Controller_A3D8_Basic.h"
 #include "DotMatrix3D.h"
+#include "ReverseByte.h"
 
 class Controller_A3D8:public Controller_A3D8_Basic
 {

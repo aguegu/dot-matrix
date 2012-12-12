@@ -26,7 +26,7 @@ void DotPattern::print()
 	{
 		for (byte col = _col, c = _byte_in_row; c--;)
 		{
-			byte k = DotMatrix::reverseByte(*(p++));
+			byte k = reverseByte(*(p++));
 			_dm.putByte(col, row, k);
 			col += 8;
 		}

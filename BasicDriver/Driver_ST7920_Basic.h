@@ -20,6 +20,7 @@
 #include "Arduino.h"
 #include "PinWrite.h"
 #include "DotMatrix.h"
+#include "ReverseByte.h"
 
 class ST7920_Basic
 {
@@ -41,7 +42,7 @@ public:
 protected:
 
 	void setDdRam(byte address); // Set address in Text Mode
-	void writeDataRev(byte c);
+	void writeData(byte c);
 
 private:
 
@@ -56,7 +57,7 @@ private:
 	void setCgRam(byte value);
 
 	void writeCmd(byte c);
-	void writeData(byte c);
+
 };
 
 #endif /* LCD12864_H_ */

@@ -47,7 +47,7 @@ void DotMatrix::setDot(byte col, byte row, boolean b)
 {
 	word i = getIndex(col, row);
 
-	bitWrite(*(_pScreen+i), (col & 0x07), b);
+	bitWrite(*(_pScreen+i), 7-(col & 0x07), b);
 }
 
 void DotMatrix::setLine(byte cA, byte rA, byte cB, byte rB, bool on)
@@ -140,7 +140,7 @@ word DotMatrix::getIndex(byte col, byte row) const
 byte DotMatrix::getDot(byte col, byte row) const
 {
 	word i = getIndex(col, row);
-	return bitRead(_pScreen[i], (col & 0x07));
+	return bitReadInByte(_pScreen[i], 7-(col & 0x07));
 }
 
 byte * DotMatrix::output() const
@@ -183,10 +183,9 @@ void DotMatrix::putByte(byte col, byte row, byte value)
 	_pScreen[i + 1] |= value >> (8 - j);
 }
 
-
 byte DotMatrix::getByte(word index)
 {
-	return index >= _bytes_length? 0:_pScreen[index];
+	return index >= _bytes_length ? 0 : _pScreen[index];
 }
 
 void DotMatrix::moveBitInColNega(bool recycle)
@@ -194,17 +193,18 @@ void DotMatrix::moveBitInColNega(bool recycle)
 	byte *p = _pScreen;
 	for (byte r = _row_count; r--;)
 	{
-		bool b0 = bitRead(*p, 0);
+		bool b0 = bitReadInByte(*p, 0);
 		for (byte i = _bytes_per_row - 1; i--;)
 		{
-			boolean b = bitRead(*(p+1), 0);
+			boolean b = bitReadInByte(*(p+1), 0);
 			*p >>= 1;
 			bitWrite(*p, 7, b);
 			p++;
 		}
 
 		*p >>= 1;
-		if (recycle) bitWrite(*p, 7, b0);
+		if (recycle)
+			bitWrite(*p, 7, b0);
 
 		p++;
 	}
@@ -215,17 +215,18 @@ void DotMatrix::moveBitInColPosi(bool recycle)
 	byte *p = _pScreen + _bytes_per_row - 1;
 	for (byte r = _row_count; r--;)
 	{
-		boolean b0 = bitRead(*p, 7);
+		boolean b0 = bitReadInByte(*p, 7);
 		for (byte i = _bytes_per_row - 1; i--;)
 		{
-			boolean b = bitRead(*(p-1), 7);
+			boolean b = bitReadInByte(*(p-1), 7);
 			*p <<= 1;
 			bitWrite(*p, 0, b);
 			p--;
 		}
 
 		*p <<= 1;
-		if (recycle) bitWrite(*p, 0, b0);
+		if (recycle)
+			bitWrite(*p, 0, b0);
 
 		p += _bytes_per_row + _bytes_per_row - 1;
 	}
@@ -341,11 +342,6 @@ void DotMatrix::setMoveDirection(Direction d)
 void DotMatrix::move(bool recycle)
 {
 	(this->*_funMoveDirection)(recycle);
-}
-
-byte DotMatrix::reverseByte(byte c)
-{
-	return (pgm_read_byte_near(REVERSE + (c & 0x0f)) << 4) ^ (pgm_read_byte_near(REVERSE + (c >> 4)) & 0x0f);
 }
 
 byte DotMatrix::orValue()

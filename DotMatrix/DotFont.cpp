@@ -45,6 +45,7 @@ DotFont::DotFont(DotMatrix & dm) :
 		_dm(dm)
 {
 	_col = _row = _index = 0;
+
 	_vertical = true;
 }
 

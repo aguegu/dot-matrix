@@ -36,7 +36,7 @@ void Controller_A3D8::putDMrevZ()
 	_sp.write(0xf2);
 	byte *p = _dm.output();
 	for (byte i = _length; i--;)
-		_sp.write(DotMatrix::reverseByte(*p++));
+		_sp.write(reverseByte(*p++));
 }
 
 void Controller_A3D8::putReverseDM()

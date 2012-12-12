@@ -36,7 +36,7 @@ void ST7920::putDM()
 		this->setDdRam(r); // y
 		this->setDdRam(0x00); // x
 		for (byte i = _dm.countBytePerRow(); i--;)
-			this->writeDataRev(*(p++));
+			this->writeData(*(p++));
 	}
 
 	for (byte r = 0; r < 0x20; r++)
@@ -44,7 +44,7 @@ void ST7920::putDM()
 		this->setDdRam(r); // y
 		this->setDdRam(0x08); // x
 		for (byte i =  _dm.countBytePerRow(); i--;)
-			this->writeDataRev(*(p++));
+			this->writeData(*(p++));
 	}
 }
 
