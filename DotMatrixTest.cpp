@@ -22,8 +22,6 @@ void setup()
 //		dm.setByte(i, i);
 //	}
 
-	dm.setByte(0, 2U);
-
 	DotFont df(dm);
 	df.setPattern(FONT_0703, FONT_0703_STATE);
 	df.setVertical(false);
@@ -75,5 +73,8 @@ void setup()
 
 void loop()
 {
-
+	delay(100);
+	dm.setMoveDirection(DotMatrix::BIT_IN_BYTE_NEGA);
+	dm.move(true);
+	dmd.putDM();
 }

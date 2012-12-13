@@ -47,7 +47,7 @@ void DotMatrix::setDot(byte col, byte row, boolean b)
 {
 	word i = getIndex(col, row);
 
-	bitWriteInByteRev(*(_pScreen+i), col & 0x07, b);
+	writeHighBitInByte(*(_pScreen+i), col & 0x07, b);
 }
 
 void DotMatrix::setLine(byte cA, byte rA, byte cB, byte rB, bool on)
@@ -140,7 +140,7 @@ word DotMatrix::getIndex(byte col, byte row) const
 byte DotMatrix::getDot(byte col, byte row) const
 {
 	word i = getIndex(col, row);
-	return bitReadInByteRev(_pScreen[i], col & 0x07);
+	return readHighBitInByte(_pScreen[i], col & 0x07);
 }
 
 byte * DotMatrix::output() const
@@ -193,18 +193,18 @@ void DotMatrix::moveBitInColNega(bool recycle)
 	byte *p = _pScreen;
 	for (byte r = _row_count; r--;)
 	{
-		bool b0 = bitReadInByte(*p, 0);
+		bool b0 = readHighBitInByte(*p, 0);
 		for (byte i = _bytes_per_row - 1; i--;)
 		{
-			boolean b = bitReadInByte(*(p+1), 0);
-			*p >>= 1;
-			bitWriteInByte(*p, 7, b);
+			boolean b = readHighBitInByte(*(p+1), 0);
+			*p <<= 1;
+			writeLowBitInByte(*p, 0, b);
 			p++;
 		}
 
-		*p >>= 1;
+		*p <<= 1;
 		if (recycle)
-			bitWriteInByte(*p, 7, b0);
+			writeLowBitInByte(*p, 0, b0);
 
 		p++;
 	}
@@ -215,18 +215,18 @@ void DotMatrix::moveBitInColPosi(bool recycle)
 	byte *p = _pScreen + _bytes_per_row - 1;
 	for (byte r = _row_count; r--;)
 	{
-		boolean b0 = bitReadInByte(*p, 7);
+		boolean b0 = readLowBitInByte(*p, 0);
 		for (byte i = _bytes_per_row - 1; i--;)
 		{
-			boolean b = bitReadInByte(*(p-1), 7);
-			*p <<= 1;
-			bitWriteInByte(*p, 0, b);
+			boolean b = readLowBitInByte(*(p-1), 0);
+			*p >>= 1;
+			writeHighBitInByte(*p, 0, b);
 			p--;
 		}
 
-		*p <<= 1;
+		*p >>= 1;
 		if (recycle)
-			bitWriteInByte(*p, 0, b0);
+			writeHighBitInByte(*p, 0, b0);
 
 		p += _bytes_per_row + _bytes_per_row - 1;
 	}
@@ -289,10 +289,10 @@ void DotMatrix::moveBitInByteNega(bool recycle)
 	byte *p = _pScreen;
 	for (word index = _bytes_length; index--; p++)
 	{
-		bool temp = *p & 0x01;
-		*p >>= 1;
+		bool temp = *p & 0x80;
+		*p <<= 1;
 		if (recycle && temp)
-			*p |= 0x80;
+			*p |= 0x01;
 	}
 }
 
@@ -301,10 +301,10 @@ void DotMatrix::moveBitInBytePosi(bool recycle)
 	byte *p = _pScreen;
 	for (word index = _bytes_length; index--; p++)
 	{
-		bool temp = *p & 0x80;
-		*p <<= 1;
+		bool temp = *p & 0x01;
+		*p >>= 1;
 		if (recycle && temp)
-			*p |= 0x01;
+			*p |= 0x80;
 	}
 }
 
