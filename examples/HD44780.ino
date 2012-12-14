@@ -14,6 +14,9 @@ void setup()
 {
 	lcd.init();
 	df.setPattern(FONT_0603, FONT_0603_STATE);
+
+	dm.clear();
+
 }
 
 void loop()
@@ -26,8 +29,6 @@ void loop()
 	ds.printf("%4d", i);
 	ds.postAt(0, 3);
 	lcd.convertDotMatrixToCache();
-
-	//lcd.printf("Hello, World.");
 	lcd.putCache();
 	i++;
 
