@@ -179,8 +179,8 @@ void DotMatrix::putByte(byte col, byte row, byte value)
 {
 	word i = getIndex(col, row);
 	byte j = col & 0x07;
-	_pScreen[i] |= value << j;
-	_pScreen[i + 1] |= value >> (8 - j);
+	_pScreen[i] |= value >> j;
+	_pScreen[i + 1] |= value << (8 - j);
 }
 
 byte DotMatrix::getByte(word index)

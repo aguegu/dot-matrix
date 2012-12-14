@@ -24,8 +24,7 @@ private:
 	DotMatrix & _dm;
 	byte _byte_in_row;
 	byte _row_count;
-	byte _col;
-	byte _row;
+
 	int _length;
 	uint8_t *_pattern;
 	void print();

@@ -44,8 +44,7 @@ public:
 
 protected:
 
-	void sendMsbFirst(byte c, bool b);
-	void sendLsbFirst(byte c, bool b);
+	void transmit(byte c, bool b);
 	const static byte BYTES_PER_COLUMN = 6;
 	const static byte CLOLUMN_COUNT = 84;
 

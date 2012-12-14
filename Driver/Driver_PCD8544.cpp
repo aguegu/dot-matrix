@@ -41,7 +41,7 @@ void Driver_PCD8544::putDM()
 		byte i = BYTES_PER_COLUMN;
 
 		while (i--)
-			this->sendLsbFirst(*(--p), DATA);
+			this->transmit(*(--p), DATA);
 
 		p += BYTES_PER_COLUMN;
 	}

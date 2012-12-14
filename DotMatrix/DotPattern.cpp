@@ -20,29 +20,25 @@ DotPattern::~DotPattern()
 
 void DotPattern::print()
 {
+
+}
+
+void DotPattern::postAt(byte col, byte row)
+{
+	//this->print();
 	uint8_t *p = _pattern;
-	byte row = _row;
 	for (byte r = _row_count; r--;)
 	{
-		for (byte col = _col, c = _byte_in_row; c--;)
+		for (byte cl = col, c = _byte_in_row; c--;)
 		{
-			byte k = reverseByte(*(p++));
-			_dm.putByte(col, row, k);
-			col += 8;
+			_dm.putByte(cl, row, *(p++));
+			cl += 8;
 		}
 		row++;
 	}
 }
 
-void DotPattern::postAt(byte col, byte row)
-{
-	_col = col;
-	_row = row;
-	this->print();
-}
-
-void DotPattern::setPattern(uint8_t * pattern, int length,
-		byte byte_in_row)
+void DotPattern::setPattern(uint8_t * pattern, int length, byte byte_in_row)
 {
 	_pattern = pattern;
 	_length = length;

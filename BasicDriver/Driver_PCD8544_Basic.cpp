@@ -33,7 +33,7 @@ Driver_PCD8544_Basic::~Driver_PCD8544_Basic()
 	// TODO Auto-generated destructor stub
 }
 
-void Driver_PCD8544_Basic::sendMsbFirst(byte c, bool b)
+void Driver_PCD8544_Basic::transmit(byte c, bool b)
 {
 	pinClear(_pin_sce);
 
@@ -45,22 +45,6 @@ void Driver_PCD8544_Basic::sendMsbFirst(byte c, bool b)
 		pinClear(_pin_sclk);
 		pinSet(_pin_sclk);
 		c <<= 1;
-	}
-	pinSet(_pin_sce);
-}
-
-void Driver_PCD8544_Basic::sendLsbFirst(byte c, bool b)
-{
-	pinClear(_pin_sce);
-
-	pinWrite(_pin_dc, b);
-
-	for (byte i = 8; i--;)
-	{
-		pinWrite(_pin_din, bitRead(c, 0));
-		pinClear(_pin_sclk);
-		pinSet(_pin_sclk);
-		c >>= 1;
 	}
 	pinSet(_pin_sce);
 }
@@ -80,7 +64,7 @@ void Driver_PCD8544_Basic::init()
 void Driver_PCD8544_Basic::configureFunction(bool active,
 		bool vertical_addressing, bool extend_command)
 {
-	this->sendMsbFirst(
+	this->transmit(
 			0x20 | (active ? 0x00 : 0x04) | (vertical_addressing ? 0x02 : 0x00)
 					| (extend_command ? 0x01 : 0x00), COMMAND);
 }
@@ -88,15 +72,15 @@ void Driver_PCD8544_Basic::configureFunction(bool active,
 void Driver_PCD8544_Basic::configureHardware(byte tc, byte bias, byte vop)
 {
 	this->configureFunction(true, true, true);
-	this->sendMsbFirst(0x04 | (tc & 0x03), COMMAND);
-	this->sendMsbFirst(0x10 | (bias & 0x07), COMMAND);
-	this->sendMsbFirst(0x80 | (vop & 0x7f), COMMAND);
+	this->transmit(0x04 | (tc & 0x03), COMMAND);
+	this->transmit(0x10 | (bias & 0x07), COMMAND);
+	this->transmit(0x80 | (vop & 0x7f), COMMAND);
 	this->configureFunction(true, true, false);
 }
 
 void Driver_PCD8544_Basic::configureDisplay(bool display_on, bool reverse)
 {
-	this->sendMsbFirst(
+	this->transmit(
 			0x08 | (display_on ? 0x04 : 0x00) | (reverse ? 0x01 : 0x00),
 			COMMAND);
 }
@@ -105,6 +89,6 @@ void Driver_PCD8544_Basic::setRamAddress(byte x, byte y)
 {
 	x %= CLOLUMN_COUNT;
 	y %= BYTES_PER_COLUMN;
-	this->sendMsbFirst(0x80 | x, COMMAND);
-	this->sendMsbFirst(0x40 | y, COMMAND);
+	this->transmit(0x80 | x, COMMAND);
+	this->transmit(0x40 | y, COMMAND);
 }
