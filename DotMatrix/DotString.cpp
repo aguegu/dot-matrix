@@ -14,7 +14,7 @@
 	source host: https://github.com/aguegu/dot-matrix
  */
 #include "DotString.h"
-#include "DotFont.h"
+
 
 DotString::DotString(DotFont & df, byte length, bool smart_width) :
 		_df(df)
@@ -48,7 +48,7 @@ void DotString::postAt(byte col, byte row)
 	cursor = col;
 	while (*p)
 	{
-		_df.setChar(*(p++));
+		_df.setChar(*p++);
 		_df.postAt(cursor, row);
 		cursor +=
 				_smart_width ? _df.calcFontRealWidth() + 1 : _df.getWidth() + 1;

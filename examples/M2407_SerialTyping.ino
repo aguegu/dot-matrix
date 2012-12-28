@@ -1,6 +1,6 @@
 /*
 	Created on: 2012-01-25
-	Updated on: 2012-07-09
+	Updated on: 2012-06-03
 	Author: Weihong Guan
 	Blog: http://aguegu.net
 	E-mail: weihong.guan@gmail.com
@@ -15,10 +15,9 @@
 #include "DotString.h"
 #include "Font0703.h"
 
-DotMatrix dm(24*1, 7);
-Driver_595_138 dmd(dm, 11, 10, 9, 8, 7, 6, 5, 4);
-
-
+DotMatrix dm(32, 8);
+//Driver_595_138 dmd(dm, 10, 11, 13, 12, 7, 6, 5, 4);
+Driver_595_138 dmd(dm, 8, 9, 11, 12, 7, 6, 5, 4);
 DotFont df(dm);
 DotString ds(df, dm.countCol(), true);
 
@@ -27,26 +26,33 @@ byte index = 0;
 
 void setup()
 {
+	pinMode(8, OUTPUT);
+	digitalWrite(8, HIGH);
+
+	pinMode(9, OUTPUT);
+	digitalWrite(9, LOW);
+
 	dm.clear(0x00);
+	dm.setDot(0,0);
 
 	df.setPattern(FONT_0703, FONT_0703_STATE);
-	ds.printf("Hello.");
+	ds.printf("Hi, world.");
 	ds.postAt(0,0);
 
-	dmd.setSpeed(0x800);
+	dmd.setSpeed(0x200);
+
 	Serial.begin(9600);
 
-	dm.setMoveDirection(DotMatrix::BIT_IN_COL_POSI);
 }
 
 void loop()
 {
-	dm.move(true);
-	dmd.display(0x20);
+	dmd.display(0x08);
 }
 
 void serialEvent()
 {
+
 	while (Serial.available())
 	{
 		if (index < dm.countCol())
@@ -67,5 +73,3 @@ void serialEvent()
 		}
 	}
 }
-
-

@@ -22,7 +22,7 @@ public:
 	Driver_74HC595(uint8_t pin_DS, uint8_t pin_SH, uint8_t pin_ST, uint8_t pin_OE);
 	virtual ~Driver_74HC595();
 
-	void setShiftMode(byte mode = MSBFIRST);
+	void setShiftMode(byte mode = LSBFIRST);
 
 	void shiftSend(byte *p, byte length) const;
 	void shiftSendRev(byte *p, byte length) const;

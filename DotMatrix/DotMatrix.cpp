@@ -22,6 +22,9 @@ DotMatrix::DotMatrix(byte colCount, byte rowCount)
 	_row_count = rowCount;
 
 	_bytes_per_row = _col_count / 8;
+	if (_col_count % 8)
+		_bytes_per_row++;
+
 	_bytes_length = _bytes_per_row * _row_count;
 
 	_pScreen = (byte *) malloc(sizeof(byte) * (_bytes_length + 1));

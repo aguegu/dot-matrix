@@ -16,24 +16,27 @@
 #include "Driver_HD44780_Basic.h"
 
 const uint8_t PROGMEM HD44780_BAR[] =
-{
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x1f, 0x1f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x1f, 0x1f, 0x00, 0x00, 0x00,
-	0x1f, 0x1f, 0x00, 0x1f, 0x1f, 0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1f, 0x1f,
-	0x1f, 0x1f, 0x00, 0x00, 0x00, 0x00, 0x1f, 0x1f,
-	0x00, 0x00, 0x00, 0x1f, 0x1f, 0x00, 0x1f, 0x1f,
-	0x1f, 0x1f, 0x00, 0x1f, 0x1f, 0x00, 0x1f, 0x1f,
-};
+{ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1f, 0x1f, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1f, 0x1f, 0x00, 0x00, 0x00, 0x1f,
+		0x1f, 0x00, 0x1f, 0x1f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+		0x00, 0x1f, 0x1f, 0x1f, 0x1f, 0x00, 0x00, 0x00, 0x00, 0x1f, 0x1f, 0x00,
+		0x00, 0x00, 0x1f, 0x1f, 0x00, 0x1f, 0x1f, 0x1f, 0x1f, 0x00, 0x1f, 0x1f,
+		0x00, 0x1f, 0x1f, };
 
-const uint8_t PROGMEM HD44780_ROW_ADDRESS[] = { 0x00, 0x40, 0x10, 0x50 };
+const uint8_t PROGMEM HD44780_ROW_ADDRESS_16[] =
+{ 0x00, 0x40, 0x10, 0x50 };
+const uint8_t PROGMEM HD44780_ROW_ADDRESS_20[] =
+{ 0x00, 0x40, 0x14, 0x54 };
 
-HD44780_Basic::HD44780_Basic(uint8_t pin_rs, uint8_t pin_en,
-		uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7,
-		byte row_count, byte col_count)
-		:   _pin_rs(pin_rs), _pin_en(pin_en), _row_count(row_count), _col_count(col_count)
+HD44780_Basic::HD44780_Basic(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4,
+		uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7, byte row_count,
+		byte col_count) :
+		_pin_rs(pin_rs), _pin_en(pin_en), _row_count(row_count), _col_count(
+				col_count)
 {
+	_cache_length = _row_count * _col_count + 1;
+	_cache = (char *) malloc(sizeof(char) * _cache_length);
+
 	_pin_dt[0] = pin_d4;
 	_pin_dt[1] = pin_d5;
 	_pin_dt[2] = pin_d6;
@@ -44,9 +47,6 @@ HD44780_Basic::HD44780_Basic(uint8_t pin_rs, uint8_t pin_en,
 
 	for (byte i = 0; i < 4; i++)
 		pinMode(_pin_dt[i], OUTPUT);
-
-	_cache_length = _row_count * _col_count + 1;
-	_cache = (char *) malloc(sizeof(char) * _cache_length);
 
 	this->setCache();
 }
@@ -88,7 +88,8 @@ void HD44780_Basic::setDT(byte c, bool b) const
 		c >>= 4;
 
 	for (byte i = 0; i < 4; i++)
-		pinWrite(_pin_dt[i], bit_is_set(c, i));//pinWrite(_pin_dt[i], bit_is_set(c, i));
+		pinWrite(_pin_dt[i], bit_is_set(c, i));
+	//pinWrite(_pin_dt[i], bit_is_set(c, i));
 
 	this->pulseEn();
 }
@@ -144,7 +145,8 @@ void HD44780_Basic::configureInput(bool ac, bool screen_move) const // 0x04
 	this->writeCmd(cmd);
 }
 
-void HD44780_Basic::configureDisplay(bool display_on, bool cursor, bool blink) const // 0x08
+void HD44780_Basic::configureDisplay(bool display_on, bool cursor,
+		bool blink) const // 0x08
 {
 	byte cmd = 0x08;
 	if (display_on)
@@ -187,12 +189,10 @@ void HD44780_Basic::configureFunction(bool interface8, bool doubleline,
 
 void HD44780_Basic::setCGRam(byte *pFont, byte length) const
 {
-	byte i;
-
 	this->configureInput(true, false);
 	this->writeCmd(0x40);
 
-	for (i = 0; i < length; i++)
+	for (byte i = 0; i < length; i++)
 	{
 		this->writeData(pFont[i]);
 	}
@@ -210,7 +210,7 @@ void HD44780_Basic::putString(byte address, char *p, byte length) const
 
 	this->setCursor(address);
 
-	while(length--)
+	while (length--)
 	{
 		this->writeData(*pp++);
 	}
@@ -233,11 +233,11 @@ void HD44780_Basic::init()
 	this->configureDisplay(true, false, false);
 }
 
-
 void HD44780_Basic::putCache() const
 {
 	for (byte r = 0; r < _row_count; r++)
-		this->putString(pgm_read_byte_near(HD44780_ROW_ADDRESS + r),
+		this->putString(
+				pgm_read_byte_near((_col_count<=16?HD44780_ROW_ADDRESS_16:HD44780_ROW_ADDRESS_20) + r),
 				_cache + _col_count * r, _col_count);
 }
 
@@ -267,7 +267,8 @@ void HD44780_Basic::setCache(byte value)
 
 void HD44780_Basic::setCache(byte index, byte value)
 {
-	if (index >= _cache_length) return;
+	if (index >= _cache_length)
+		return;
 
 	_cache[index] = value;
 }
