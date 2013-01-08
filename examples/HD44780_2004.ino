@@ -1,91 +1,46 @@
-#include "ObdExamples.h"
-#include "Obd.h"
-#include "Driver_HD44780_Basic.h"
-#include "RemoteTransmitter.h"
+#include "DotMatrixTest.h"
 
-Obd obd(Serial);
-HD44780_Basic lcd(12, 11, 5, 4, 3, 2, 4);
-RemoteTransmitter rt(13, 478);
+#include "Driver_HD44780.h"
+#include "DotMatrix.h"
+#include "Font0603.h"
+#include "DotFont.h"
+#include "DotString.h"
 
-const uint32_t ADDRESS = 265518UL;
+HD44780 lcd(13, 12, 11, 10, 9, 8, 4, 0x14);
+
+DotMatrix dm = lcd.getDotMatrix();
+DotFont df(dm);
 
 void setup()
 {
 	lcd.init();
-	Serial.begin(38400);
-	Serial.setTimeout(3000);
+	df.setPattern(FONT_0603, FONT_0603_STATE);
 
-	lcd.printf("OBD Start");
+	dm.clear();
 
-//	char c[] =
-//	{ 0x30, 0x31, 0x30, 0x64, 0x0D, 0x34, 0x31, 0x20, 0x30, 0x44, 0x20, 0x30,
-//			0x30, 0x20, 0x0d, 0x0d };
-//
-//	int i;
-//	sscanf(c + 11, "%02x", &i);
-//	lcd.printf("%d", i);
+	DotString ds(df, 8);
+	ds.printf("%4d", 2360);
+	ds.postAt(0x05, 0);
+	lcd.convertDotMatrixToCache();
 
-//	for (byte i = 0; i < sizeof(c); i++)
-//	{
-//		//lcd.printf(i + i, "%02X", p[i]);
-//		lcd.setCache(i, c[i]);
-//	}
-
+	lcd.printf(0x28, "THR.%d%% SPD.%3d km/h", 47, 107);
+	lcd.printf(0x3c, "CLD.%d%% TMP.%2d/%2d %cC", 62, 90, 58, 0xdf);
+	lcd.printf(0x00, "RPM.");
 	lcd.putCache();
 }
 
 void loop()
 {
-	static byte counter = 0;
-	static word last_speed = 0;
-
-	word speed = obd.getByte(0x0D);
-
-	lcd.setCache();
-
-	if (obd.err())
-	{
-		char *p = obd.getOutput();
-		for (byte i = 0; i < 64; i++)
-			lcd.setCache(i, p[i]);
-
-		rt.sendData(ADDRESS + 80);
-		//rt.sendData(ADDRESS + 18);
-	}
-	else
-	{
-		lcd.printf(0x10, "SPD:%u km/h", speed);
-
-		uint16_t rpm = obd.getWord(0x0C) / 4;
-		lcd.printf("RPM:%u", rpm);
-
-		int16_t throttle = obd.getByte(0x11) * 20 / 51;
-		lcd.printf(0x20, "Thr:%u%%", throttle);
-
-		int16_t load = obd.getByte(0x04) * 20 / 51;
-		lcd.printf(0x30, "Load:%u%%", load);
-
-		//if (counter > 0)
-		{
-			if (speed >= 30)
-				rt.sendData(ADDRESS + 2); // blue swift
-			else if (speed == 0)
-				rt.sendData(ADDRESS + 54);
-			else
-			{
-				if (speed > last_speed)
-					rt.sendData(ADDRESS + 6);
-				else //if (speed < last_speed - 2)
-					rt.sendData(ADDRESS + 18);
-			}
-
-			//counter = 0;
-		}
-
-		last_speed = speed;
-	}
-	lcd.putCache();
-
-	counter++;
-
+//	static int i = 0;
+//
+//	dm.clear();
+//
+//	DotString ds(df, 8);
+//	ds.printf("%4d", i);
+//	ds.postAt(0, 3);
+//	lcd.convertDotMatrixToCache();
+//	//lcd.putCache();
+//	i++;
+//
+//	delay(100);
 }
