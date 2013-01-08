@@ -73,6 +73,7 @@ void HD44780_Basic::initHardware() const
 	this->setDT(0x30, true);
 	delayMicroseconds(150);
 
+	this->setDT(0x30, true);
 	this->setDT(0x20, true);
 
 	this->configureFunction();

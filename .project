@@ -82,4 +82,11 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 		<nature>it.baeyens.arduinonature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>Twi</name>
+			<type>2</type>
+			<location>/home/agu/gitpool/Arduino/libraries/Twi</location>
+		</link>
+	</linkedResources>
 </projectDescription>
