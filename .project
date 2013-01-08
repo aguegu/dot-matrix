@@ -84,6 +84,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>SPI</name>
+			<type>2</type>
+			<location>/home/agu/gitpool/Arduino/libraries/SPI</location>
+		</link>
+		<link>
 			<name>Twi</name>
 			<type>2</type>
 			<location>/home/agu/gitpool/Arduino/libraries/Twi</location>

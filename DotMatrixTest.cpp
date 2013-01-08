@@ -6,6 +6,7 @@ I2cHd44780 lcd(0x27);
 void setup()
 {
 	lcd.init();
+	lcd.setBackLight(false);
 }
 
 void loop()

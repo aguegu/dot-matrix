@@ -3,6 +3,18 @@
  *
  *  Created on: Jan 8, 2013
  *      Author: agu
+ *
+ *  HD44780 LiquidCtrystal display on i2c bus 8-bit I/O expander PCF8574
+ *
+ *  PCF8574 -	HD44780
+ *  P7	-	D7
+ *  P6	-	D6
+ *  P5	-	D5
+ *  P4	-	D4
+ *  P3	-	Background Led, on when high
+ *  P2	-	E
+ *  P1	-	RW
+ *  P0	-	RS
  */
 
 #ifndef I2CHD44780_H_
@@ -10,12 +22,13 @@
 
 #include "Arduino.h"
 #include "Twi.h"
+// The twi library is my substitute of the Wire library,
+// host on https://github.com/aguegu/Arduino/tree/master/libraries/Twi
 
 #define PIN_RS	0
 #define PIN_RW	1
 #define PIN_EN	2
 #define PIN_BL	3	// backlight, background LED
-
 
 class I2cHd44780
 {
@@ -43,6 +56,8 @@ public:
 	void setCache(byte index, byte value);
 	void printf(const char *__fmt, ...);
 	void printf(byte index, const char *__fmt, ...);
+
+	void setBackLight(bool bl);
 
 private:
 
