@@ -1,5 +1,5 @@
 /*
- * Controller_A3D8.h
+ *  ctl_3d8_dm.h
  *
  *  Created on: 2012-7-3
  *	Author: Weihong Guan
@@ -14,15 +14,15 @@
 #ifndef CONTROLLER_A3D8_H_
 #define CONTROLLER_A3D8_H_
 
-#include "Controller_A3D8_Basic.h"
+#include "ctl_3d8.h"
 #include "DotMatrix3D.h"
 #include "ReverseByte.h"
 
-class Controller_A3D8:public Controller_A3D8_Basic
+class Ctl3D8Dm:public Ctl3D8
 {
 public:
-	Controller_A3D8(DotMatrix3D & dm, HardwareSerial & sp, unsigned long baud_rate = 57600);
-	virtual ~Controller_A3D8();
+	Ctl3D8Dm(DotMatrix3D & dm, HardwareSerial & sp, unsigned long baud_rate = 57600);
+	virtual ~Ctl3D8Dm();
 
 	void putDM();
 	void putDMrevZ();

@@ -5,45 +5,45 @@
  *      Author: Agu
  */
 
-#include "Driver_74HC595.h"
+#include "drv_74hc595.h"
 
-Driver_74HC595::Driver_74HC595(uint8_t pin_DS, uint8_t pin_SH, uint8_t pin_ST,
-		uint8_t pin_OE) :
-		_pin_DS(pin_DS), _pin_SH(pin_SH), _pin_ST(pin_ST), _pin_OE(pin_OE)
+Drv74hc595::Drv74hc595(uint8_t pin_ds, uint8_t pin_sh, uint8_t pin_st,
+		uint8_t pin_oe) :
+		_pin_ds(pin_ds), _pin_sh(pin_sh), _pin_st(pin_st), _pin_oe(pin_oe)
 {
-	pinMode(_pin_DS, OUTPUT);
-	pinMode(_pin_SH, OUTPUT);
-	pinMode(_pin_ST, OUTPUT);
-	pinMode(_pin_OE, OUTPUT);
+	pinMode(_pin_ds, OUTPUT);
+	pinMode(_pin_sh, OUTPUT);
+	pinMode(_pin_st, OUTPUT);
+	pinMode(_pin_oe, OUTPUT);
 
 	this->setShiftMode();
 }
 
-Driver_74HC595::~Driver_74HC595()
+Drv74hc595::~Drv74hc595()
 {
-	// TODO Auto-generated destructor stub
+
 }
 
-void Driver_74HC595::setShiftMode(byte mode)
+void Drv74hc595::setShiftMode(byte mode)
 {
 	if (mode)
-		_shiftSend = &Driver_74HC595::shiftSendFromMSB;
+		_shiftSend = &Drv74hc595::shiftSendFromMSB;
 	else
-		_shiftSend = &Driver_74HC595::shiftSendFromLSB;
+		_shiftSend = &Drv74hc595::shiftSendFromLSB;
 }
 
-void Driver_74HC595::setDS(bool high) const
+void Drv74hc595::setDS(bool high) const
 {
-	pinWrite(_pin_DS, high);
+	pinWrite(_pin_ds, high);
 }
 
-void Driver_74HC595::shiftClock() const
+void Drv74hc595::shiftClock() const
 {
-	pinSet(_pin_SH);
-	pinClear(_pin_SH);
+	pinSet(_pin_sh);
+	pinClear(_pin_sh);
 }
 
-void Driver_74HC595::shiftSendFromLSB(byte c) const
+void Drv74hc595::shiftSendFromLSB(byte c) const
 {
 	byte i = BIT_IN_BYTE;
 
@@ -55,7 +55,7 @@ void Driver_74HC595::shiftSendFromLSB(byte c) const
 	}
 }
 
-void Driver_74HC595::shiftSendFromMSB(byte c) const
+void Drv74hc595::shiftSendFromMSB(byte c) const
 {
 	byte i = BIT_IN_BYTE;
 
@@ -67,26 +67,26 @@ void Driver_74HC595::shiftSendFromMSB(byte c) const
 	}
 }
 
-void Driver_74HC595::shiftSend(byte * p, byte length) const
+void Drv74hc595::shiftSend(byte * p, byte length) const
 {
 	for (byte i = length; i--;)
 		(this->*_shiftSend)(*(p++));
 
 }
 
-void Driver_74HC595::shiftSendRev(byte * p, byte length) const
+void Drv74hc595::shiftSendRev(byte * p, byte length) const
 {
 	for (byte i = length; i--;)
 		(this->*_shiftSend)(~(*(p++)));
 }
 
-void Driver_74HC595::shiftLatch() const
+void Drv74hc595::shiftLatch() const
 {
-	pinSet(_pin_ST);
-	pinClear(_pin_ST);
+	pinSet(_pin_st);
+	pinClear(_pin_st);
 }
 
-void Driver_74HC595::setOE(bool high) const
+void Drv74hc595::setOE(bool high) const
 {
-	pinWrite(_pin_OE, high);
+	pinWrite(_pin_oe, high);
 }

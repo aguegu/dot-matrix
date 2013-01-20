@@ -1,5 +1,5 @@
 /*
- * 	Driver3D8.cpp
+ * 	drv_3d8.cpp
  *
  *	A3D8 (3D8S) 8x8x8 cubic led display driver
  *
@@ -13,12 +13,12 @@
  *	source host: https://github.com/aguegu/dot-matrix
  */
 
-#include "Driver_3D8.h"
+#include "drv_3d8.h"
 
-Driver_3D8::Driver_3D8(DotMatrix & dm, uint8_t pin_din, uint8_t pin_clk,
+Drv3D8::Drv3D8(DotMatrix & dm, uint8_t pin_din, uint8_t pin_clk,
 		uint8_t pin_latch, uint8_t pin_en, uint8_t pin_rext, uint8_t pin_a2,
 		uint8_t pin_a1, uint8_t pin_a0, uint16_t scan_speed) :
-		Driver_62726_138(dm, pin_din, pin_clk, pin_latch, pin_en, pin_rext,
+		DrvTb62726X74hc138(dm, pin_din, pin_clk, pin_latch, pin_en, pin_rext,
 				pin_a2, pin_a1, pin_a0, 255, scan_speed)
 
 {
@@ -26,28 +26,28 @@ Driver_3D8::Driver_3D8(DotMatrix & dm, uint8_t pin_din, uint8_t pin_clk,
 	this->setMode();
 }
 
-Driver_3D8::~Driver_3D8()
+Drv3D8::~Drv3D8()
 {
 
 }
 
-void Driver_3D8::setMode(ScanMode mode)
+void Drv3D8::setMode(ScanMode mode)
 {
 	switch (mode)
 	{
 	case ZXY:
-		_setCol = &Driver_3D8::setColzxy;
+		_setCol = &Drv3D8::setColzxy;
 		break;
 	case YZX:
-		_setCol = &Driver_3D8::setColyzx;
+		_setCol = &Drv3D8::setColyzx;
 		break;
 	default:
-		_setCol = &Driver_3D8::setColxyz;
+		_setCol = &Drv3D8::setColxyz;
 		break;
 	}
 }
 
-void Driver_3D8::setColxyz(byte row) const
+void Drv3D8::setColxyz(byte row) const
 {
 	byte * p = _dm.output();
 	p += _byte_per_row * row;
@@ -55,7 +55,7 @@ void Driver_3D8::setColxyz(byte row) const
 	chip_col.shiftSendCoupleFromLSB(p, _byte_per_row);
 }
 
-void Driver_3D8::display(byte times) const
+void Drv3D8::display(byte times) const
 {
 	while (times--)
 	{
@@ -73,7 +73,7 @@ void Driver_3D8::display(byte times) const
 	}
 }
 
-void Driver_3D8::setColzxy(byte row) const
+void Drv3D8::setColzxy(byte row) const
 {
 	byte * p = _dm.output();
 	for (byte j = 0; j < _word_per_row; j++)
@@ -94,7 +94,7 @@ void Driver_3D8::setColzxy(byte row) const
 	}
 }
 
-void Driver_3D8::setColyzx(byte row) const
+void Drv3D8::setColyzx(byte row) const
 {
 	byte *p = _dm.output() + row;
 	for (byte j = 0; j < _byte_per_row; j++) // z

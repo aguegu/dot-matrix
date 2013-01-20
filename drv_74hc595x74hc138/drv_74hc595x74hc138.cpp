@@ -14,9 +14,9 @@
 	source host: https://github.com/aguegu/dot-matrix
  */
 
-#include "Driver_595_138.h"
+#include "drv_74hc595x74hc138.h"
 
-Driver_595_138::Driver_595_138(DotMatrix & dm, uint8_t pin_C_IN,
+Drv74hc595X74hc138::Drv74hc595X74hc138(DotMatrix & dm, uint8_t pin_C_IN,
 		uint8_t pin_C_OE, uint8_t pin_C_ST, uint8_t pin_C_SH, uint8_t pin_R_OE,
 		uint8_t pin_R_A2, uint8_t pin_R_A1, uint8_t pin_R_A0, uint16_t scan_span)
 		:_dm(dm), chip_col(pin_C_IN, pin_C_SH, pin_C_ST, pin_C_OE), chip_row(pin_R_A2, pin_R_A1, pin_R_A0, pin_R_OE)
@@ -25,12 +25,12 @@ Driver_595_138::Driver_595_138(DotMatrix & dm, uint8_t pin_C_IN,
 	this->setSpeed(scan_span);
 }
 
-Driver_595_138::~Driver_595_138()
+Drv74hc595X74hc138::~Drv74hc595X74hc138()
 {
 
 }
 
-void Driver_595_138::display(byte times)
+void Drv74hc595X74hc138::display(byte times)
 {
 	chip_col.setShiftMode();
 
@@ -55,12 +55,12 @@ void Driver_595_138::display(byte times)
 	}
 }
 
-void Driver_595_138::setSpeed(uint16_t scan_span)
+void Drv74hc595X74hc138::setSpeed(uint16_t scan_span)
 {
 	_scan_span = scan_span;
 }
 
-void Driver_595_138::setSize()
+void Drv74hc595X74hc138::setSize()
 {
 	_row_count = _dm.countRow();
 	_bytes_per_row = _dm.countBytePerRow();

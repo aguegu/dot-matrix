@@ -1,5 +1,5 @@
 /*
- * I2cHd44780.h
+ * drv_hd44780_i2c.h
  *
  *  Created on: Jan 8, 2013
  *      Author: agu
@@ -17,8 +17,8 @@
  *  P0	-	RS
  */
 
-#ifndef I2CHD44780_H_
-#define I2CHD44780_H_
+#ifndef DRV_HD44780_I2C_H_
+#define DRV_HD44780_I2C_H_
 
 #include "Arduino.h"
 #include "Twi.h"
@@ -30,11 +30,11 @@
 #define PIN_EN	2
 #define PIN_BL	3	// backlight, background LED
 
-class I2cHd44780
+class DrvHd44780I2c
 {
 public:
-	I2cHd44780(byte address, byte row_count = 2, byte col_count = 16);
-	virtual ~I2cHd44780();
+	DrvHd44780I2c(byte address, byte row_count = 2, byte col_count = 16);
+	virtual ~DrvHd44780I2c();
 
 	void init();
 	void clear() const;
@@ -79,4 +79,4 @@ protected:
 	char * _cache;
 };
 
-#endif /* I2CHD44780_H_ */
+#endif /* DRV_HD44780_I2C_H_ */

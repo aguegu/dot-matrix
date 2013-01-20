@@ -1,21 +1,21 @@
 /*
- * Driver_TB62726.h
+ * drv_tb62726.h
  *
  *  Created on: 2012-7-10
  *      Author: Agu
  */
 
-#ifndef DRIVER_TB62726_H_
-#define DRIVER_TB62726_H_
+#ifndef DRV_TB62726_H_
+#define DRV_TB62726_H_
 
-#include "Driver_74HC595.h"
+#include "drv_74hc595.h"
 
-class Driver_TB62726: public Driver_74HC595
+class DrvTb62726: public Drv74hc595
 {
 public:
 
-	Driver_TB62726(uint8_t pin_din, uint8_t pin_clk, uint8_t pin_latch, uint8_t pin_oe, uint8_t pin_rext);
-	virtual ~Driver_TB62726();
+	DrvTb62726(uint8_t pin_din, uint8_t pin_clk, uint8_t pin_latch, uint8_t pin_oe, uint8_t pin_rext);
+	virtual ~DrvTb62726();
 	void setBrightness(byte brg);
 	void shiftSendCoupleFromLSB(byte *p, byte length) const;
 
@@ -25,4 +25,4 @@ private:
 
 };
 
-#endif /* DRIVER_TB62726_H_ */
+#endif /* DRV_TB62726_H_ */

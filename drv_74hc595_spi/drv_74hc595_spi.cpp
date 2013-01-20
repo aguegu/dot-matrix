@@ -5,13 +5,13 @@
  *      Author: Agu
  */
 
-#include "Driver_74HC595_SPI.h"
+#include "drv_74hc595_spi.h"
 
-Driver_74HC595_SPI::Driver_74HC595_SPI(SPIClass & spi, uint8_t pin_ST, uint8_t pin_OE)
-: _spi(spi), _pin_ST(pin_ST), _pin_OE(pin_OE)
+Drv74hc595Spi::Drv74hc595Spi(SPIClass & spi, uint8_t pin_st, uint8_t pin_oe)
+: _spi(spi), _pin_st(pin_st), _pin_oe(pin_oe)
 {
-	pinMode(pin_ST, OUTPUT);
-	pinMode(pin_OE, OUTPUT);
+	pinMode(_pin_st, OUTPUT);
+	pinMode(_pin_oe, OUTPUT);
 
 	this->setShiftSendMode();
 	_spi.setDataMode(SPI_MODE0);
@@ -19,36 +19,36 @@ Driver_74HC595_SPI::Driver_74HC595_SPI(SPIClass & spi, uint8_t pin_ST, uint8_t p
 	_spi.begin();
 }
 
-Driver_74HC595_SPI::~Driver_74HC595_SPI()
+Drv74hc595Spi::~Drv74hc595Spi()
 {
 
 }
 
-void Driver_74HC595_SPI::setShiftSendMode(byte mode)
+void Drv74hc595Spi::setShiftSendMode(byte mode)
 {
 	_spi.setBitOrder(mode);
 }
 
 
-void Driver_74HC595_SPI::shiftSendRev(byte *p, byte length) const
+void Drv74hc595Spi::shiftSendRev(byte *p, byte length) const
 {
 	while(length--)
 		_spi.transfer(~*(p++));
 }
 
-void Driver_74HC595_SPI::shiftSend(byte *p, byte length) const
+void Drv74hc595Spi::shiftSend(byte *p, byte length) const
 {
 	while(length--)
 		_spi.transfer(*(p++));
 }
 
-void Driver_74HC595_SPI::shiftLatch() const
+void Drv74hc595Spi::shiftLatch() const
 {
-	pinSet(_pin_ST);
-	pinClear(_pin_ST);
+	pinSet(_pin_st);
+	pinClear(_pin_st);
 }
 
-void Driver_74HC595_SPI::setOE(bool high) const
+void Drv74hc595Spi::setOE(bool high) const
 {
-	pinWrite(_pin_OE, high);
+	pinWrite(_pin_oe, high);
 }

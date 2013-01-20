@@ -1,29 +1,29 @@
 /*
- * Driver_3W1608.h
+ * drv_ld1608.h
  *
  *  Created on: 2012-8-31
  *      Author: agu
  */
 
-#ifndef DRIVER_3W1608_H_
-#define DRIVER_3W1608_H_
+#ifndef DRV_LD1608_H_
+#define DRV_LD1608_H_
 
 #include "Arduino.h"
-#include "Driver_74HC595_SPI.h"
+#include "drv_74hc595_spi.h"
 #include "DotMatrix.h"
 
-class Driver_3W1608
+class DrvLd1608
 {
 public:
-	Driver_3W1608();
-	virtual ~Driver_3W1608();
+	DrvLd1608();
+	virtual ~DrvLd1608();
 	void display(byte times = 1);
 	void setScanSpan(uint16_t scan_span = 0x800);
 	DotMatrix & getDotMatrix();
 private:
 	DotMatrix _dm;
-	Driver_74HC595_SPI chip;
+	Drv74hc595Spi chip;
 	uint16_t _scan_span;
 };
 
-#endif /* DRIVER_3W1608_H_ */
+#endif /* DRV_LD1608_H_ */

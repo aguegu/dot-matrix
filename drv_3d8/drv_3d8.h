@@ -1,5 +1,5 @@
 /*
- * 	Driver3D8.h
+ * 	drv_3d8.h
  *
  *	A3D8 (3D8S) 8x8x8 cubic led display driver
  *
@@ -13,16 +13,16 @@
  *	source host: https://github.com/aguegu/dot-matrix
  */
 
-#ifndef DRIVER_3D8_H_
-#define DRIVER_3D8_H_
+#ifndef DRV_3D8_H_
+#define DRV_3D8_H_
 
 #include "DotMatrix.h"
-#include "Driver_62726_138.h"
+#include "drv_tb62726x74hc138.h"
 
-class Driver_3D8: public Driver_62726_138
+class Drv3D8: public DrvTb62726X74hc138
 {
 public:
-	Driver_3D8(DotMatrix & dm, uint8_t pin_din, uint8_t pin_clk,
+	Drv3D8(DotMatrix & dm, uint8_t pin_din, uint8_t pin_clk,
 			uint8_t pin_latch, uint8_t pin_en, uint8_t pin_rext, uint8_t pin_a2,
 			uint8_t pin_a1, uint8_t pin_a0, uint16_t scan_speed = 0x600);
 
@@ -35,15 +35,15 @@ public:
 
 	void setMode(ScanMode mode = XYZ);
 
-	virtual ~Driver_3D8();
+	virtual ~Drv3D8();
 
 private:
 
-	void (Driver_3D8::*_setCol)(byte row) const;
+	void (Drv3D8::*_setCol)(byte row) const;
 
 	void setColxyz(byte row) const;
 	void setColzxy(byte row) const;
 	void setColyzx(byte row) const;
 };
 
-#endif /* DRIVER3D8_H_ */
+#endif /* DRV_3D8_H_ */

@@ -1,30 +1,30 @@
 /*
- * Driver_TB62726_SPI.cpp
+ * drv_tb62726_spi.cpp
  *
  *  Created on: 2012-7-16
  *      Author: Agu
  */
 
-#include "Driver_TB62726_SPI.h"
+#include "drv_tb62726_spi.h"
 
-Driver_TB62726_SPI::Driver_TB62726_SPI(SPIClass & spi, uint8_t pin_latch,
+DrvTb62726Spi::DrvTb62726Spi(SPIClass & spi, uint8_t pin_latch,
 		uint8_t pin_oe, uint8_t pin_rext) :
-		Driver_74HC595_SPI(spi, pin_latch, pin_oe), _pin_rext(pin_rext)
+		Drv74hc595Spi(spi, pin_latch, pin_oe), _pin_rext(pin_rext)
 {
 
 }
 
-void Driver_TB62726_SPI::setBrightness(byte brg)
+void DrvTb62726Spi::setBrightness(byte brg)
 {
 	analogWrite(_pin_rext, brg);
 }
 
-Driver_TB62726_SPI::~Driver_TB62726_SPI()
+DrvTb62726Spi::~DrvTb62726Spi()
 {
 
 }
 
-void Driver_TB62726_SPI::shiftSendCoupleFromLSB(byte *p, byte length) const
+void DrvTb62726Spi::shiftSendCoupleFromLSB(byte *p, byte length) const
 {
 	for (byte i = length >> 1; i--;)
 	{

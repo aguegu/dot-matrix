@@ -1,6 +1,6 @@
 /*
-	Driver_ST7920.cpp
-	Driver_ST7920 Class, Arduino Driver for liquid crystal display driven by ST7920, namely 12864
+	drv_st7920.cpp
+	DrvSt7920 Class, Arduino Driver for liquid crystal display driven by ST7920, namely 12864
 	Created on: 2012-03-04
 	Updated on: 2012-06-01
 
@@ -14,9 +14,9 @@
 	source host: https://github.com/aguegu/dot-matrix
  */
 
-#include "Driver_ST7920_Basic.h"
+#include "drv_st7920.h"
 
-ST7920_Basic::ST7920_Basic(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4,
+DrvSt7920::DrvSt7920(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4,
 		uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7) :
 		_pin_rs(pin_rs), _pin_en(pin_en)
 {
@@ -28,7 +28,12 @@ ST7920_Basic::ST7920_Basic(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4,
 	this->initPin();
 }
 
-void ST7920_Basic::initPin()
+DrvSt7920::~DrvSt7920()
+{
+
+}
+
+void DrvSt7920::initPin()
 {
 	pinMode(_pin_rs, OUTPUT);
 	pinMode(_pin_en, OUTPUT);
@@ -39,7 +44,7 @@ void ST7920_Basic::initPin()
 	pinClear(_pin_en);
 }
 
-void ST7920_Basic::init()
+void DrvSt7920::init()
 {
 	delayMicroseconds(50000);
 
@@ -52,18 +57,18 @@ void ST7920_Basic::init()
 	this->configureFunction(false, true, true);
 }
 
-void ST7920_Basic::clear()
+void DrvSt7920::clear()
 {
 	this->writeCmd(0x01);
 	delayMicroseconds(2000);
 }
 
-void ST7920_Basic::home()
+void DrvSt7920::home()
 {
 	this->writeCmd(0x02);
 }
 
-void ST7920_Basic::configureEntry(bool right)
+void DrvSt7920::configureEntry(bool right)
 {
 	byte cmd = 0x04;
 	if (right)
@@ -71,7 +76,7 @@ void ST7920_Basic::configureEntry(bool right)
 	this->writeCmd(cmd);
 }
 
-void ST7920_Basic::configureDisplay(bool display, bool cursor, bool blink)
+void DrvSt7920::configureDisplay(bool display, bool cursor, bool blink)
 {
 	byte cmd = 0x08;
 	if (display)
@@ -83,7 +88,7 @@ void ST7920_Basic::configureDisplay(bool display, bool cursor, bool blink)
 	this->writeCmd(cmd);
 }
 
-void ST7920_Basic::moveCursor(bool right)
+void DrvSt7920::moveCursor(bool right)
 {
 	byte cmd = 0x10;
 	if (right)
@@ -91,7 +96,7 @@ void ST7920_Basic::moveCursor(bool right)
 	this->writeCmd(cmd);
 }
 
-void ST7920_Basic::moveDisplay(bool right)
+void DrvSt7920::moveDisplay(bool right)
 {
 	byte cmd = 0x18;
 	if (right)
@@ -99,7 +104,7 @@ void ST7920_Basic::moveDisplay(bool right)
 	this->writeCmd(cmd);
 }
 
-void ST7920_Basic::configureFunction(bool interface8, bool re, bool graphic)
+void DrvSt7920::configureFunction(bool interface8, bool re, bool graphic)
 {
 	byte cmd = 0x20;
 	if (interface8)
@@ -111,33 +116,33 @@ void ST7920_Basic::configureFunction(bool interface8, bool re, bool graphic)
 	this->writeCmd(cmd);
 }
 
-void ST7920_Basic::setCgRam(byte value)
+void DrvSt7920::setCgRam(byte value)
 {
 	this->writeData(0x40 | value);
 }
 
-void ST7920_Basic::setDdRam(byte address)
+void DrvSt7920::setDdRam(byte address)
 {
 	this->writeCmd(0x80 | address);
 }
 
 /////////////////////////////////////
 
-void ST7920_Basic::writeCmd(byte c)
+void DrvSt7920::writeCmd(byte c)
 {
 	pinClear(_pin_rs);
 	setDB2(c, true);
 	setDB2(c, false);
 }
 
-void ST7920_Basic::writeData(byte c)
+void DrvSt7920::writeData(byte c)
 {
 	pinSet(_pin_rs);
 	setDB2(c, true);
 	setDB2(c, false);
 }
 
-void ST7920_Basic::setDB2(byte c, bool high)
+void DrvSt7920::setDB2(byte c, bool high)
 {
 	if (high)
 		c >>= 4;
@@ -148,14 +153,14 @@ void ST7920_Basic::setDB2(byte c, bool high)
 	this->pulseEn();
 }
 
-void ST7920_Basic::pulseEn()
+void DrvSt7920::pulseEn()
 {
 	pinSet(_pin_en);
 	pinClear(_pin_en);
 	//delayMicroseconds(0x20);
 }
 
-void ST7920_Basic::printWord(char *p)
+void DrvSt7920::printWord(char *p)
 {
 	while (*p)
 	{
@@ -163,8 +168,5 @@ void ST7920_Basic::printWord(char *p)
 	}
 }
 
-ST7920_Basic::~ST7920_Basic()
-{
 
-}
 

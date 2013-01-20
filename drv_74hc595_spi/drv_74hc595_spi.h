@@ -1,23 +1,23 @@
 /*
- * Driver_74HC595_SPI.h
+ * drv_74hc595_spi.h
  *
  *  Created on: 2012-7-16
  *      Author: Agu
  */
 
-#ifndef DRIVER_74HC595_SPI_H_
-#define DRIVER_74HC595_SPI_H_
+#ifndef DRV_74HC595_SPI_H_
+#define DRV_74HC595_SPI_H_
 
 #include "Arduino.h"
 #include "SPI.h"
-#include "PinWrite.h"
+#include "pin_op.h"
 
-class Driver_74HC595_SPI
+class Drv74hc595Spi
 {
 public:
 
-	Driver_74HC595_SPI(SPIClass & spi, uint8_t pin_ST, uint8_t pin_OE);
-	virtual ~Driver_74HC595_SPI();
+	Drv74hc595Spi(SPIClass & spi, uint8_t pin_ST, uint8_t pin_OE);
+	virtual ~Drv74hc595Spi();
 
 	void setShiftSendMode(byte mode = LSBFIRST);
 	void shiftSend(byte *p, byte length) const;
@@ -32,9 +32,9 @@ protected:
 
 private:
 
-	const uint8_t _pin_ST;
-	const uint8_t _pin_OE;
+	const uint8_t _pin_st;
+	const uint8_t _pin_oe;
 
 };
 
-#endif /* DRIVER_74HC595_SPI_H_ */
+#endif /* DRV_74HC595_SPI_H_ */

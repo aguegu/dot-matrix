@@ -1,6 +1,6 @@
 /*
-	Driver_ST7920_Basic.h
-	Driver_ST7920 Class, Arduino Driver for liquid crystal display driven by ST7920, namely 12864
+	drv_st7920.h
+	DrvSt7920 Class, Arduino Driver for liquid crystal display driven by ST7920, namely 12864
 	Created on: 2012-03-04
 	Updated on: 2012-06-01
 
@@ -14,19 +14,18 @@
 	source host: https://github.com/aguegu/dot-matrix
  */
 
-#ifndef DRIVER_ST7920_BASIC_H_
-#define DRIVER_ST7920_BASIC_H_
+#ifndef DRV_ST7920_H_
+#define DRV_ST7920_H_
 
 #include "Arduino.h"
-#include "PinWrite.h"
 #include "DotMatrix.h"
-#include "ReverseByte.h"
+#include "pin_op.h"
 
-class ST7920_Basic
+class DrvSt7920
 {
 public:
-	ST7920_Basic(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7);
-	virtual ~ST7920_Basic();
+	DrvSt7920(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7);
+	virtual ~DrvSt7920();
 
 	void init();
 
@@ -60,4 +59,4 @@ private:
 
 };
 
-#endif /* LCD12864_H_ */
+#endif /* DRV_ST7920_H_ */

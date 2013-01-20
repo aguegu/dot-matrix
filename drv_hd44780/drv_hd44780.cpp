@@ -13,18 +13,18 @@
  *	source host: https://github.com/aguegu/dot-matrix
  */
 
-#include "Driver_HD44780_Basic.h"
+#include "drv_hd44780.h"
 
 const uint8_t PROGMEM HD44780_BAR[] =
 {
-		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,	// 00000000
-		0x1f, 0x1f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // 11000000
-		0x00, 0x00, 0x00, 0x1f, 0x1f, 0x00, 0x00, 0x00, // 00011000
-		0x1f, 0x1f, 0x00, 0x1f, 0x1f, 0x00, 0x00, 0x00, // 11011000
-		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1f, 0x1f,	// 00000011
-		0x1f, 0x1f, 0x00, 0x00, 0x00, 0x00, 0x1f, 0x1f, // 11000011
-		0x00, 0x00, 0x00, 0x1f, 0x1f, 0x00, 0x1f, 0x1f, // 00011011
-		0x1f, 0x1f, 0x00, 0x1f, 0x1f, 0x00, 0x1f, 0x1f, // 11011011
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,	// 00000000
+	0x1f, 0x1f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // 11000000
+	0x00, 0x00, 0x00, 0x1f, 0x1f, 0x00, 0x00, 0x00, // 00011000
+	0x1f, 0x1f, 0x00, 0x1f, 0x1f, 0x00, 0x00, 0x00, // 11011000
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1f, 0x1f,	// 00000011
+	0x1f, 0x1f, 0x00, 0x00, 0x00, 0x00, 0x1f, 0x1f, // 11000011
+	0x00, 0x00, 0x00, 0x1f, 0x1f, 0x00, 0x1f, 0x1f, // 00011011
+	0x1f, 0x1f, 0x00, 0x1f, 0x1f, 0x00, 0x1f, 0x1f, // 11011011
 };
 
 const uint8_t PROGMEM HD44780_ROW_ADDRESS_16[] =
@@ -32,7 +32,7 @@ const uint8_t PROGMEM HD44780_ROW_ADDRESS_16[] =
 const uint8_t PROGMEM HD44780_ROW_ADDRESS_20[] =
 { 0x00, 0x40, 0x14, 0x54 };
 
-HD44780_Basic::HD44780_Basic(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4,
+DrvHd44780::DrvHd44780(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4,
 		uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7, byte row_count,
 		byte col_count) :
 		_pin_rs(pin_rs), _pin_en(pin_en), _row_count(row_count), _col_count(
@@ -55,12 +55,12 @@ HD44780_Basic::HD44780_Basic(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4,
 	this->setCache();
 }
 
-HD44780_Basic::~HD44780_Basic()
+DrvHd44780::~DrvHd44780()
 {
 	free(_cache);
 }
 
-void HD44780_Basic::initHardware() const
+void DrvHd44780::initHardware() const
 {
 	delayMicroseconds(40000);
 
@@ -84,7 +84,7 @@ void HD44780_Basic::initHardware() const
 	this->rst();
 }
 
-void HD44780_Basic::setDT(byte c, bool b) const
+void DrvHd44780::setDT(byte c, bool b) const
 {
 	if (b)
 		c >>= 4;
@@ -95,26 +95,26 @@ void HD44780_Basic::setDT(byte c, bool b) const
 	this->pulseEn();
 }
 
-void HD44780_Basic::setData(byte c) const
+void DrvHd44780::setData(byte c) const
 {
 	this->setDT(c, true);
 	this->setDT(c, false);
 }
 
-void HD44780_Basic::pulseEn(void) const
+void DrvHd44780::pulseEn(void) const
 {
 	pinSet(_pin_en);
 	pinClear(_pin_en);
 	delayMicroseconds(100);
 }
 
-void HD44780_Basic::writeCmd(byte command) const
+void DrvHd44780::writeCmd(byte command) const
 {
 	pinClear(_pin_rs);
 	this->setData(command);
 }
 
-void HD44780_Basic::writeData(byte data) const
+void DrvHd44780::writeData(byte data) const
 {
 	pinSet(_pin_rs);
 	this->setData(data);
@@ -122,19 +122,19 @@ void HD44780_Basic::writeData(byte data) const
 
 ////////////////////////////////////////////
 
-void HD44780_Basic::clear() const // 0x01
+void DrvHd44780::clear() const // 0x01
 {
 	this->writeCmd(0x01);
 	delayMicroseconds(2000);
 }
 
-void HD44780_Basic::rst() const // 0x02
+void DrvHd44780::rst() const // 0x02
 {
 	this->writeCmd(0x02);
 	delayMicroseconds(2000);
 }
 
-void HD44780_Basic::configureInput(bool ac, bool screen_move) const // 0x04
+void DrvHd44780::configureInput(bool ac, bool screen_move) const // 0x04
 {
 	byte cmd = 0x04;
 
@@ -146,7 +146,7 @@ void HD44780_Basic::configureInput(bool ac, bool screen_move) const // 0x04
 	this->writeCmd(cmd);
 }
 
-void HD44780_Basic::configureDisplay(bool display_on, bool cursor,
+void DrvHd44780::configureDisplay(bool display_on, bool cursor,
 		bool blink) const // 0x08
 {
 	byte cmd = 0x08;
@@ -159,7 +159,7 @@ void HD44780_Basic::configureDisplay(bool display_on, bool cursor,
 	this->writeCmd(cmd);
 }
 
-void HD44780_Basic::moveCursor(bool right) const // 0x10
+void DrvHd44780::moveCursor(bool right) const // 0x10
 {
 	byte cmd = 0x10;
 	if (right)
@@ -167,7 +167,7 @@ void HD44780_Basic::moveCursor(bool right) const // 0x10
 	this->writeCmd(cmd);
 }
 
-void HD44780_Basic::moveScreen(bool right) const // 0x11
+void DrvHd44780::moveScreen(bool right) const // 0x11
 {
 	byte cmd = 0x11;
 	if (right)
@@ -175,7 +175,7 @@ void HD44780_Basic::moveScreen(bool right) const // 0x11
 	this->writeCmd(cmd);
 }
 
-void HD44780_Basic::configureFunction(bool interface8, bool doubleline,
+void DrvHd44780::configureFunction(bool interface8, bool doubleline,
 		bool font5x10) const // 0x20
 {
 	byte cmd = 0x20;
@@ -188,7 +188,7 @@ void HD44780_Basic::configureFunction(bool interface8, bool doubleline,
 	this->writeCmd(cmd);
 }
 
-void HD44780_Basic::setCGRam(byte *pFont, byte length) const
+void DrvHd44780::setCGRam(byte *pFont, byte length) const
 {
 	this->configureInput(true, false);
 	this->writeCmd(0x40);
@@ -199,13 +199,13 @@ void HD44780_Basic::setCGRam(byte *pFont, byte length) const
 	}
 }
 
-void HD44780_Basic::setCursor(byte address) const // 0x80
+void DrvHd44780::setCursor(byte address) const // 0x80
 {
 	this->writeCmd(address | 0x80);
 }
 
 ////////////////////
-void HD44780_Basic::putString(byte address, char *p, byte length) const
+void DrvHd44780::putString(byte address, char *p, byte length) const
 {
 	char *pp = p;
 
@@ -217,12 +217,12 @@ void HD44780_Basic::putString(byte address, char *p, byte length) const
 	}
 }
 
-void HD44780_Basic::putChar(byte address, char c) const
+void DrvHd44780::putChar(byte address, char c) const
 {
 	this->putString(address, &c, 1);
 }
 
-void HD44780_Basic::init()
+void DrvHd44780::init()
 {
 	this->initHardware();
 
@@ -234,7 +234,7 @@ void HD44780_Basic::init()
 	this->configureDisplay(true, false, false);
 }
 
-void HD44780_Basic::putCache() const
+void DrvHd44780::putCache() const
 {
 	for (byte r = 0; r < _row_count; r++)
 		this->putString(
@@ -242,7 +242,7 @@ void HD44780_Basic::putCache() const
 				_cache + _col_count * r, _col_count);
 }
 
-void HD44780_Basic::printf(byte index, const char *__fmt, ...)
+void DrvHd44780::printf(byte index, const char *__fmt, ...)
 {
 	if (index >= _cache_length)
 		return;
@@ -253,7 +253,7 @@ void HD44780_Basic::printf(byte index, const char *__fmt, ...)
 	va_end(ap);
 }
 
-void HD44780_Basic::printf(const char *__fmt, ...)
+void DrvHd44780::printf(const char *__fmt, ...)
 {
 	va_list ap;
 	va_start(ap, __fmt);
@@ -261,12 +261,12 @@ void HD44780_Basic::printf(const char *__fmt, ...)
 	va_end(ap);
 }
 
-void HD44780_Basic::setCache(byte value)
+void DrvHd44780::setCache(byte value)
 {
 	memset(_cache, value, _cache_length);
 }
 
-void HD44780_Basic::setCache(byte index, byte value)
+void DrvHd44780::setCache(byte index, byte value)
 {
 	if (index >= _cache_length)
 		return;

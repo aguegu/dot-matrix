@@ -1,5 +1,5 @@
 /*
- * ControllerA3D8.cpp
+ * ctl_3d8_dm.cpp
  *
  *  Created on: 2012-7-3
  *	Author: Weihong Guan
@@ -12,26 +12,26 @@
  *
  */
 
-#include "Controller_A3D8.h"
+#include "ctl_3d8_dm.h"
 
-Controller_A3D8::Controller_A3D8(DotMatrix3D & dm, HardwareSerial & sp,
+Ctl3D8Dm::Ctl3D8Dm(DotMatrix3D & dm, HardwareSerial & sp,
 		unsigned long baud_rate) :
-		Controller_A3D8_Basic(sp, baud_rate, dm.countBytes()), _dm(dm)
+		Ctl3D8(sp, baud_rate, dm.countBytes()), _dm(dm)
 {
 
 }
 
-Controller_A3D8::~Controller_A3D8()
+Ctl3D8Dm::~Ctl3D8Dm()
 {
 
 }
 
-void Controller_A3D8::putDM()
+void Ctl3D8Dm::putDM()
 {
 	this->sendBatch(_dm.output(), _length);
 }
 
-void Controller_A3D8::putDMrevZ()
+void Ctl3D8Dm::putDMrevZ()
 {
 	_sp.write(0xf2);
 	byte *p = _dm.output();
@@ -39,7 +39,7 @@ void Controller_A3D8::putDMrevZ()
 		_sp.write(reverseByte(*p++));
 }
 
-void Controller_A3D8::putReverseDM()
+void Ctl3D8Dm::putReverseDM()
 {
 	_sp.write(0xf2);
 	byte *p = _dm.output();

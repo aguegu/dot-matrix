@@ -1,29 +1,29 @@
 /*
- * Driver_74HC138.h
+ * drv_74hc138.h
  *
  *  Created on: 2012-7-9
  *      Author: Agu
  */
 
-#ifndef DRIVER_74HC138_H_
-#define DRIVER_74HC138_H_
+#ifndef DRV_74HC138_H_
+#define DRV_74HC138_H_
 
 #include "Arduino.h"
-#include "PinWrite.h"
+#include "pin_op.h"
 
-class Driver_74HC138
+class Drv74hc138
 {
 public:
-	Driver_74HC138(uint8_t pin_A2, uint8_t pin_A1, uint8_t pin_A0,
-			uint8_t pin_OE);
-	virtual ~Driver_74HC138();
+	Drv74hc138(uint8_t pin_a2, uint8_t pin_a1, uint8_t pin_a0,
+			uint8_t pin_oe);
+	virtual ~Drv74hc138();
 	void setValue(byte r) const;
 	void setOE(bool on) const;
 private:
-	const uint8_t _pin_A2;
-	const uint8_t _pin_A1;
-	const uint8_t _pin_A0;
-	const uint8_t _pin_OE;
+	const uint8_t _pin_a2;
+	const uint8_t _pin_a1;
+	const uint8_t _pin_a0;
+	const uint8_t _pin_oe;
 };
 
 #endif /* DRIVER_74HC138_H_ */

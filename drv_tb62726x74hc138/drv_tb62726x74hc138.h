@@ -1,5 +1,5 @@
 /*
- * 	Driver_62726_138.h
+ * 	drv_tb62726x74hc138.h
  *
  *	DotMatrix driver for led matrix driven by 74HC138 and TB62726(TM1818)
  *
@@ -13,22 +13,22 @@
  *	source host: https://github.com/aguegu/dot-matrix
  */
 
-#ifndef DRIVER_62726_138_H_
-#define DRIVER_62726_138_H_
+#ifndef DRV_TB62726_X_74HC138_H_
+#define DRV_TB62726_X_74HC138_H_
 
 #include "DotMatrix.h"
-#include "Driver_TB62726.h"
-#include "Driver_74HC138.h"
+#include "drv_tb62726.h"
+#include "drv_74hc138.h"
 
-class Driver_62726_138
+class DrvTb62726X74hc138
 {
 public:
-	Driver_62726_138(DotMatrix & dm, uint8_t pin_din, uint8_t pin_clk,
+	DrvTb62726X74hc138(DotMatrix & dm, uint8_t pin_din, uint8_t pin_clk,
 			uint8_t pin_latch, uint8_t pin_en, uint8_t pin_rext, uint8_t pin_a2,
 			uint8_t pin_a1, uint8_t pin_a0, uint8_t pin_oe,
 			uint16_t scan_speed = 0x600);
 
-	virtual ~Driver_62726_138();
+	virtual ~DrvTb62726X74hc138();
 
 	void setSpeed(uint16_t scan_span);
 	void setSize();
@@ -39,8 +39,8 @@ public:
 protected:
 
 	const DotMatrix & _dm;
-	Driver_TB62726 chip_col;
-	Driver_74HC138 chip_row;
+	DrvTb62726 chip_col;
+	Drv74hc138 chip_row;
 
 	word _scan_span;
 
@@ -51,4 +51,4 @@ protected:
 	void setCol(byte row) const;
 };
 
-#endif /* DRIVER1818138_H_ */
+#endif /* DRV_TB62726_X_74HC138_H_ */

@@ -1,5 +1,5 @@
 /*
- *	Driver_HD44780_Basic.h
+ *	drv_hd44780.h
  *	Driver_HD44780_Basic Class, arduino driver for liquid crystal display driven by HD47780, namely 1602/1604
  *	Created on: 2012-06-01
  *
@@ -13,23 +13,23 @@
  *	source host: https://github.com/aguegu/dot-matrix
  */
 
-#ifndef DRIVER_HD44780_BASIC_H_
-#define DRIVER_HD44780_BASIC_H_
+#ifndef DRV_HD44780_H_
+#define DRV_HD44780_H_
 
 #include "Arduino.h"
-#include "PinWrite.h"
+#include "pin_op.h"
 
 #ifdef PROGMEM
   #undef PROGMEM
   #define PROGMEM __attribute__((section(".progmem.data")))
 #endif
 
-class HD44780_Basic
+class DrvHd44780
 {
 public:
-	HD44780_Basic(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7,
+	DrvHd44780(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7,
 			byte row_count = 2, byte col_count = 16);
-	virtual ~HD44780_Basic();
+	virtual ~DrvHd44780();
 
 	void init();
 	void clear() const;
@@ -77,4 +77,4 @@ protected:
 	char * _cache;
 };
 
-#endif /* DRIVER_HD44780_BASIC_H_ */
+#endif /* DRV_HD44780_H_ */

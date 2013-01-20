@@ -1,13 +1,13 @@
 /*
- * DriverDual595.cpp
+ * drv_ld4812.cpp
  *
  *  Created on: 2012-9-4
  *      Author: agu
  */
 
-#include "Driver_Dual595.h"
+#include "drv_ld4812.h"
 
-Driver_Dual595::Driver_Dual595(uint8_t pin_col, uint8_t pin_row, uint8_t pin_sh,
+DrvLd4812::DrvLd4812(uint8_t pin_col, uint8_t pin_row, uint8_t pin_sh,
 		uint8_t pin_st, uint8_t pin_oe) :
 		_dm(48, 12), _pin_col(pin_col), _pin_row(pin_row), _pin_sh(pin_sh), _pin_st(
 				pin_st), _pin_oe(pin_oe)
@@ -21,28 +21,28 @@ Driver_Dual595::Driver_Dual595(uint8_t pin_col, uint8_t pin_row, uint8_t pin_sh,
 	this->setBrightness();
 }
 
-Driver_Dual595::~Driver_Dual595()
+DrvLd4812::~DrvLd4812()
 {
 
 }
 
-void Driver_Dual595::shiftLatch() const
+void DrvLd4812::shiftLatch() const
 {
 	pinSet(_pin_st);
 	pinClear(_pin_st);
 }
 
-void Driver_Dual595::shiftClock() const
+void DrvLd4812::shiftClock() const
 {
 	pinSet(_pin_sh);
 	pinClear(_pin_sh);
 }
 
-void Driver_Dual595::display() const
+void DrvLd4812::display() const
 {
 	static byte r = 0;
 
-	byte *p2 = _dm.output() + pgm_read_byte_near(DUAL595_ROW_ADDRESS+r);
+	byte *p2 = _dm.output() + pgm_read_byte_near(LD4812_ROW_ADDRESS+r);
 	for (byte i = 3, j = 0; i--;)
 	{
 		byte tmp = *p2++;
@@ -58,16 +58,16 @@ void Driver_Dual595::display() const
 	this->shiftLatch();
 
 	r++;
-	if (r == DUAL595_WIDTH)
+	if (r == LD4812_WIDTH)
 		r = 0;
 }
 
-DotMatrix & Driver_Dual595::getDotMatrix()
+DotMatrix & DrvLd4812::getDotMatrix()
 {
 	return _dm;
 }
 
-void Driver_Dual595::setBrightness(byte brightness)
+void DrvLd4812::setBrightness(byte brightness)
 {
 	analogWrite(_pin_oe, 0xff - brightness);
 }

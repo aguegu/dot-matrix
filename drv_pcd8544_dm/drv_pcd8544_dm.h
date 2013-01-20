@@ -1,6 +1,6 @@
 /*
- *	Driver_PCD8544.h
- *	Driver_PCD8544 Class for dot-matrix printing on liquid crystal display driven by PCD8544, namely Nokia 8544
+ *	drv_pcd8544_dm.h
+ *	DrvPcd8544Dm Class for dot-matrix printing on liquid crystal display driven by PCD8544, namely Nokia 8544
  *	Created on: 2012-05-30
  *
  *	library for Arduino for Dot Matrix Display, support driver by 74HC595 and 74HC138, ST7920, HD47780
@@ -13,23 +13,22 @@
  *	source host: https://github.com/aguegu/dot-matrix
  */
 
-#ifndef DRIVER_PCD8544_H_
-#define DRIVER_PCD8544_H_
+#ifndef DRV_PCD8544_DM_H_
+#define DRV_PCD8544_DM_H_
 
 #include "Arduino.h"
 #include "DotMatrix.h"
-#include "Driver_PCD8544_Basic.h"
+#include "drv_pcd8544.h"
 
 #define COMMAND	false
 #define DATA	true
 
-class Driver_PCD8544:public Driver_PCD8544_Basic
+class DrvPcd8544Dm: public DrvPcd8544
 {
-
 public:
 
-	Driver_PCD8544(uint8_t pin_sce, uint8_t pin_rst, uint8_t pin_dc, uint8_t pin_din, uint8_t pin_sclk);
-	virtual ~Driver_PCD8544();
+	DrvPcd8544Dm(uint8_t pin_sce, uint8_t pin_rst, uint8_t pin_dc, uint8_t pin_din, uint8_t pin_sclk);
+	virtual ~DrvPcd8544Dm();
 
 	void putDM();
 	DotMatrix & getDM();
@@ -38,4 +37,4 @@ private:
 	DotMatrix _dm;
 };
 
-#endif /* DRIVER_PCD8544_H_ */
+#endif /* DRV_PCD8544_DM_H_ */

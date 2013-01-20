@@ -1,5 +1,5 @@
 /*
- * BitOp.h
+ * bit_op.h
  *
  *  Created on: Dec 13, 2012
  *      Author: agu

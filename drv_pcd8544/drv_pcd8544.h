@@ -1,6 +1,6 @@
 /*
- *	Driver_PCD8544_Basic.h
- *	Driver_PCD8544 Class for dot-matrix printing on liquid crystal display driven by HD47780, namely 1602/1604
+ *	drv_pcd8544.h
+ *	DrvPcd8544 Class for dot-matrix printing on liquid crystal display driven by HD47780, namely 1602/1604
  *	Created on: 2012-05-30
  *
  *	library for Arduino for Dot Matrix Display, support driver by 74HC595 and 74HC138, ST7920, HD47780
@@ -13,34 +13,31 @@
  *	source host: https://github.com/aguegu/dot-matrix
  */
 
-#ifndef DRIVER_PCD8544_BASIC
-#define DRIVER_PCD8544_BASIC
+#ifndef DRV_PCD8544_H_
+#define DRV_PCD8544_H_
 
 #include "Arduino.h"
+#include "pin_op.h"
 
 #define COMMAND	false
 #define DATA	true
 
-#ifndef PIN_WRITE
-#define pinSet(pin)	*portOutputRegister(digitalPinToPort(pin)) |= digitalPinToBitMask(pin)
-#define pinClear(pin)	*portOutputRegister(digitalPinToPort(pin)) &= ~digitalPinToBitMask(pin)
-#define pinWrite(pin, val) ( (val) ? pinSet(pin) : pinClear(pin))
-#endif
-
-class Driver_PCD8544_Basic
+class DrvPcd8544
 {
 
 public:
 
-	Driver_PCD8544_Basic
-		(uint8_t pin_sce, uint8_t pin_rst, uint8_t pin_dc, uint8_t pin_din, uint8_t pin_sclk);
-	virtual ~Driver_PCD8544_Basic();
+	DrvPcd8544(uint8_t pin_sce, uint8_t pin_rst, uint8_t pin_dc,
+			uint8_t pin_din, uint8_t pin_sclk);
+	virtual ~DrvPcd8544();
+
 	void init();
 	void setRamAddress(byte x, byte y);
 
 	void configureHardware(byte tc = 0x03, byte bias = 0x00, byte vop = 0x50);
 	void configureDisplay(bool display_on = true, bool reverse = false);
-	void configureFunction(bool active = true, bool vertical_addressing = true, bool extend_command = false);
+	void configureFunction(bool active = true, bool vertical_addressing = true,
+			bool extend_command = false);
 
 protected:
 
@@ -57,4 +54,4 @@ private:
 	const uint8_t _pin_sclk;
 };
 
-#endif /* DRIVER_PCD8544_H_ */
+#endif /* DRV_PCD8544_H_ */

@@ -5,7 +5,7 @@
  *      Author: Agu
  */
 
-#ifndef PIN_WRITE
+#ifndef PIN_OP
 
 #define pinSet(pin)	*portOutputRegister(digitalPinToPort(pin)) |= digitalPinToBitMask(pin)
 #define pinClear(pin)	*portOutputRegister(digitalPinToPort(pin)) &= ~digitalPinToBitMask(pin)

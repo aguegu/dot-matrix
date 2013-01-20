@@ -1,21 +1,21 @@
 /*
- * DriverDual595.h
+ * drv_ld4812.h
  *
  *  Created on: 2012-9-4
  *      Author: agu
  */
 
-#ifndef DRIVERDUAL595_H_
-#define DRIVERDUAL595_H_
+#ifndef DRV_LD4812_H_
+#define DRV_LD4812_H_
 
 #include <avr/io.h>
 #include "Arduino.h"
-#include "PinWrite.h"
+#include "pin_op.h"
 #include "DotMatrix.h"
 
-#define DUAL595_WIDTH	24
+#define LD4812_WIDTH	24
 
-const uint8_t PROGMEM DUAL595_ROW_ADDRESS[] =
+const uint8_t PROGMEM LD4812_ROW_ADDRESS[] =
 {
 	24, 30, 36, 42,
 	48, 54, 60, 66,
@@ -25,12 +25,12 @@ const uint8_t PROGMEM DUAL595_ROW_ADDRESS[] =
 	27, 33, 39, 45,
 };
 
-class Driver_Dual595
+class DrvLd4812
 {
 public:
 
-	Driver_Dual595(uint8_t pin_col, uint8_t pin_row, uint8_t pin_sh, uint8_t pin_st, uint8_t pin_oe);
-	virtual ~Driver_Dual595();
+	DrvLd4812(uint8_t pin_col, uint8_t pin_row, uint8_t pin_sh, uint8_t pin_st, uint8_t pin_oe);
+	virtual ~DrvLd4812();
 	void display() const;
 	DotMatrix & getDotMatrix();
 
@@ -50,7 +50,4 @@ private:
 	inline void shiftClock() const;
 };
 
-
-
-
-#endif /* DRIVERDUAL595_H_ */
+#endif /* DRV_LD4812_H_ */

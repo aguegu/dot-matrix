@@ -1,6 +1,6 @@
 /*
- *	Driver_PCD8544_WithoutDotMatrix.cpp
- *	Driver_PCD8544 Class for dot-matrix printing on liquid crystal display driven by HD47780, namely 1602/1604
+ *	drv_pcd8544.cpp
+ *	DrvPcd8544 Class for dot-matrix printing on liquid crystal display driven by HD47780, namely 1602/1604
  *	Created on: 2012-05-30
  *
  *	library for Arduino for Dot Matrix Display, support driver by 74HC595 and 74HC138, ST7920, HD47780
@@ -13,14 +13,13 @@
  *	source host: https://github.com/aguegu/dot-matrix
  */
 
-#include "Driver_PCD8544_Basic.h"
+#include "drv_pcd8544.h"
 
-Driver_PCD8544_Basic::Driver_PCD8544_Basic(uint8_t pin_sce, uint8_t pin_rst,
-		uint8_t pin_dc, uint8_t pin_din, uint8_t pin_sclk) :
+DrvPcd8544::DrvPcd8544(uint8_t pin_sce, uint8_t pin_rst, uint8_t pin_dc,
+		uint8_t pin_din, uint8_t pin_sclk) :
 		_pin_sce(pin_sce), _pin_rst(pin_rst), _pin_dc(pin_dc), _pin_din(
 				pin_din), _pin_sclk(pin_sclk)
 {
-	// TODO Auto-generated constructor stub
 	pinMode(_pin_sce, OUTPUT);
 	pinMode(_pin_rst, OUTPUT);
 	pinMode(_pin_dc, OUTPUT);
@@ -28,12 +27,12 @@ Driver_PCD8544_Basic::Driver_PCD8544_Basic(uint8_t pin_sce, uint8_t pin_rst,
 	pinMode(_pin_sclk, OUTPUT);
 }
 
-Driver_PCD8544_Basic::~Driver_PCD8544_Basic()
+DrvPcd8544::~DrvPcd8544()
 {
-	// TODO Auto-generated destructor stub
+
 }
 
-void Driver_PCD8544_Basic::transmit(byte c, bool b)
+void DrvPcd8544::transmit(byte c, bool b)
 {
 	pinClear(_pin_sce);
 
@@ -49,7 +48,7 @@ void Driver_PCD8544_Basic::transmit(byte c, bool b)
 	pinSet(_pin_sce);
 }
 
-void Driver_PCD8544_Basic::init()
+void DrvPcd8544::init()
 {
 	digitalWrite(_pin_sce, LOW);
 	digitalWrite(_pin_rst, LOW);
@@ -61,15 +60,15 @@ void Driver_PCD8544_Basic::init()
 	this->configureDisplay();
 }
 
-void Driver_PCD8544_Basic::configureFunction(bool active,
-		bool vertical_addressing, bool extend_command)
+void DrvPcd8544::configureFunction(bool active, bool vertical_addressing,
+		bool extend_command)
 {
 	this->transmit(
 			0x20 | (active ? 0x00 : 0x04) | (vertical_addressing ? 0x02 : 0x00)
 					| (extend_command ? 0x01 : 0x00), COMMAND);
 }
 
-void Driver_PCD8544_Basic::configureHardware(byte tc, byte bias, byte vop)
+void DrvPcd8544::configureHardware(byte tc, byte bias, byte vop)
 {
 	this->configureFunction(true, true, true);
 	this->transmit(0x04 | (tc & 0x03), COMMAND);
@@ -78,14 +77,13 @@ void Driver_PCD8544_Basic::configureHardware(byte tc, byte bias, byte vop)
 	this->configureFunction(true, true, false);
 }
 
-void Driver_PCD8544_Basic::configureDisplay(bool display_on, bool reverse)
+void DrvPcd8544::configureDisplay(bool display_on, bool reverse)
 {
-	this->transmit(
-			0x08 | (display_on ? 0x04 : 0x00) | (reverse ? 0x01 : 0x00),
+	this->transmit(0x08 | (display_on ? 0x04 : 0x00) | (reverse ? 0x01 : 0x00),
 			COMMAND);
 }
 
-void Driver_PCD8544_Basic::setRamAddress(byte x, byte y)
+void DrvPcd8544::setRamAddress(byte x, byte y)
 {
 	x %= CLOLUMN_COUNT;
 	y %= BYTES_PER_COLUMN;
