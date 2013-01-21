@@ -15,8 +15,8 @@
 	source host: https://github.com/aguegu/dot-matrix
  */
 
-#ifndef FONT_0705_H_
-#define FONT_0705_H_
+#ifndef VFONT_7X5_H_
+#define VFONT_7X5_H_
 
 #include <avr/pgmspace.h>
 
@@ -25,7 +25,7 @@
   #define PROGMEM __attribute__((section(".progmem.data")))
 #endif
 
-extern const uint8_t PROGMEM FONT_0705_STATE[];
-extern const uint8_t PROGMEM FONT_0705[];
+extern const uint8_t PROGMEM VFONT_7X5_STATE[];
+extern const uint8_t PROGMEM VFONT_7X5[];
 
 #endif

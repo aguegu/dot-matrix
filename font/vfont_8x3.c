@@ -1,5 +1,5 @@
 /*
- 	Font0803.c
+ 	vfont_8x3.c
 	Customized Digital Font of 8x3 Dot Matrix
 
 	Created on: 2012-05-14
@@ -15,15 +15,15 @@
 	source host: https://github.com/aguegu/dot-matrix
  */
 
-#include "Font0803.h"
+#include "vfont_8x3.h"
 
-const uint8_t PROGMEM FONT_0803_STATE[] = {3, 8, 0x30, 10};
+const uint8_t PROGMEM VFONT_8X3_STATE[] = {3, 8, 0x30, 10};
 
-const uint8_t PROGMEM FONT_0803[]  =
+const uint8_t PROGMEM VFONT_8X3[]  =
 {
 	0xff, 0x81, 0xff,	//0
-	0x00, 0xff, 0x00,	//1
-	0xf1, 0x91, 0x9f,	//2
+	0x82, 0xff, 0x80,	//1
+	0xf9, 0x89, 0x8f,	//2
 	0x89, 0x89, 0xff,	//3
 	0x3f, 0x20, 0xff,	//4
 	0x8f, 0x89, 0xf9,	//5

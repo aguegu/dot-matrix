@@ -15,7 +15,7 @@
 	source host: https://github.com/aguegu/dot-matrix
  */
 
-#include "Font0503.h"
+#include "vfont_5x3.h"
 
 const uint8_t PROGMEM FONT_0503_STATE[] = {3, 5, 0x30, 10};
 

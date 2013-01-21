@@ -1,5 +1,5 @@
 /*
- 	Font0803.h
+ 	vfont_8x3.h
 	Customized Digital Font of 8x3 Dot Matrix
 
 	Created on: 2012-05-14
@@ -16,8 +16,8 @@
  */
 
 
-#ifndef FONT0803_H_
-#define FONT0803_H_
+#ifndef VFONT_8X3_H_
+#define VFONT_8X3_H_
 
 #include <avr/pgmspace.h>
 
@@ -26,9 +26,9 @@
   #define PROGMEM __attribute__((section(".progmem.data")))
 #endif
 
-extern const uint8_t PROGMEM FONT_0803_STATE[] ;
+extern const uint8_t PROGMEM VFONT_8X3_STATE[] ;
 
-extern const uint8_t PROGMEM FONT_0803[] ;
+extern const uint8_t PROGMEM VFONT_8X3[] ;
 
 
-#endif /* FONT0803_H_ */
+#endif /* VFONT_8X3_H_ */

@@ -15,12 +15,12 @@
 	source host: https://github.com/aguegu/dot-matrix
  */
 
-#include "Font0703.h"
+#include "vfont_7x3.h"
 
-const uint8_t PROGMEM FONT_0703_STATE[] = {3, 7, 0x20, 0x60};
+const uint8_t PROGMEM VFONT_7X3_STATE[] = {3, 7, 0x20, 0x60};
 // Width, Height, Indent, Length
 
-const uint8_t PROGMEM FONT_0703[] =
+const uint8_t PROGMEM VFONT_7X3[] =
 {
 	0x00, 0x00, 0x00, // Space
 	0x5f, 0x00, 0x00, // !

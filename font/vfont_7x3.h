@@ -1,5 +1,5 @@
 /*
-	FONT_0703.h
+	vfont_7x3.h
 	Customized ASCII 7x3 Font of Dot Matrix
 
 	Created on: 2012-04-18
@@ -24,7 +24,7 @@
   #define PROGMEM __attribute__((section(".progmem.data")))
 #endif
 
-extern const uint8_t PROGMEM FONT_0703_STATE[];
-extern const uint8_t PROGMEM FONT_0703[];
+extern const uint8_t PROGMEM VFONT_7X3_STATE[];
+extern const uint8_t PROGMEM VFONT_7X3[];
 
 #endif /* FONT_0703_H_ */

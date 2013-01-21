@@ -4,7 +4,7 @@
  *  Created on: 2012-7-1
  *      Author: Agu
  */
-#include "Pattern.h"
+#include "hfont.h"
 
 const uint8_t PROGMEM PATTERN_CHAR[]  =
 {
