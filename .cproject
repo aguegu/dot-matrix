@@ -39,6 +39,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ARDUINOBOARDNAME}/${ARDUINO_CORE_FOLDER}}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ARDUINOBOARDNAME}/${ARDUINOBOARDVARIANT}}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/dot-matrix}&quot;"/>
 								</option>
 								<option id="it.baeyens.avreclipse.compiler.option.def.1485111403" name="Define Syms (-D)" superClass="it.baeyens.avreclipse.compiler.option.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__IN_ECLIPSE__=1"/>
@@ -64,6 +66,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ARDUINOBOARDNAME}/${ARDUINO_CORE_FOLDER}}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ARDUINOBOARDNAME}/${ARDUINOBOARDVARIANT}}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/dot-matrix}&quot;"/>
 								</option>
 								<option id="it.baeyens.avreclipse.cppcompiler.option.def.479432623" name="Define Syms (-D)" superClass="it.baeyens.avreclipse.cppcompiler.option.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__IN_ECLIPSE__=1"/>
@@ -111,12 +115,13 @@
 							<option id="it.baeyens.avreclipse.toolchain.options.toolchain.objdump.app.release.615307235.1532939553" name="Generate Extended Listing (Source + generated Assembler)" superClass="it.baeyens.avreclipse.toolchain.options.toolchain.objdump.app.release.615307235"/>
 							<option id="it.baeyens.avreclipse.toolchain.options.toolchain.size.app.release.1878891254.1980688468" name="Print Size" superClass="it.baeyens.avreclipse.toolchain.options.toolchain.size.app.release.1878891254"/>
 							<option id="it.baeyens.avreclipse.toolchain.options.toolchain.avrdude.app.release.1381992110.744547024" name="AVRDude" superClass="it.baeyens.avreclipse.toolchain.options.toolchain.avrdude.app.release.1381992110"/>
+							<targetPlatform id="it.baeyens.avreclipse.targetplatform.winavr.app.release" name="AVR Cross-Target" superClass="it.baeyens.avreclipse.targetplatform.winavr.app.release"/>
 							<tool id="it.baeyens.avreclipse.tool.assembler.winavr.app.release.1329691255" name="AVR Assembler" superClass="it.baeyens.avreclipse.tool.assembler.winavr.app.release.2056035817">
-								<option id="it.baeyens.avreclipse.asm.option.include.paths.1139378391" superClass="it.baeyens.avreclipse.asm.option.include.paths" valueType="includePath"/>
+								<option id="it.baeyens.avreclipse.asm.option.include.paths.1139378391" name="#include paths for preprocessor(-I)" superClass="it.baeyens.avreclipse.asm.option.include.paths" valueType="includePath"/>
 								<inputType id="it.baeyens.avreclipse.tool.assembler.input.1749867406" superClass="it.baeyens.avreclipse.tool.assembler.input"/>
 							</tool>
 							<tool id="it.baeyens.avreclipse.tool.compiler.winavr.app.release.301005393" name="AVR Compiler" superClass="it.baeyens.avreclipse.tool.compiler.winavr.app.release.1677379678">
-								<option id="it.baeyens.avreclipse.compiler.option.incpath.1923262931" superClass="it.baeyens.avreclipse.compiler.option.incpath" valueType="includePath">
+								<option id="it.baeyens.avreclipse.compiler.option.incpath.1923262931" name="Include Paths (-I)" superClass="it.baeyens.avreclipse.compiler.option.incpath" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ARDUINOBOARDNAME}/${ARDUINO_CORE_FOLDER}}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ARDUINOBOARDNAME}/${ARDUINOBOARDVARIANT}}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix}&quot;"/>
@@ -125,7 +130,7 @@
 								<inputType id="it.baeyens.avreclipse.compiler.winavr.input.1747638757" name="C Source Files" superClass="it.baeyens.avreclipse.compiler.winavr.input"/>
 							</tool>
 							<tool id="it.baeyens.avreclipse.tool.cppcompiler.app.release.1129717857" name="AVR C++ Compiler" superClass="it.baeyens.avreclipse.tool.cppcompiler.app.release.265767624">
-								<option id="it.baeyens.avreclipse.cppcompiler.option.incpath.972832379" superClass="it.baeyens.avreclipse.cppcompiler.option.incpath" valueType="includePath">
+								<option id="it.baeyens.avreclipse.cppcompiler.option.incpath.972832379" name="Include Paths (-I)" superClass="it.baeyens.avreclipse.cppcompiler.option.incpath" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ARDUINOBOARDNAME}/${ARDUINO_CORE_FOLDER}}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ARDUINOBOARDNAME}/${ARDUINOBOARDVARIANT}}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix}&quot;"/>
@@ -144,7 +149,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="drv_st7920_dm|drv_pcd8544_dm|SPI|Twi|drv_hd44780_dm" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="drv_pcd8544_dm|Twi|SPI|drv_st7920_dm|drv_hd44780_dm" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 						<entry excluding="?xamples/*" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="SPI"/>
 						<entry excluding="?xamples/*" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Twi"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="drv_hd44780_dm"/>
@@ -159,8 +164,10 @@
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 		<project id="second eclipse test.it.baeyens.avreclipse.project.winavr.elf_2.1.0.295587019" name="AVR Cross Target Application" projectType="it.baeyens.avreclipse.project.winavr.elf_2.1.0"/>
 	</storageModule>
-	<storageModule moduleId="refreshScope" versionNumber="1">
-		<resource resourceType="PROJECT" workspacePath="/secondEclipseTest"/>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Release">
+			<resource resourceType="PROJECT" workspacePath="/secondEclipseTest"/>
+		</configuration>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
