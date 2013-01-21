@@ -1,6 +1,6 @@
 /*
- Driver_HD44780.cpp
- Driver_HD44780 Class for dot-matrix printing on liquid crystal display driven by HD47780, namely 1602/1604
+ drvdm_hd44780.cpp
+ DrvDmHd44780 Class for dot-matrix printing on liquid crystal display driven by HD47780, namely 1602/1604
  Created on: 2012-02-29
  Updated on: 2012-06-01
 
@@ -14,21 +14,20 @@
  source host: https://github.com/aguegu/dot-matrix
  */
 
-#include "drv_hd44780_dm.h"
+#include "drvdm_hd44780.h"
 
-DrvHd44780Dm::DrvHd44780Dm(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7, byte row_count, byte col_count)
+DrvDmHd44780::DrvDmHd44780(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7, byte row_count, byte col_count)
 :DrvHd44780(pin_rs, pin_en, pin_d4, pin_d5, pin_d6, pin_d7, row_count, col_count), _dm(col_count, row_count * 3)
 {
 	//this->init();
 }
 
-//////////////////////
-DrvHd44780Dm::~DrvHd44780Dm()
+DrvDmHd44780::~DrvDmHd44780()
 {
 
 }
 
-void DrvHd44780Dm::convertDotMatrixToCache()
+void DrvDmHd44780::convertDotMatrixToCache()
 {
 	this->setCache();
 
@@ -42,7 +41,7 @@ void DrvHd44780Dm::convertDotMatrixToCache()
 	}
 }
 
-DotMatrix & DrvHd44780Dm::getDotMatrix()
+DotMatrix & DrvDmHd44780::getDotMatrix()
 {
 	return _dm;
 }

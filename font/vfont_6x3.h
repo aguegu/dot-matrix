@@ -1,5 +1,5 @@
 /*
-	FONT_0603.h
+	vfont_6x3.h
 	Customized Digital Font of 6x3 Dot Matrix
 
 	Created on: 2012-03-03
@@ -15,8 +15,8 @@
 	source host: https://github.com/aguegu/dot-matrix
  */
 
-#ifndef FONT_0603_H_
-#define FONT_0603_H_
+#ifndef VFONT_6X3_H_
+#define VFONT_6X3_H_
 
 #include <avr/pgmspace.h>
 
@@ -25,10 +25,10 @@
   #define PROGMEM __attribute__((section(".progmem.data")))
 #endif
 
-extern const uint8_t PROGMEM FONT_0603_STATE[];
-extern const uint8_t PROGMEM FONT_0603[];
+extern const uint8_t PROGMEM VFONT_6X3_STATE[];
+extern const uint8_t PROGMEM VFONT_6X3[];
 //extern const uint8_t PROGMEM BAR[];
 
 
 
-#endif /* NUMFONT0603_H_ */
+#endif /* VFONT_6X3_H_ */

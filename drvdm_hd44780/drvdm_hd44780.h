@@ -1,6 +1,6 @@
 /*
-	drv_hd44780_dm.h
-	Driver_HD44780 Class for dot-matrix printing on liquid crystal display driven by HD47780, namely 1602/1604
+	drvdm_hd44780.h
+	DrvDmHd44780 Class for dot-matrix printing on liquid crystal display driven by HD47780, namely 1602/1604
 	Created on: 2012-02-29
 	Updated on: 2012-06-01
 
@@ -14,19 +14,19 @@
 	source host: https://github.com/aguegu/dot-matrix
  */
 
-#ifndef DRV_HD44780_DM_H_
-#define DRV_HD44780_DM_H_
+#ifndef DRV_DM_HD44780_H_
+#define DRV_DM_HD44780_H_
 
 #include "Arduino.h"
 #include "dot-matrix.h"
 #include "drv_hd44780.h"
 
-class DrvHd44780Dm: public DrvHd44780
+class DrvDmHd44780: public DrvHd44780
 {
 public:
 
-	DrvHd44780Dm(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7, byte row_count = 2, byte col_count = 16);
-	virtual ~DrvHd44780Dm();
+	DrvDmHd44780(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7, byte row_count = 2, byte col_count = 16);
+	virtual ~DrvDmHd44780();
 
 	void convertDotMatrixToCache();
 	DotMatrix & getDotMatrix();
@@ -34,4 +34,4 @@ public:
 private:
 	DotMatrix _dm;
 };
-#endif /* DRV_HD44780_DM_H_ */
+#endif /* DRV_DM_HD44780_H_ */
