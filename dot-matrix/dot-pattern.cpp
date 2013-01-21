@@ -1,11 +1,11 @@
 /*
- * DotPattern.cpp
+ * dot-pattern.cpp
  *
  *  Created on: 2012-7-1
  *      Author: Agu
  */
 
-#include "DotPattern.h"
+#include "dot-pattern.h"
 
 DotPattern::DotPattern(DotMatrix & dm) :
 		_dm(dm)

@@ -1,5 +1,5 @@
 /*
- * DotPattern.h
+ * dot-pattern.h
  *
  *  Created on: 2012-7-1
  *      Author: Agu
@@ -9,7 +9,7 @@
 #define DOTPATTERN_H_
 
 #include "Arduino.h"
-#include "DotMatrix.h"
+#include "dot-matrix.h"
 #include "ReverseByte.h"
 
 class DotPattern

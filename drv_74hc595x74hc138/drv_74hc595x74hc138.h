@@ -17,10 +17,10 @@
 #ifndef DRIVER_74HC595_X_74HC138_H_
 #define DRIVER_74HC595_X_74HC138_H_
 
-#include "DotMatrix.h"
 #include "Arduino.h"
 #include "drv_74hc138.h"
 #include "drv_74hc595.h"
+#include "dot-matrix.h"
 
 class Drv74hc595X74hc138
 {

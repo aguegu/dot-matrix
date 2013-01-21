@@ -17,7 +17,7 @@
 
 DrvPcd8544Dm::DrvPcd8544Dm(uint8_t pin_sce, uint8_t pin_rst, uint8_t pin_dc,
 		uint8_t pin_din, uint8_t pin_sclk) :
-		DrvPcd8544Dm(pin_sce, pin_rst, pin_dc, pin_din, pin_sclk), _dm(
+		DrvPcd8544(pin_sce, pin_rst, pin_dc, pin_din, pin_sclk), _dm(
 				48, 84)
 {
 

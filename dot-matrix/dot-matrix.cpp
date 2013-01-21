@@ -14,7 +14,7 @@
  source host: https://github.com/aguegu/dot-matrix
  */
 
-#include "DotMatrix.h"
+#include "dot-matrix.h"
 
 DotMatrix::DotMatrix(byte colCount, byte rowCount)
 {

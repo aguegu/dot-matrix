@@ -17,7 +17,7 @@
 #ifndef DOTFONT_H_
 #define DOTFONT_H_
 #include "Arduino.h"
-#include "DotMatrix.h"
+#include "dot-matrix.h"
 
 class DotFont
 {

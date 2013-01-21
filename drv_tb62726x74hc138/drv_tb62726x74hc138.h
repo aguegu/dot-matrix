@@ -16,7 +16,7 @@
 #ifndef DRV_TB62726_X_74HC138_H_
 #define DRV_TB62726_X_74HC138_H_
 
-#include "DotMatrix.h"
+#include "dot-matrix.h"
 #include "drv_tb62726.h"
 #include "drv_74hc138.h"
 

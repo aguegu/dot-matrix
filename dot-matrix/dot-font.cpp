@@ -14,7 +14,15 @@
  source host: https://github.com/aguegu/dot-matrix
  */
 
-#include "DotFont.h"
+#include "dot-font.h"
+
+DotFont::DotFont(DotMatrix & dm) :
+		_dm(dm)
+{
+	_col = _row = _index = 0;
+	_vertical = true;
+}
+
 
 byte DotFont::getWidth() const
 {
@@ -41,12 +49,6 @@ byte DotFont::getMaxRow() const
 	return _dm.countRow() - 1;
 }
 
-DotFont::DotFont(DotMatrix & dm) :
-		_dm(dm)
-{
-	_col = _row = _index = 0;
-	_vertical = true;
-}
 
 DotFont::~DotFont()
 {

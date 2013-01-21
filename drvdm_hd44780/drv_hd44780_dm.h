@@ -18,7 +18,7 @@
 #define DRV_HD44780_DM_H_
 
 #include "Arduino.h"
-#include "DotMatrix.h"
+#include "dot-matrix.h"
 #include "drv_hd44780.h"
 
 class DrvHd44780Dm: public DrvHd44780

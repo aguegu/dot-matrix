@@ -16,15 +16,17 @@
 #ifndef DRV_ST7920_DM_H_
 #define DRV_ST7920_DM_H_
 
+#include "Arduino.h"
 #include "drv_st7920.h"
-#include "DotMatrix.h"
+#include "dot-matrix.h"
 
 class DrvSt7920Dm: public DrvSt7920
 {
 
 public:
 
-	DrvSt7920Dm(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7);virtual ~ST7920();
+	DrvSt7920Dm(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7);
+	virtual ~DrvSt7920Dm();
 	void putDM();
 	DotMatrix & getDotMatrix();
 

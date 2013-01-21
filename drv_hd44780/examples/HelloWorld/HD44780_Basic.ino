@@ -1,8 +1,6 @@
-#include "DotMatrixTest.h"
+#include "drv_hd44780.h"
 
-#include "Driver_HD44780_Basic.h"
-
-HD44780_Basic lcd(13, 12, 11, 10, 9, 8);
+DrvHd44780 lcd(7, 6, 5, 4, 3, 2);
 
 void setup()
 {

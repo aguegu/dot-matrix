@@ -15,8 +15,8 @@
 
 #include "drv_st7920_dm.h"
 
-DrvSt7920Dm::DrvSt7920Dm(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4, uint8_t pin_d5,
-		uint8_t pin_d6, uint8_t pin_d7) :
+DrvSt7920Dm::DrvSt7920Dm(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4,
+		uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7) :
 		DrvSt7920(pin_rs, pin_en, pin_d4, pin_d5, pin_d6, pin_d7), _dm(128,
 				64)
 {

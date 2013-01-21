@@ -8,6 +8,7 @@
 #ifndef DRV_TB62726_H_
 #define DRV_TB62726_H_
 
+#include "Arduino.h"
 #include "drv_74hc595.h"
 
 class DrvTb62726: public Drv74hc595

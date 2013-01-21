@@ -1,44 +1,43 @@
 /*
- * Driver_3D8_SPI.cpp
+ * drvdm_tb62726x74hc138_spi.cpp
  *
  *  Created on: 2012-7-26
  *      Author: Agu
  */
 
-#include "Driver_3D8_SPI.h"
+#include "drvdm_tb62726x74hc138_spi.h"
 
-Driver_3D8_SPI::Driver_3D8_SPI(DotMatrix & dm, SPIClass & spi,
+DrvDmTb6276X74hc138Spi::DrvDmTb6276X74hc138Spi(DotMatrix & dm, SPIClass & spi,
 		uint8_t pin_latch, uint8_t pin_en, uint8_t pin_rext, uint8_t pin_a2,
 		uint8_t pin_a1, uint8_t pin_a0, uint16_t scan_speed) :
-		Driver_62726_138_SPI(dm, spi, pin_latch, pin_en, pin_rext,
-				pin_a2, pin_a1, pin_a0, 255, scan_speed)
+		DrvTb62726X74hc138Spi(dm, spi, pin_latch, pin_en, pin_rext, pin_a2,
+				pin_a1, pin_a0, 255, scan_speed)
 {
-	// TODO Auto-generated constructor stub
 	this->setMode();
 }
 
-Driver_3D8_SPI::~Driver_3D8_SPI()
+DrvDmTb6276X74hc138Spi::~DrvDmTb6276X74hc138Spi()
 {
-	// TODO Auto-generated destructor stub
+
 }
 
-void Driver_3D8_SPI::setMode(ScanMode mode)
+void DrvDmTb6276X74hc138Spi::setMode(ScanMode mode)
 {
 	switch (mode)
 	{
 	case ZXY:
-		_setCol = &Driver_3D8_SPI::setColzxy;
+		_setCol = &DrvDmTb6276X74hc138Spi::setColzxy;
 		break;
 	case YZX:
-		_setCol = &Driver_3D8_SPI::setColyzx;
+		_setCol = &DrvDmTb6276X74hc138Spi::setColyzx;
 		break;
 	default:
-		_setCol = &Driver_3D8_SPI::setColxyz;
+		_setCol = &DrvDmTb6276X74hc138Spi::setColxyz;
 		break;
 	}
 }
 
-void Driver_3D8_SPI::setColxyz(byte row) const
+void DrvDmTb6276X74hc138Spi::setColxyz(byte row) const
 {
 	byte * p = _dm.output();
 	p += _byte_per_row * row;
@@ -46,7 +45,7 @@ void Driver_3D8_SPI::setColxyz(byte row) const
 	chip_col.shiftSendCoupleFromLSB(p, _byte_per_row);
 }
 
-void Driver_3D8_SPI::display(byte times) const
+void DrvDmTb6276X74hc138Spi::display(byte times) const
 {
 	while (times--)
 	{
@@ -59,12 +58,12 @@ void Driver_3D8_SPI::display(byte times) const
 			chip_row.setValue(r);
 			chip_col.setOE(false);
 
-			delayMicroseconds(_scan_span);
+			delayMicroseconds (_scan_span);
 		}
 	}
 }
 
-void Driver_3D8_SPI::setColzxy(byte row) const
+void DrvDmTb6276X74hc138Spi::setColzxy(byte row) const
 {
 	byte * p = _dm.output();
 	for (byte j = 0; j < _word_per_row; j++)
@@ -74,18 +73,20 @@ void Driver_3D8_SPI::setColzxy(byte row) const
 
 		for (byte i = 8; i--;)
 		{
-			cache[0]<<=1;
-			if (bitRead(*(p++), row)) cache[0] |= 0x01;
+			cache[0] <<= 1;
+			if (bitRead(*(p++), row))
+				cache[0] |= 0x01;
 
-			cache[1]<<=1;
-			if (bitRead(*(--p2), row)) cache[1] |= 0x01;
+			cache[1] <<= 1;
+			if (bitRead(*(--p2), row))
+				cache[1] |= 0x01;
 		}
 		p += _byte_per_row;
 		chip_col.shiftSend(cache, 2);
 	}
 }
 
-void Driver_3D8_SPI::setColyzx(byte row) const
+void DrvDmTb6276X74hc138Spi::setColyzx(byte row) const
 {
 	byte *p = _dm.output() + row;
 	for (byte j = 0; j < _byte_per_row; j++) // z
@@ -98,7 +99,8 @@ void Driver_3D8_SPI::setColyzx(byte row) const
 
 			if (j & 0x01)
 				p -= _byte_per_row;
-			if (bitRead(*p, j)) cache |= 0x01;
+			if (bitRead(*p, j))
+				cache |= 0x01;
 			if (!(j & 0x01))
 				p += _byte_per_row;
 		}

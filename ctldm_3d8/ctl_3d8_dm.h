@@ -15,13 +15,14 @@
 #define CONTROLLER_A3D8_H_
 
 #include "ctl_3d8.h"
-#include "DotMatrix3D.h"
+#include "dot-matrix-3d8.h"
 #include "ReverseByte.h"
 
-class Ctl3D8Dm:public Ctl3D8
+class Ctl3D8Dm: public Ctl3D8
 {
 public:
-	Ctl3D8Dm(DotMatrix3D & dm, HardwareSerial & sp, unsigned long baud_rate = 57600);
+	Ctl3D8Dm(DotMatrix3D8 & dm, HardwareSerial & sp, unsigned long baud_rate =
+			57600);
 	virtual ~Ctl3D8Dm();
 
 	void putDM();

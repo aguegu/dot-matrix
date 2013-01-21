@@ -10,7 +10,7 @@
 
 #include "Arduino.h"
 #include "drv_74hc595_spi.h"
-#include "DotMatrix.h"
+#include "dot-matrix.h"
 
 class DrvLd1608
 {

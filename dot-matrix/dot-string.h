@@ -17,8 +17,8 @@
 #ifndef DOTSTRING_H_
 #define DOTSTRING_H_
 
-#include "DotMatrix.h"
-#include "DotFont.h"
+#include "dot-matrix.h"
+#include "dot-font.h"
 
 class DotString
 {

@@ -11,10 +11,10 @@
  *	source host: https://github.com/aguegu/dot-matrix
  */
 
-#ifndef DOTMATRIX3D_H_
-#define DOTMATRIX3D_H_
+#ifndef DOTMATRIX_3D8_H_
+#define DOTMATRIX_3D8_H_
 
-#include "DotMatrix.h"
+#include "dot-matrix.h"
 
 const uint8_t PROGMEM ROLL_INDEX[] =
 {
@@ -40,11 +40,11 @@ const uint8_t PROGMEM ROLL_LENGTH[] = {28,20,12,4};
 
 const uint8_t PROGMEM ROLL_STEP[] = {0x7f, 0x5d, 0x2a, 0x08};
 
-class DotMatrix3D: public DotMatrix
+class DotMatrix3D8: public DotMatrix
 {
 public:
-	DotMatrix3D(byte block_count);
-	virtual ~DotMatrix3D();
+	DotMatrix3D8(byte block_count);
+	virtual ~DotMatrix3D8();
 	void setDot(byte x, byte y, byte z, bool on = true);
 
 	enum Direction3D
@@ -71,4 +71,4 @@ private:
 	byte convertCol(byte x, byte y);
 };
 
-#endif /* DOTMATRIX3D_H_ */
+#endif /* DOTMATRIX_3D8_H_ */

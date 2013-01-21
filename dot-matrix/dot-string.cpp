@@ -13,7 +13,7 @@
 
 	source host: https://github.com/aguegu/dot-matrix
  */
-#include "DotString.h"
+#include "dot-string.h"
 
 
 DotString::DotString(DotFont & df, byte length, bool smart_width) :
