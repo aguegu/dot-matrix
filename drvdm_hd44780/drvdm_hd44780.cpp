@@ -19,7 +19,7 @@
 DrvDmHd44780::DrvDmHd44780(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7, byte row_count, byte col_count)
 :DrvHd44780(pin_rs, pin_en, pin_d4, pin_d5, pin_d6, pin_d7, row_count, col_count), _dm(col_count, row_count * 3)
 {
-	//this->init();
+
 }
 
 DrvDmHd44780::~DrvDmHd44780()
