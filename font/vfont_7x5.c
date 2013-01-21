@@ -19,7 +19,6 @@
 
 const uint8_t PROGMEM VFONT_7X5_STATE[] = {5, 7, 0x30, 10};
 
-
 const uint8_t PROGMEM VFONT_7X5[] =
 {
 	0x7f, 0x7f, 0x41, 0x7f, 0x7f, //0
