@@ -1,9 +1,7 @@
-#include "DotMatrixTest.h"
+#include "dot-matrix.h"
+#include "drvdm_st7920.h"
 
-#include "DotMatrix.h"
-#include "Driver_ST7920.h"
-
-ST7920 dmd(A5, A4, A3, A2, A1, A0);
+DrvDmSt7920 dmd(7, 6, 5, 4, 3, 2);
 DotMatrix dm = dmd.getDotMatrix();
 
 volatile bool completed = false;
