@@ -17,9 +17,9 @@
 
 #include "vfont_5x3.h"
 
-const uint8_t PROGMEM FONT_0503_STATE[] = {3, 5, 0x30, 10};
+const uint8_t PROGMEM VFONT_5X3_STATE[] = {3, 5, 0x30, 10};
 
-const uint8_t PROGMEM FONT_0503[]  =
+const uint8_t PROGMEM VFONT_5X3[]  =
 {
 	0x1f, 0x11, 0x1f,	//0
 	0x00, 0x1f, 0x00,	//1

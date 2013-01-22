@@ -13,9 +13,9 @@
  source host: https://github.com/aguegu/dot-matrix
  */
 
-#include "drv_st7920_dm.h"
+#include "drvdm_st7920.h"
 
-DrvSt7920Dm::DrvSt7920Dm(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4,
+DrvDmSt7920::DrvDmSt7920(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4,
 		uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7) :
 		DrvSt7920(pin_rs, pin_en, pin_d4, pin_d5, pin_d6, pin_d7), _dm(128,
 				64)
@@ -23,12 +23,12 @@ DrvSt7920Dm::DrvSt7920Dm(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4,
 	this->init();
 }
 
-DrvSt7920Dm::~DrvSt7920Dm()
+DrvDmSt7920::~DrvDmSt7920()
 {
 
 }
 
-void DrvSt7920Dm::putDM()
+void DrvDmSt7920::putDM()
 {
 	byte *p = _dm.output();
 
@@ -49,7 +49,7 @@ void DrvSt7920Dm::putDM()
 	}
 }
 
-DotMatrix & DrvSt7920Dm::getDotMatrix()
+DotMatrix & DrvDmSt7920::getDotMatrix()
 {
 	return _dm;
 }

@@ -1,16 +1,15 @@
-#include "DotMatrixTest.h"
 
-#include "DotMatrix.h"
-#include "Driver_ST7920.h"
-#include "DotFont.h"
-#include "DotString.h"
+#include "dot-matrix.h"
+#include "drvdm_st7920.h"
+#include "dot-font.h"
+#include "dot-string.h"
 
-#include "Font0703.h"
-#include "Font0704.h"
-#include "Font0705.h"
-#include "Font0503.h"
+#include "vfont_7x3.h"
+#include "vfont_7x4.h"
+#include "vfont_7x5.h"
+#include "vfont_5x3.h"
 
-ST7920 dmd(A5, A4, A3, A2, A1, A0);
+DrvDmSt7920 dmd(7, 6, 5, 4, 3, 2);
 DotMatrix dm = dmd.getDotMatrix();
 
 void setup()
@@ -18,10 +17,10 @@ void setup()
 	dm.clear();
 
 	DotFont df(dm);
-	df.setPattern(FONT_0703, FONT_0703_STATE);
+	df.setPattern(VFONT_7X3, VFONT_7X3_STATE);
 	df.setVertical(false);
 
-	df.setPattern(FONT_0705, FONT_0705_STATE);
+	df.setPattern(VFONT_7X5, VFONT_7X5_STATE);
 	for (byte i = 0; i < 10; i++)
 	{
 		DotString ds(df, 32, true);
@@ -29,7 +28,7 @@ void setup()
 		ds.postAt(i * 6, 0);
 	}
 
-	df.setPattern(FONT_0503, FONT_0503_STATE);
+	df.setPattern(VFONT_5X3, VFONT_5X3_STATE);
 	for (byte i = 0; i < 10; i++)
 	{
 		DotString ds(df, 32, true);
@@ -37,7 +36,7 @@ void setup()
 		ds.postAt(i * 6, 8);
 	}
 
-	df.setPattern(FONT_0704, FONT_0704_STATE);
+	df.setPattern(VFONT_7X4, VFONT_7X4_STATE);
 	df.setVertical();
 	DotString hds(df, 32, true);
 	hds.printf("%s", "Lcd12864 driven by dot-matrix");

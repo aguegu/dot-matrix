@@ -13,27 +13,24 @@
  source host: https://github.com/aguegu/dot-matrix
  */
 
-#ifndef DRV_ST7920_DM_H_
-#define DRV_ST7920_DM_H_
+#ifndef DRV_DM_ST7920_H_
+#define DRV_DM_ST7920_H_
 
 #include "Arduino.h"
 #include "drv_st7920.h"
 #include "dot-matrix.h"
 
-class DrvSt7920Dm: public DrvSt7920
+class DrvDmSt7920: public DrvSt7920
 {
 
 public:
-
-	DrvSt7920Dm(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7);
-	virtual ~DrvSt7920Dm();
+	DrvDmSt7920(uint8_t pin_rs, uint8_t pin_en, uint8_t pin_d4, uint8_t pin_d5, uint8_t pin_d6, uint8_t pin_d7);
+	virtual ~DrvDmSt7920();
 	void putDM();
 	DotMatrix & getDotMatrix();
 
 private:
-
 	DotMatrix _dm;
-
 };
 
 #endif /* DRV_ST7920_DM_H_ */
