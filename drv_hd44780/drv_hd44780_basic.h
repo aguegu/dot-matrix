@@ -49,19 +49,14 @@ protected:
 	byte _cache_length;
 	char * _cache;
 
-	virtual void setDT(byte c, bool b) const = 0;
-	virtual void pulseEn(void) const = 0;
-	virtual void setData(byte c) const = 0;
+	virtual void initHardware() const = 0;
 
-	virtual void writeCmd(byte) const = 0;
-	virtual void writeData(byte) const = 0;
+	virtual void transmit(bool isData, byte val) const = 0;
 
-private:
-
-	void initHardware() const;
 	void configureInput(bool ac = true, bool screen_move = false) const;
 	void configureFunction(bool interface8 = false, bool doubleline = true,
 			bool font5x10 = false) const;
+
 };
 
 #endif /* DRV_HD44780_BASIC_H_ */

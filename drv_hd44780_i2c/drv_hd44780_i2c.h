@@ -21,6 +21,7 @@
 #define DRV_HD44780_I2C_H_
 
 #include "Arduino.h"
+#include "drv_hd44780_basic.h"
 #include "Twi.h"
 // The twi library is my substitute of the Wire library,
 // host on https://github.com/aguegu/Arduino/tree/master/libraries/Twi
@@ -30,32 +31,11 @@
 #define PIN_EN	2
 #define PIN_BL	3	// backlight, background LED
 
-class DrvHd44780I2c
+class DrvHd44780I2c: public DrvHd44780Basic
 {
 public:
 	DrvHd44780I2c(byte address, byte row_count = 2, byte col_count = 16);
 	virtual ~DrvHd44780I2c();
-
-	void init();
-	void clear() const;
-	void rst() const;
-
-	void setCursor(byte address) const;
-	void moveCursor(bool right) const;
-	void moveScreen(bool right) const;
-
-	void configureDisplay(bool display_on = true, bool cursor = true,
-			bool blink = true) const;
-	void setCGRam(byte *pFont, byte length) const;
-
-	void putString(byte address, char *p, byte length) const;
-	void putChar(byte address, char c) const;
-	void putCache() const;
-
-	void setCache(byte value = 0x00);
-	void setCache(byte index, byte value);
-	void printf(const char *__fmt, ...);
-	void printf(byte index, const char *__fmt, ...);
 
 	void setBackLight(bool bl);
 
@@ -66,17 +46,6 @@ private:
 
 	void initHardware() const;
 	void transmit(bool isData, byte val) const;
-
-	void configureInput(bool ac = true, bool screen_move = false) const;
-	void configureFunction(bool interface8 = false, bool doubleline = true,
-			bool font5x10 = false) const;
-
-protected:
-
-	const byte _row_count;
-	const byte _col_count;
-	byte _cache_length;
-	char * _cache;
 };
 
 #endif /* DRV_HD44780_I2C_H_ */

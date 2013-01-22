@@ -41,6 +41,7 @@ DrvHd44780::~DrvHd44780()
 
 }
 
+/////////////////////////////////////////////////
 
 void DrvHd44780::setDT(byte c, bool b) const
 {
@@ -50,7 +51,9 @@ void DrvHd44780::setDT(byte c, bool b) const
 	for (byte i = 0; i < 4; i++)
 		pinWrite(_pin_dt[i], bit_is_set(c, i));
 
-	this->pulseEn();
+	pinSet(_pin_en);
+	pinClear(_pin_en);
+	delayMicroseconds(0x20);
 }
 
 void DrvHd44780::setData(byte c) const
@@ -59,21 +62,29 @@ void DrvHd44780::setData(byte c) const
 	this->setDT(c, false);
 }
 
-void DrvHd44780::pulseEn(void) const
+void DrvHd44780::transmit(bool isData, byte val) const
 {
-	pinSet(_pin_en);
-	pinClear(_pin_en);
-	delayMicroseconds(100);
+	pinWrite(_pin_rs, isData);
+	this->setData(val);
 }
 
-void DrvHd44780::writeCmd(byte command) const
+void DrvHd44780::initHardware() const
 {
-	pinClear(_pin_rs);
-	this->setData(command);
-}
+	delayMicroseconds(40000);
 
-void DrvHd44780::writeData(byte data) const
-{
-	pinSet(_pin_rs);
-	this->setData(data);
+	this->setDT(0x30, true);
+	delayMicroseconds(4500);
+
+	this->setDT(0x30, true);
+	delayMicroseconds(150);
+
+	this->setDT(0x30, true);
+	this->setDT(0x20, true);
+
+	this->configureFunction();
+	this->configureDisplay(false, false, false);
+
+	this->clear();
+	this->configureInput();
+	this->rst();
 }

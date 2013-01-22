@@ -8,15 +8,16 @@
 #include "drv_hd44780_basic.h"
 
 const uint8_t PROGMEM HD44780_BAR[] =
-{ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // 00000000
-		0x1f, 0x1f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // 11000000
-		0x00, 0x00, 0x00, 0x1f, 0x1f, 0x00, 0x00, 0x00, // 00011000
-		0x1f, 0x1f, 0x00, 0x1f, 0x1f, 0x00, 0x00, 0x00, // 11011000
-		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1f, 0x1f, // 00000011
-		0x1f, 0x1f, 0x00, 0x00, 0x00, 0x00, 0x1f, 0x1f, // 11000011
-		0x00, 0x00, 0x00, 0x1f, 0x1f, 0x00, 0x1f, 0x1f, // 00011011
-		0x1f, 0x1f, 0x00, 0x1f, 0x1f, 0x00, 0x1f, 0x1f, // 11011011
-		};
+{
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // 00000000
+	0x1f, 0x1f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // 11000000
+	0x00, 0x00, 0x00, 0x1f, 0x1f, 0x00, 0x00, 0x00, // 00011000
+	0x1f, 0x1f, 0x00, 0x1f, 0x1f, 0x00, 0x00, 0x00, // 11011000
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1f, 0x1f, // 00000011
+	0x1f, 0x1f, 0x00, 0x00, 0x00, 0x00, 0x1f, 0x1f, // 11000011
+	0x00, 0x00, 0x00, 0x1f, 0x1f, 0x00, 0x1f, 0x1f, // 00011011
+	0x1f, 0x1f, 0x00, 0x1f, 0x1f, 0x00, 0x1f, 0x1f, // 11011011
+};
 
 const uint8_t PROGMEM HD44780_ROW_ADDRESS_16[] =
 { 0x00, 0x40, 0x10, 0x50 };
@@ -25,7 +26,6 @@ const uint8_t PROGMEM HD44780_ROW_ADDRESS_20[] =
 
 DrvHd44780Basic::DrvHd44780Basic(byte row_count, byte col_count) :
 		_row_count(row_count), _col_count(col_count)
-
 {
 	_cache_length = _row_count * _col_count + 1;
 	_cache = (char *) malloc(sizeof(char) * _cache_length);
@@ -58,7 +58,7 @@ void DrvHd44780Basic::putString(byte address, char *p, byte length) const
 
 	while (length--)
 	{
-		writeData(*pp++);
+		transmit(true, *pp++);
 	}
 }
 
@@ -108,13 +108,13 @@ void DrvHd44780Basic::printf(const char *__fmt, ...)
 
 void DrvHd44780Basic::clear() const // 0x01
 {
-	writeCmd(0x01);
+	transmit(false, 0x01);
 	delayMicroseconds(2000);
 }
 
 void DrvHd44780Basic::rst() const // 0x02
 {
-	writeCmd(0x02);
+	transmit(false, 0x02);
 	delayMicroseconds(2000);
 }
 
@@ -127,7 +127,7 @@ void DrvHd44780Basic::configureInput(bool ac, bool screen_move) const // 0x04
 	if (screen_move)
 		cmd |= 0x01;
 
-	writeCmd(cmd);
+	transmit(false, cmd);
 }
 
 void DrvHd44780Basic::configureDisplay(bool display_on, bool cursor,
@@ -140,7 +140,8 @@ void DrvHd44780Basic::configureDisplay(bool display_on, bool cursor,
 		cmd |= 0x02;
 	if (blink)
 		cmd |= 0x01;
-	writeCmd(cmd);
+
+	transmit(false, cmd);
 }
 
 void DrvHd44780Basic::moveCursor(bool right) const // 0x10
@@ -148,7 +149,7 @@ void DrvHd44780Basic::moveCursor(bool right) const // 0x10
 	byte cmd = 0x10;
 	if (right)
 		cmd |= 0x04;
-	writeCmd(cmd);
+	transmit(false, cmd);
 }
 
 void DrvHd44780Basic::moveScreen(bool right) const // 0x11
@@ -156,7 +157,7 @@ void DrvHd44780Basic::moveScreen(bool right) const // 0x11
 	byte cmd = 0x11;
 	if (right)
 		cmd |= 0x04;
-	writeCmd(cmd);
+	transmit(false, cmd);
 }
 
 void DrvHd44780Basic::configureFunction(bool interface8, bool doubleline,
@@ -169,42 +170,21 @@ void DrvHd44780Basic::configureFunction(bool interface8, bool doubleline,
 		cmd |= 0x08;
 	if (font5x10)
 		cmd |= 0x04;
-	writeCmd(cmd);
+	transmit(false, cmd);
 }
 
 void DrvHd44780Basic::setCGRam(byte *pFont, byte length) const
 {
 	this->configureInput(true, false);
-	writeCmd(0x40);
+	transmit(false, 0x40);
 
 	for (byte i = 0; i < length; i++)
 	{
-		writeData(pFont[i]);
+		transmit(true, pFont[i]);
 	}
 }
 
 void DrvHd44780Basic::setCursor(byte address) const // 0x80
 {
-	writeCmd(address | 0x80);
-}
-
-void DrvHd44780Basic::initHardware() const
-{
-	delayMicroseconds(40000);
-
-	this->setDT(0x30, true);
-	delayMicroseconds(4500);
-
-	this->setDT(0x30, true);
-	delayMicroseconds(150);
-
-	this->setDT(0x30, true);
-	this->setDT(0x20, true);
-
-	this->configureFunction();
-	this->configureDisplay(false, false, false);
-
-	this->clear();
-	this->configureInput();
-	this->rst();
+	transmit(false, address | 0x80);
 }

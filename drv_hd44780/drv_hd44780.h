@@ -35,12 +35,11 @@ private:
 	uint8_t _pin_dt[4];
 
 	void setDT(byte c, bool b) const;
-	void pulseEn(void) const;
 	void setData(byte c) const;
 
-	void writeCmd(byte) const;
-	void writeData(byte) const;
+	void transmit(bool isData, byte val) const;
 
+	void initHardware() const;
 };
 
 #endif /* DRV_HD44780_H_ */

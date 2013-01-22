@@ -1,5 +1,3 @@
-#include "DotMatrixTest.h"
-
 #include "drv_hd44780_i2c.h"
 
 DrvHd44780I2c lcd(0x20 + 7);
