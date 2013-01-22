@@ -40,8 +40,7 @@ void serialEvent()
 		}
 		else
 		{
-			dm.setByte(index - 1, data);
-			index = index + 1;
+			dm.setByte(index++ - 1, data);
 		}
 	}
 }

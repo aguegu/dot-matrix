@@ -1,22 +1,22 @@
 /*
- * drv_ld1608.h
+ * drvdm_ld1608.h
  *
  *  Created on: 2012-8-31
  *      Author: agu
  */
 
-#ifndef DRV_LD1608_H_
-#define DRV_LD1608_H_
+#ifndef DRV_DM_LD1608_H_
+#define DRV_DM_LD1608_H_
 
 #include "Arduino.h"
 #include "drv_74hc595_spi.h"
 #include "dot-matrix.h"
 
-class DrvLd1608
+class DrvDmLd1608
 {
 public:
-	DrvLd1608();
-	virtual ~DrvLd1608();
+	DrvDmLd1608();
+	virtual ~DrvDmLd1608();
 	void display(byte times = 1);
 	void setScanSpan(uint16_t scan_span = 0x800);
 	DotMatrix & getDotMatrix();
@@ -26,4 +26,4 @@ private:
 	uint16_t _scan_span;
 };
 
-#endif /* DRV_LD1608_H_ */
+#endif /* DRV_DM_LD1608_H_ */

@@ -4,9 +4,9 @@
  *  Created on: 2012-7-1
  *      Author: Agu
  */
-#include "hfont.h"
+#include "hpattern.h"
 
-const uint8_t PROGMEM PATTERN_CHAR[]  =
+const uint8_t PROGMEM H_PATTERN[]  =
 {
 		// 0x31968, 0xB05, 0xCE, 0xA2, ΢
 

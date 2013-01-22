@@ -1,18 +1,17 @@
-#include "DotMatrixTest.h"
-#include "DotMatrix.h"
-#include "DotFont.h"
-#include "DotString.h"
-#include "Driver_PCD8544.h"
+#include "dot-matrix.h"
+#include "dot-font.h"
+#include "dot-string.h"
+#include "drvdm_pcd8544.h"
 
-#include "Font0703.h"
+#include "vfont_7x3.h"
 
-Driver_PCD8544 lcd(A5, A4, A3, A2, A1);
+DrvDmPcd8544 lcd(7, 6, 5, 4, 3);
 DotMatrix dm = lcd.getDM();
 
 void setup()
 {
-	pinMode(A0, OUTPUT);
-	digitalWrite(A0, HIGH);
+	pinMode(2, OUTPUT);
+	digitalWrite(2, HIGH);	// background led
 
 	lcd.init();
 
@@ -21,7 +20,7 @@ void setup()
 
 	DotFont df(dm);
 
-	df.setPattern(FONT_0703, FONT_0703_STATE);
+	df.setPattern(VFONT_7X3, VFONT_7X3_STATE);
 	DotString ds(df, 32, true);
 
 	dm.setDot(0,0);
@@ -53,3 +52,4 @@ void loop()
 	dm.move(true);
 	delay(200);
 }
+

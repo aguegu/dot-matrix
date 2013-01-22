@@ -1,5 +1,5 @@
 /*
- *	drv_pcd8544_dm.cpp
+ *	drvdm_pcd8544.cpp
  *	DrvPcd8544Dm Class for dot-matrix printing on liquid crystal display driven by PCD8544, namely Nokia 8544
  *	Created on: 2012-05-30
  *
@@ -13,9 +13,9 @@
  *	source host: https://github.com/aguegu/dot-matrix
  */
 
-#include "drv_pcd8544_dm.h"
+#include "drvdm_pcd8544.h"
 
-DrvPcd8544Dm::DrvPcd8544Dm(uint8_t pin_sce, uint8_t pin_rst, uint8_t pin_dc,
+DrvDmPcd8544::DrvDmPcd8544(uint8_t pin_sce, uint8_t pin_rst, uint8_t pin_dc,
 		uint8_t pin_din, uint8_t pin_sclk) :
 		DrvPcd8544(pin_sce, pin_rst, pin_dc, pin_din, pin_sclk), _dm(
 				48, 84)
@@ -23,12 +23,12 @@ DrvPcd8544Dm::DrvPcd8544Dm(uint8_t pin_sce, uint8_t pin_rst, uint8_t pin_dc,
 
 }
 
-DrvPcd8544Dm::~DrvPcd8544Dm()
+DrvDmPcd8544::~DrvDmPcd8544()
 {
 
 }
 
-void DrvPcd8544Dm::putDM()
+void DrvDmPcd8544::putDM()
 {
 	byte *p = _dm.output();
 	this->setRamAddress(0, 0);
@@ -47,7 +47,7 @@ void DrvPcd8544Dm::putDM()
 	}
 }
 
-DotMatrix & DrvPcd8544Dm::getDM()
+DotMatrix & DrvDmPcd8544::getDM()
 {
 	return _dm;
 }

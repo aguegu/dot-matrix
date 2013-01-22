@@ -36,6 +36,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/font}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780_i2c}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_st7920}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_pcd8544}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_ld1608}&quot;"/>
 								</option>
 								<inputType id="it.baeyens.avreclipse.tool.assembler.input.237159600" superClass="it.baeyens.avreclipse.tool.assembler.input"/>
 							</tool>
@@ -65,6 +67,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/font}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780_i2c}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_st7920}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_pcd8544}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_ld1608}&quot;"/>
 								</option>
 								<option id="it.baeyens.avreclipse.compiler.option.def.1485111403" name="Define Syms (-D)" superClass="it.baeyens.avreclipse.compiler.option.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__IN_ECLIPSE__=1"/>
@@ -109,6 +113,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/font}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780_i2c}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_st7920}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_pcd8544}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_ld1608}&quot;"/>
 								</option>
 								<option id="it.baeyens.avreclipse.cppcompiler.option.def.479432623" name="Define Syms (-D)" superClass="it.baeyens.avreclipse.cppcompiler.option.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__IN_ECLIPSE__=1"/>
@@ -165,6 +171,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/font}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780_i2c}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_st7920}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_pcd8544}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_ld1608}&quot;"/>
 								</option>
 								<inputType id="it.baeyens.avreclipse.tool.assembler.input.1749867406" superClass="it.baeyens.avreclipse.tool.assembler.input"/>
 							</tool>
@@ -192,6 +200,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/font}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780_i2c}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_st7920}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_pcd8544}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_ld1608}&quot;"/>
 								</option>
 								<inputType id="it.baeyens.avreclipse.compiler.winavr.input.1747638757" name="C Source Files" superClass="it.baeyens.avreclipse.compiler.winavr.input"/>
 							</tool>
@@ -219,6 +229,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/font}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780_i2c}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_st7920}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_pcd8544}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_ld1608}&quot;"/>
 								</option>
 								<inputType id="it.baeyens.avreclipse.cppcompiler.input.1715211632" superClass="it.baeyens.avreclipse.cppcompiler.input"/>
 							</tool>
@@ -248,6 +260,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/font}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780_i2c}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_st7920}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_pcd8544}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_ld1608}&quot;"/>
 								</option>
 								<inputType id="it.baeyens.avreclipse.tool.assembler.input.1746302194" superClass="it.baeyens.avreclipse.tool.assembler.input"/>
 							</tool>
@@ -275,6 +289,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/font}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780_i2c}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_st7920}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_pcd8544}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_ld1608}&quot;"/>
 								</option>
 								<inputType id="it.baeyens.avreclipse.compiler.winavr.input.122788810" name="C Source Files" superClass="it.baeyens.avreclipse.compiler.winavr.input"/>
 							</tool>
@@ -302,6 +318,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/font}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780_i2c}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_st7920}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_pcd8544}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_ld1608}&quot;"/>
 								</option>
 								<inputType id="it.baeyens.avreclipse.cppcompiler.input.474010602" superClass="it.baeyens.avreclipse.cppcompiler.input"/>
 							</tool>
@@ -331,6 +349,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/font}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780_i2c}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_st7920}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_pcd8544}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_ld1608}&quot;"/>
 								</option>
 								<inputType id="it.baeyens.avreclipse.tool.assembler.input.1746515566" superClass="it.baeyens.avreclipse.tool.assembler.input"/>
 							</tool>
@@ -358,6 +378,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/font}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780_i2c}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_st7920}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_pcd8544}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_ld1608}&quot;"/>
 								</option>
 								<inputType id="it.baeyens.avreclipse.compiler.winavr.input.1465559903" name="C Source Files" superClass="it.baeyens.avreclipse.compiler.winavr.input"/>
 							</tool>
@@ -385,6 +407,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/font}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780_i2c}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_st7920}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_pcd8544}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_ld1608}&quot;"/>
 								</option>
 								<inputType id="it.baeyens.avreclipse.cppcompiler.input.1467557535" superClass="it.baeyens.avreclipse.cppcompiler.input"/>
 							</tool>

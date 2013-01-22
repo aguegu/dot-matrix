@@ -1,5 +1,3 @@
-#include "DotMatrixTest.h"
-
 #include "dot-matrix.h"
 #include "drvdm_ld1608.h"
 #include "dot-font.h"

@@ -19,7 +19,7 @@ public:
 	Drv74hc595Spi(SPIClass & spi, uint8_t pin_ST, uint8_t pin_OE);
 	virtual ~Drv74hc595Spi();
 
-	void setShiftSendMode(byte mode = LSBFIRST);
+	void setShiftSendMode(byte mode = MSBFIRST);
 	void shiftSend(byte *p, byte length) const;
 	void shiftSendRev(byte *p, byte length) const;
 

@@ -10,11 +10,11 @@
  *
  */
 
-#include "Driver_74HC595_SPI.h"
+#include "drv_74hc595_spi.h"
 
-Driver_74HC595_SPI chip(SPI, 8, 9);
+Drv74hc595Spi chip(SPI, 8, 9);
 
-#define SECTION_COUNT 4
+#define SECTION_COUNT 8
 #define LED_PER_SECTION 8
 #define BW_SPAN	0x1f
 
@@ -40,7 +40,19 @@ void display(byte* pBW, byte times = 1, byte length = led_count)
 			for (byte i = 0; i < length; i++)
 			{
 				if (bw <= pBW[i])
-					pCache[i >> 3] |= _BV(i&0x07);
+				{
+					//	pCache[i >> 3] |= _BV(i&0x07);
+					byte k = i >> 4;
+					byte j = i & 0x0f;
+					if (j < 8)
+					{
+						pCache[k << 1] |= _BV(7-j);
+					}
+					else if (j < 11)
+						pCache[(k << 1) + 1] |= _BV(10-j);
+					else
+						pCache[(k << 1) + 1] |= _BV(j-8);
+				}
 			}
 
 			chip.shiftSend(pCache, SECTION_COUNT);
