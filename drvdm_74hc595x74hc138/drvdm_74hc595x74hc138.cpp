@@ -1,5 +1,5 @@
 /*
-	Driver_595_138.cpp
+	drvdm_74hc595x74hc138.cpp
 	Driver_595_138 Class for dot-matrix printing on matrix driven by 74HC595 and 74HC138
 	Created on: 2012-01-15
 	Updated on: 2012-06-05
@@ -16,13 +16,14 @@
 
 #include "drvdm_74hc595x74hc138.h"
 
-DrvDm74hc595X74hc138::DrvDm74hc595X74hc138(DotMatrix & dm, uint8_t pin_C_IN,
-		uint8_t pin_C_OE, uint8_t pin_C_ST, uint8_t pin_C_SH, uint8_t pin_R_OE,
-		uint8_t pin_R_A2, uint8_t pin_R_A1, uint8_t pin_R_A0, uint16_t scan_span)
-		:_dm(dm), chip_col(pin_C_IN, pin_C_SH, pin_C_ST, pin_C_OE), chip_row(pin_R_A2, pin_R_A1, pin_R_A0, pin_R_OE)
+DrvDm74hc595X74hc138::DrvDm74hc595X74hc138(DotMatrix & dm, uint8_t pin_c_in,
+		uint8_t pin_c_oe, uint8_t pin_c_st, uint8_t pin_c_sh, uint8_t pin_r_oe,
+		uint8_t pin_r_a2, uint8_t pin_r_a1, uint8_t pin_r_a0, uint16_t scan_span)
+		:_dm(dm), chip_col(pin_c_in, pin_c_sh, pin_c_st, pin_c_oe), chip_row(pin_r_a2, pin_r_a1, pin_r_a0, pin_r_oe)
 {
 	this->setSize();
 	this->setSpeed(scan_span);
+	chip_col.setShiftMode();
 }
 
 DrvDm74hc595X74hc138::~DrvDm74hc595X74hc138()
@@ -32,8 +33,6 @@ DrvDm74hc595X74hc138::~DrvDm74hc595X74hc138()
 
 void DrvDm74hc595X74hc138::display(byte times)
 {
-	chip_col.setShiftMode();
-
 	while (times--)
 	{
 		byte *p = _dm.output();

@@ -7,26 +7,15 @@
 	Code license: Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)
 	http://creativecommons.org/licenses/by-nc-sa/3.0/
  */
- 
- /*
-	Created on: 2012-01-25
-	Updated on: 2012-06-03
-	Author: Weihong Guan
-	Blog: http://aguegu.net
-	E-mail: weihong.guan@gmail.com
-	Code license: Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)
-	http://creativecommons.org/licenses/by-nc-sa/3.0/
- */
 
-#include "DotMatrixTest.h"
-#include "Driver_595_138.h"
-#include "DotMatrix.h"
-#include "DotFont.h"
-#include "DotString.h"
-#include "Font0703.h"
+#include "drvdm_74hc595x74hc138.h"
+#include "dot-matrix.h"
+#include "dot-font.h"
+#include "dot-string.h"
+#include "vfont_7x3.h"
 
 DotMatrix dm(24, 7);
-Driver_595_138 dmd(dm, 10, 11, 13, 12, 7, 6, 5, 4);
+DrvDm74hc595X74hc138 dmd(dm, A0, A1, A2, A3, 7, 6, 5, 4);
 DotFont df(dm);
 DotString ds(df, dm.countCol(), true);
 
@@ -42,16 +31,14 @@ void setup()
 	digitalWrite(9, HIGH);
 
 	dm.clear(0x00);
-	dm.setDot(0,0);
 
-	df.setPattern(FONT_0703, FONT_0703_STATE);
-	ds.printf("Hi, world.");
+	df.setPattern(VFONT_7X3, VFONT_7X3_STATE);
+	ds.printf("Serial");
 	ds.postAt(0,0);
 
 	dmd.setSpeed(0x200);
 
 	Serial.begin(9600);
-
 }
 
 void loop()
@@ -59,10 +46,8 @@ void loop()
 	dmd.display(0x08);
 }
 
-/*
 void serialEvent()
 {
-
 	while (Serial.available())
 	{
 		if (index < dm.countCol())
@@ -83,6 +68,3 @@ void serialEvent()
 		}
 	}
 }
-
-*/
- 

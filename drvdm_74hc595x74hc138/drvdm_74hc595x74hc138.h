@@ -26,7 +26,9 @@ class DrvDm74hc595X74hc138
 {
 public:
 
-	DrvDm74hc595X74hc138(DotMatrix & dm, uint8_t pin_C_IN, uint8_t pin_C_OE, uint8_t pin_C_ST, uint8_t pin_C_SH, uint8_t pin_R_OE, uint8_t pin_R_A2, uint8_t pin_R_A1, uint8_t pin_R_A0, uint16_t speed = 0x400);
+	DrvDm74hc595X74hc138(DotMatrix & dm, uint8_t pin_c_in,
+			uint8_t pin_c_oe, uint8_t pin_c_st, uint8_t pin_c_sh, uint8_t pin_r_oe,
+			uint8_t pin_r_a2, uint8_t pin_r_a1, uint8_t pin_r_a0, uint16_t scan_span = 0x400);
 	virtual ~DrvDm74hc595X74hc138();
 	void display(byte times = 1);
 	void setSpeed(uint16_t scan_span = 0x400);

@@ -34,13 +34,14 @@ void setup()
 	dm.clear(0x00);
 
 	df.setPattern(VFONT_7X3, VFONT_7X3_STATE);
-	ds.printf("aGuegu");
+	ds.printf("Serial");
 	ds.postAt(0,0);
 
 	dmd.setSpeed(0x200);
 
 	Serial.begin(9600);
 
+	sbi(TIMSK0, TOIE2);
 }
 
 void loop()
@@ -50,7 +51,6 @@ void loop()
 
 void serialEvent()
 {
-
 	while (Serial.available())
 	{
 		if (index < dm.countCol())
