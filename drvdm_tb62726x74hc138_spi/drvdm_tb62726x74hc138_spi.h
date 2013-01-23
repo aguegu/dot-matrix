@@ -42,7 +42,6 @@ protected:
 	byte _byte_per_row;
 
 	void setCol(byte row) const;
-
 };
 
 #endif /* DRV_DM_TB62726_X_74HC138_SPI_H_ */

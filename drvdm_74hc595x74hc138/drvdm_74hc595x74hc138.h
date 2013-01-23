@@ -30,8 +30,7 @@ public:
 			uint8_t pin_c_oe, uint8_t pin_c_st, uint8_t pin_c_sh, uint8_t pin_r_oe,
 			uint8_t pin_r_a2, uint8_t pin_r_a1, uint8_t pin_r_a0, uint16_t scan_span = 0x400);
 	virtual ~DrvDm74hc595X74hc138();
-	void display(byte times = 1);
-	void setSpeed(uint16_t scan_span = 0x400);
+	void display();
 
 protected:
 
@@ -42,9 +41,6 @@ protected:
 
 	byte _row_count;
 	byte _bytes_per_row;
-	uint16_t _scan_span;
-
-	void setSize();
 };
 
 #endif /* DRV_DM_74HC595_X_74HC138_H_ */

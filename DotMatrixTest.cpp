@@ -1,6 +1,6 @@
 /*
 	Created on: 2012-01-25
-	Updated on: 2012-06-03
+
 	Author: Weihong Guan
 	Blog: http://aguegu.net
 	E-mail: weihong.guan@gmail.com
@@ -37,16 +37,18 @@ void setup()
 	ds.printf("Serial");
 	ds.postAt(0,0);
 
-	dmd.setSpeed(0x200);
-
 	Serial.begin(9600);
 
-	sbi(TIMSK0, TOIE2);
+	sbi(TIMSK2, TOIE2);
+
+	dbi(TCCR2B, CS22, bitRead(2, 2));
+	dbi(TCCR2B, CS21, bitRead(2, 1));
+	dbi(TCCR2B, CS20, bitRead(2, 0));
 }
 
 void loop()
 {
-	dmd.display(0x08);
+
 }
 
 void serialEvent()
@@ -71,3 +73,13 @@ void serialEvent()
 		}
 	}
 }
+
+ISR(TIMER2_OVF_vect)
+{
+	static byte t = 0;
+	t %= 4;
+	if (t++ == 0)
+		dmd.display();
+}
+
+
