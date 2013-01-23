@@ -30,14 +30,7 @@
 							<tool command="avr-gcc" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} -x c++ ${INPUTS}" errorParsers="org.eclipse.cdt.core.GASErrorParser" id="it.baeyens.avreclipse.tool.assembler.winavr.app.release.2056035817" name="AVR Assembler" superClass="it.baeyens.avreclipse.tool.assembler.winavr.app.release">
 								<option id="it.baeyens.avreclipse.assembler.option.debug.level.22469911" name="Generate Debugging Info" superClass="it.baeyens.avreclipse.assembler.option.debug.level" value="it.baeyens.avreclipse.assembler.option.debug.level.none" valueType="enumerated"/>
 								<option id="it.baeyens.avreclipse.asm.option.include.paths.1193182990" name="#include paths for preprocessor(-I)" superClass="it.baeyens.avreclipse.asm.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/ctl_3d8}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_hd44780}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/font}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780_i2c}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_st7920}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_pcd8544}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_ld1608}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_74hc595x74hc138}&quot;"/>
 								</option>
 								<inputType id="it.baeyens.avreclipse.tool.assembler.input.237159600" superClass="it.baeyens.avreclipse.tool.assembler.input"/>
 							</tool>
@@ -60,8 +53,6 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_st7920}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_pcd8544}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_tb62726x74hc138_spi}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_tb62726x74hc138}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/ctl_3d8}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_hd44780}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/font}&quot;"/>
@@ -69,6 +60,9 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_st7920}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_pcd8544}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_ld1608}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_tb62726x74hc138_spi}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_tb62726x74hc138}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_74hc595x74hc138}&quot;"/>
 								</option>
 								<option id="it.baeyens.avreclipse.compiler.option.def.1485111403" name="Define Syms (-D)" superClass="it.baeyens.avreclipse.compiler.option.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__IN_ECLIPSE__=1"/>
@@ -106,8 +100,6 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_st7920}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_pcd8544}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_tb62726x74hc138_spi}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_tb62726x74hc138}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/ctl_3d8}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_hd44780}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/font}&quot;"/>
@@ -115,6 +107,9 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_st7920}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_pcd8544}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_ld1608}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_tb62726x74hc138_spi}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_tb62726x74hc138}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_74hc595x74hc138}&quot;"/>
 								</option>
 								<option id="it.baeyens.avreclipse.cppcompiler.option.def.479432623" name="Define Syms (-D)" superClass="it.baeyens.avreclipse.cppcompiler.option.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__IN_ECLIPSE__=1"/>
@@ -155,96 +150,7 @@
 							<tool id="it.baeyens.avreclipse.tool.avrdude.app.release.165671477" name="AVRDude" superClass="it.baeyens.avreclipse.tool.avrdude.app.release"/>
 						</toolChain>
 					</folderInfo>
-					<folderInfo id="it.baeyens.avreclipse.configuration.app.release.980545052.1885393049" name="/" resourcePath="drv_tb62726x74hc138_spi">
-						<toolChain id="it.baeyens.avreclipse.toolchain.winavr.app.release.1877586132" name="AVR-GCC Toolchain" superClass="it.baeyens.avreclipse.toolchain.winavr.app.release" unusedChildren="">
-							<option id="it.baeyens.avreclipse.toolchain.options.toolchain.objcopy.flash.app.release.1046730981.2136187012" name="Generate HEX file for Flash memory" superClass="it.baeyens.avreclipse.toolchain.options.toolchain.objcopy.flash.app.release.1046730981"/>
-							<option id="it.baeyens.avreclipse.toolchain.options.toolchain.objcopy.eeprom.app.release.219589584.1066304358" name="Generate HEX file for EEPROM" superClass="it.baeyens.avreclipse.toolchain.options.toolchain.objcopy.eeprom.app.release.219589584"/>
-							<option id="it.baeyens.avreclipse.toolchain.options.toolchain.objdump.app.release.615307235.1532939553" name="Generate Extended Listing (Source + generated Assembler)" superClass="it.baeyens.avreclipse.toolchain.options.toolchain.objdump.app.release.615307235"/>
-							<option id="it.baeyens.avreclipse.toolchain.options.toolchain.size.app.release.1878891254.1980688468" name="Print Size" superClass="it.baeyens.avreclipse.toolchain.options.toolchain.size.app.release.1878891254"/>
-							<option id="it.baeyens.avreclipse.toolchain.options.toolchain.avrdude.app.release.1381992110.744547024" name="AVRDude" superClass="it.baeyens.avreclipse.toolchain.options.toolchain.avrdude.app.release.1381992110"/>
-							<targetPlatform id="it.baeyens.avreclipse.targetplatform.winavr.app.release" name="AVR Cross-Target" superClass="it.baeyens.avreclipse.targetplatform.winavr.app.release"/>
-							<tool id="it.baeyens.avreclipse.tool.assembler.winavr.app.release.1329691255" name="AVR Assembler" superClass="it.baeyens.avreclipse.tool.assembler.winavr.app.release.2056035817">
-								<option id="it.baeyens.avreclipse.asm.option.include.paths.1139378391" name="#include paths for preprocessor(-I)" superClass="it.baeyens.avreclipse.asm.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/ctl_3d8}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_hd44780}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/font}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780_i2c}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_st7920}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_pcd8544}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_ld1608}&quot;"/>
-								</option>
-								<inputType id="it.baeyens.avreclipse.tool.assembler.input.1749867406" superClass="it.baeyens.avreclipse.tool.assembler.input"/>
-							</tool>
-							<tool id="it.baeyens.avreclipse.tool.compiler.winavr.app.release.301005393" name="AVR Compiler" superClass="it.baeyens.avreclipse.tool.compiler.winavr.app.release.1677379678">
-								<option id="it.baeyens.avreclipse.compiler.option.incpath.1923262931" name="Include Paths (-I)" superClass="it.baeyens.avreclipse.compiler.option.incpath" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ARDUINOBOARDNAME}/${ARDUINO_CORE_FOLDER}}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ARDUINOBOARDNAME}/${ARDUINOBOARDVARIANT}}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/common}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/dot-matrix}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/SPI}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/Twi}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_tb62726_spi}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_74hc138}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_74hc595_spi}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_tb62726}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_74hc595}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_st7920}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_pcd8544}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_tb62726x74hc138_spi}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_tb62726x74hc138}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/ctl_3d8}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_hd44780}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/font}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780_i2c}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_st7920}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_pcd8544}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_ld1608}&quot;"/>
-								</option>
-								<inputType id="it.baeyens.avreclipse.compiler.winavr.input.1747638757" name="C Source Files" superClass="it.baeyens.avreclipse.compiler.winavr.input"/>
-							</tool>
-							<tool id="it.baeyens.avreclipse.tool.cppcompiler.app.release.1129717857" name="AVR C++ Compiler" superClass="it.baeyens.avreclipse.tool.cppcompiler.app.release.265767624">
-								<option id="it.baeyens.avreclipse.cppcompiler.option.incpath.972832379" name="Include Paths (-I)" superClass="it.baeyens.avreclipse.cppcompiler.option.incpath" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ARDUINOBOARDNAME}/${ARDUINO_CORE_FOLDER}}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ARDUINOBOARDNAME}/${ARDUINOBOARDVARIANT}}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/common}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/dot-matrix}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/SPI}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/Twi}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_tb62726_spi}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_74hc138}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_74hc595_spi}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_tb62726}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_74hc595}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_st7920}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_pcd8544}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_tb62726x74hc138_spi}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_tb62726x74hc138}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/ctl_3d8}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_hd44780}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/font}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780_i2c}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_st7920}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_pcd8544}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_ld1608}&quot;"/>
-								</option>
-								<inputType id="it.baeyens.avreclipse.cppcompiler.input.1715211632" superClass="it.baeyens.avreclipse.cppcompiler.input"/>
-							</tool>
-							<tool id="it.baeyens.avreclipse.tool.linker.winavr.app.release.1580003251" name="AVR C Linker" superClass="it.baeyens.avreclipse.tool.linker.winavr.app.release.1782124606"/>
-							<tool id="it.baeyens.avreclipse.tool.cpplinker.app.release.885555341" name="AVR C++ Linker" superClass="it.baeyens.avreclipse.tool.cpplinker.app.release.1612619751"/>
-							<tool id="it.baeyens.avreclipse.tool.archiver.winavr.base.1881562402" name="AVR Archiver" superClass="it.baeyens.avreclipse.tool.archiver.winavr.base.2145680251"/>
-							<tool id="it.baeyens.avreclipse.tool.objdump.winavr.app.release.835185848" name="AVR Create Extended Listing" superClass="it.baeyens.avreclipse.tool.objdump.winavr.app.release.382856739"/>
-							<tool id="it.baeyens.avreclipse.tool.objcopy.flash.winavr.app.release.1111658531" name="AVR Create Flash image" superClass="it.baeyens.avreclipse.tool.objcopy.flash.winavr.app.release.696142376"/>
-							<tool id="it.baeyens.avreclipse.tool.objcopy.eeprom.winavr.app.release.1904801046" name="AVR Create EEPROM image" superClass="it.baeyens.avreclipse.tool.objcopy.eeprom.winavr.app.release.1178986446"/>
-							<tool id="it.baeyens.avreclipse.tool.size.winavr.app.release.1827837148" name="Print Size" superClass="it.baeyens.avreclipse.tool.size.winavr.app.release.456436652"/>
-							<tool id="it.baeyens.avreclipse.tool.avrdude.app.release.1496395368" name="AVRDude" superClass="it.baeyens.avreclipse.tool.avrdude.app.release.165671477"/>
-						</toolChain>
-					</folderInfo>
-					<folderInfo id="it.baeyens.avreclipse.configuration.app.release.980545052.995269951" name="/" resourcePath="drvdm_tb62726x74hc138_spi">
+					<folderInfo id="it.baeyens.avreclipse.configuration.app.release.980545052.995269951" name="/" resourcePath="drvdm_3d8_spi">
 						<toolChain id="it.baeyens.avreclipse.toolchain.winavr.app.release.1191029759" name="AVR-GCC Toolchain" superClass="it.baeyens.avreclipse.toolchain.winavr.app.release" unusedChildren="">
 							<option id="it.baeyens.avreclipse.toolchain.options.toolchain.objcopy.flash.app.release.1046730981.1456915518" name="Generate HEX file for Flash memory" superClass="it.baeyens.avreclipse.toolchain.options.toolchain.objcopy.flash.app.release.1046730981"/>
 							<option id="it.baeyens.avreclipse.toolchain.options.toolchain.objcopy.eeprom.app.release.219589584.165056608" name="Generate HEX file for EEPROM" superClass="it.baeyens.avreclipse.toolchain.options.toolchain.objcopy.eeprom.app.release.219589584"/>
@@ -254,14 +160,7 @@
 							<targetPlatform id="it.baeyens.avreclipse.targetplatform.winavr.app.release" name="AVR Cross-Target" superClass="it.baeyens.avreclipse.targetplatform.winavr.app.release"/>
 							<tool id="it.baeyens.avreclipse.tool.assembler.winavr.app.release.48721029" name="AVR Assembler" superClass="it.baeyens.avreclipse.tool.assembler.winavr.app.release.2056035817">
 								<option id="it.baeyens.avreclipse.asm.option.include.paths.1577698388" name="#include paths for preprocessor(-I)" superClass="it.baeyens.avreclipse.asm.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/ctl_3d8}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_hd44780}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/font}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780_i2c}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_st7920}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_pcd8544}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_ld1608}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_74hc595x74hc138}&quot;"/>
 								</option>
 								<inputType id="it.baeyens.avreclipse.tool.assembler.input.1746302194" superClass="it.baeyens.avreclipse.tool.assembler.input"/>
 							</tool>
@@ -282,8 +181,6 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_st7920}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_pcd8544}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_tb62726x74hc138_spi}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_tb62726x74hc138}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/ctl_3d8}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_hd44780}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/font}&quot;"/>
@@ -291,6 +188,9 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_st7920}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_pcd8544}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_ld1608}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_tb62726x74hc138_spi}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_tb62726x74hc138}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_74hc595x74hc138}&quot;"/>
 								</option>
 								<inputType id="it.baeyens.avreclipse.compiler.winavr.input.122788810" name="C Source Files" superClass="it.baeyens.avreclipse.compiler.winavr.input"/>
 							</tool>
@@ -311,8 +211,6 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_st7920}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_pcd8544}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_tb62726x74hc138_spi}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_tb62726x74hc138}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/ctl_3d8}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_hd44780}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/font}&quot;"/>
@@ -320,6 +218,9 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_st7920}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_pcd8544}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_ld1608}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_tb62726x74hc138_spi}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_tb62726x74hc138}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_74hc595x74hc138}&quot;"/>
 								</option>
 								<inputType id="it.baeyens.avreclipse.cppcompiler.input.474010602" superClass="it.baeyens.avreclipse.cppcompiler.input"/>
 							</tool>
@@ -333,6 +234,90 @@
 							<tool id="it.baeyens.avreclipse.tool.avrdude.app.release.2117963998" name="AVRDude" superClass="it.baeyens.avreclipse.tool.avrdude.app.release.165671477"/>
 						</toolChain>
 					</folderInfo>
+					<folderInfo id="it.baeyens.avreclipse.configuration.app.release.980545052.1885393049" name="/" resourcePath="drvdm_tb62726x74hc138_spi">
+						<toolChain id="it.baeyens.avreclipse.toolchain.winavr.app.release.1877586132" name="AVR-GCC Toolchain" superClass="it.baeyens.avreclipse.toolchain.winavr.app.release" unusedChildren="">
+							<option id="it.baeyens.avreclipse.toolchain.options.toolchain.objcopy.flash.app.release.1046730981.2136187012" name="Generate HEX file for Flash memory" superClass="it.baeyens.avreclipse.toolchain.options.toolchain.objcopy.flash.app.release.1046730981"/>
+							<option id="it.baeyens.avreclipse.toolchain.options.toolchain.objcopy.eeprom.app.release.219589584.1066304358" name="Generate HEX file for EEPROM" superClass="it.baeyens.avreclipse.toolchain.options.toolchain.objcopy.eeprom.app.release.219589584"/>
+							<option id="it.baeyens.avreclipse.toolchain.options.toolchain.objdump.app.release.615307235.1532939553" name="Generate Extended Listing (Source + generated Assembler)" superClass="it.baeyens.avreclipse.toolchain.options.toolchain.objdump.app.release.615307235"/>
+							<option id="it.baeyens.avreclipse.toolchain.options.toolchain.size.app.release.1878891254.1980688468" name="Print Size" superClass="it.baeyens.avreclipse.toolchain.options.toolchain.size.app.release.1878891254"/>
+							<option id="it.baeyens.avreclipse.toolchain.options.toolchain.avrdude.app.release.1381992110.744547024" name="AVRDude" superClass="it.baeyens.avreclipse.toolchain.options.toolchain.avrdude.app.release.1381992110"/>
+							<targetPlatform id="it.baeyens.avreclipse.targetplatform.winavr.app.release" name="AVR Cross-Target" superClass="it.baeyens.avreclipse.targetplatform.winavr.app.release"/>
+							<tool id="it.baeyens.avreclipse.tool.assembler.winavr.app.release.1329691255" name="AVR Assembler" superClass="it.baeyens.avreclipse.tool.assembler.winavr.app.release.2056035817">
+								<option id="it.baeyens.avreclipse.asm.option.include.paths.1139378391" name="#include paths for preprocessor(-I)" superClass="it.baeyens.avreclipse.asm.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_74hc595x74hc138}&quot;"/>
+								</option>
+								<inputType id="it.baeyens.avreclipse.tool.assembler.input.1749867406" superClass="it.baeyens.avreclipse.tool.assembler.input"/>
+							</tool>
+							<tool id="it.baeyens.avreclipse.tool.compiler.winavr.app.release.301005393" name="AVR Compiler" superClass="it.baeyens.avreclipse.tool.compiler.winavr.app.release.1677379678">
+								<option id="it.baeyens.avreclipse.compiler.option.incpath.1923262931" name="Include Paths (-I)" superClass="it.baeyens.avreclipse.compiler.option.incpath" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ARDUINOBOARDNAME}/${ARDUINO_CORE_FOLDER}}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ARDUINOBOARDNAME}/${ARDUINOBOARDVARIANT}}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/dot-matrix}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/SPI}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/Twi}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_tb62726_spi}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_74hc138}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_74hc595_spi}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_tb62726}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_74hc595}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_st7920}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_pcd8544}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/ctl_3d8}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_hd44780}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/font}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780_i2c}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_st7920}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_pcd8544}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_ld1608}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_tb62726x74hc138_spi}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_tb62726x74hc138}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_74hc595x74hc138}&quot;"/>
+								</option>
+								<inputType id="it.baeyens.avreclipse.compiler.winavr.input.1747638757" name="C Source Files" superClass="it.baeyens.avreclipse.compiler.winavr.input"/>
+							</tool>
+							<tool id="it.baeyens.avreclipse.tool.cppcompiler.app.release.1129717857" name="AVR C++ Compiler" superClass="it.baeyens.avreclipse.tool.cppcompiler.app.release.265767624">
+								<option id="it.baeyens.avreclipse.cppcompiler.option.incpath.972832379" name="Include Paths (-I)" superClass="it.baeyens.avreclipse.cppcompiler.option.incpath" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ARDUINOBOARDNAME}/${ARDUINO_CORE_FOLDER}}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ARDUINOBOARDNAME}/${ARDUINOBOARDVARIANT}}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/dot-matrix}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/SPI}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/Twi}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_tb62726_spi}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_74hc138}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_74hc595_spi}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_tb62726}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_74hc595}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_st7920}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_pcd8544}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/ctl_3d8}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_hd44780}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/font}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780_i2c}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_st7920}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_pcd8544}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_ld1608}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_tb62726x74hc138_spi}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_tb62726x74hc138}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_74hc595x74hc138}&quot;"/>
+								</option>
+								<inputType id="it.baeyens.avreclipse.cppcompiler.input.1715211632" superClass="it.baeyens.avreclipse.cppcompiler.input"/>
+							</tool>
+							<tool id="it.baeyens.avreclipse.tool.linker.winavr.app.release.1580003251" name="AVR C Linker" superClass="it.baeyens.avreclipse.tool.linker.winavr.app.release.1782124606"/>
+							<tool id="it.baeyens.avreclipse.tool.cpplinker.app.release.885555341" name="AVR C++ Linker" superClass="it.baeyens.avreclipse.tool.cpplinker.app.release.1612619751"/>
+							<tool id="it.baeyens.avreclipse.tool.archiver.winavr.base.1881562402" name="AVR Archiver" superClass="it.baeyens.avreclipse.tool.archiver.winavr.base.2145680251"/>
+							<tool id="it.baeyens.avreclipse.tool.objdump.winavr.app.release.835185848" name="AVR Create Extended Listing" superClass="it.baeyens.avreclipse.tool.objdump.winavr.app.release.382856739"/>
+							<tool id="it.baeyens.avreclipse.tool.objcopy.flash.winavr.app.release.1111658531" name="AVR Create Flash image" superClass="it.baeyens.avreclipse.tool.objcopy.flash.winavr.app.release.696142376"/>
+							<tool id="it.baeyens.avreclipse.tool.objcopy.eeprom.winavr.app.release.1904801046" name="AVR Create EEPROM image" superClass="it.baeyens.avreclipse.tool.objcopy.eeprom.winavr.app.release.1178986446"/>
+							<tool id="it.baeyens.avreclipse.tool.size.winavr.app.release.1827837148" name="Print Size" superClass="it.baeyens.avreclipse.tool.size.winavr.app.release.456436652"/>
+							<tool id="it.baeyens.avreclipse.tool.avrdude.app.release.1496395368" name="AVRDude" superClass="it.baeyens.avreclipse.tool.avrdude.app.release.165671477"/>
+						</toolChain>
+					</folderInfo>
 					<folderInfo id="it.baeyens.avreclipse.configuration.app.release.980545052.110540273" name="/" resourcePath="drvdm_hd44780">
 						<toolChain id="it.baeyens.avreclipse.toolchain.winavr.app.release.1382718071" name="AVR-GCC Toolchain" superClass="it.baeyens.avreclipse.toolchain.winavr.app.release" unusedChildren="">
 							<option id="it.baeyens.avreclipse.toolchain.options.toolchain.objcopy.flash.app.release.1046730981.1139175450" name="Generate HEX file for Flash memory" superClass="it.baeyens.avreclipse.toolchain.options.toolchain.objcopy.flash.app.release.1046730981"/>
@@ -343,14 +328,7 @@
 							<targetPlatform id="it.baeyens.avreclipse.targetplatform.winavr.app.release" name="AVR Cross-Target" superClass="it.baeyens.avreclipse.targetplatform.winavr.app.release"/>
 							<tool id="it.baeyens.avreclipse.tool.assembler.winavr.app.release.1401814167" name="AVR Assembler" superClass="it.baeyens.avreclipse.tool.assembler.winavr.app.release.2056035817">
 								<option id="it.baeyens.avreclipse.asm.option.include.paths.1409839916" name="#include paths for preprocessor(-I)" superClass="it.baeyens.avreclipse.asm.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/ctl_3d8}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_hd44780}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/font}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780_i2c}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_st7920}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_pcd8544}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_ld1608}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_74hc595x74hc138}&quot;"/>
 								</option>
 								<inputType id="it.baeyens.avreclipse.tool.assembler.input.1746515566" superClass="it.baeyens.avreclipse.tool.assembler.input"/>
 							</tool>
@@ -371,8 +349,6 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_st7920}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_pcd8544}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_tb62726x74hc138_spi}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_tb62726x74hc138}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/ctl_3d8}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_hd44780}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/font}&quot;"/>
@@ -380,6 +356,9 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_st7920}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_pcd8544}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_ld1608}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_tb62726x74hc138_spi}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_tb62726x74hc138}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_74hc595x74hc138}&quot;"/>
 								</option>
 								<inputType id="it.baeyens.avreclipse.compiler.winavr.input.1465559903" name="C Source Files" superClass="it.baeyens.avreclipse.compiler.winavr.input"/>
 							</tool>
@@ -400,8 +379,6 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_st7920}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_pcd8544}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_hd44780}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_tb62726x74hc138_spi}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drv_tb62726x74hc138}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/ctl_3d8}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_hd44780}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/font}&quot;"/>
@@ -409,6 +386,9 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_st7920}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_pcd8544}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_ld1608}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_tb62726x74hc138_spi}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_tb62726x74hc138}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/dot-matrix/drvdm_74hc595x74hc138}&quot;"/>
 								</option>
 								<inputType id="it.baeyens.avreclipse.cppcompiler.input.1467557535" superClass="it.baeyens.avreclipse.cppcompiler.input"/>
 							</tool>

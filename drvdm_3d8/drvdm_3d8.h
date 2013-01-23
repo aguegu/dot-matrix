@@ -17,16 +17,16 @@
 #define DRV_DM_3D8_H_
 
 #include "dot-matrix.h"
-#include "drv_tb62726x74hc138.h"
+#include "drvdm_tb62726x74hc138.h"
 
-class DrvDm3D8: public DrvTb62726X74hc138
+class DrvDm3d8: public DrvDmTb62726X74hc138
 {
 public:
-	DrvDm3D8(DotMatrix & dm, uint8_t pin_din, uint8_t pin_clk,
+	DrvDm3d8(DotMatrix & dm, uint8_t pin_din, uint8_t pin_clk,
 			uint8_t pin_latch, uint8_t pin_en, uint8_t pin_rext, uint8_t pin_a2,
 			uint8_t pin_a1, uint8_t pin_a0, uint16_t scan_speed = 0x600);
 
-	virtual ~DrvDm3D8();
+	virtual ~DrvDm3d8();
 
 	enum ScanMode
 	{
@@ -39,7 +39,7 @@ public:
 
 private:
 
-	void (DrvDm3D8::*_setCol)(byte row) const;
+	void (DrvDm3d8::*_setCol)(byte row) const;
 
 	void setColxyz(byte row) const;
 	void setColzxy(byte row) const;

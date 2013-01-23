@@ -1,12 +1,4 @@
-/*
-	Created on: 2012-01-25
-	Updated on: 2012-06-03
-	Author: Weihong Guan
-	Blog: http://aguegu.net
-	E-mail: weihong.guan@gmail.com
-	Code license: Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)
-	http://creativecommons.org/licenses/by-nc-sa/3.0/
- */
+
 
 #include "DotMatrixTest.h"
 #include "Driver_595_138.h"
@@ -15,8 +7,9 @@
 #include "DotString.h"
 #include "Font0703.h"
 
-DotMatrix dm(24, 7);
-Driver_595_138 dmd(dm, 10, 11, 13, 12, 7, 6, 5, 4);
+DotMatrix dm(32, 8);
+//Driver_595_138 dmd(dm, 10, 11, 13, 12, 7, 6, 5, 4);
+Driver_595_138 dmd(dm, 8, 9, 11, 12, 7, 6, 5, 4);
 DotFont df(dm);
 DotString ds(df, dm.countCol(), true);
 
@@ -26,10 +19,10 @@ byte index = 0;
 void setup()
 {
 	pinMode(8, OUTPUT);
-	digitalWrite(8, LOW);
+	digitalWrite(8, HIGH);
 
 	pinMode(9, OUTPUT);
-	digitalWrite(9, HIGH);
+	digitalWrite(9, LOW);
 
 	dm.clear(0x00);
 	dm.setDot(0,0);
@@ -49,7 +42,6 @@ void loop()
 	dmd.display(0x08);
 }
 
-/*
 void serialEvent()
 {
 
@@ -73,5 +65,3 @@ void serialEvent()
 		}
 	}
 }
-
-*/

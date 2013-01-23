@@ -14,20 +14,20 @@
 	source host: https://github.com/aguegu/dot-matrix
  */
 
-#ifndef DRIVER_74HC595_X_74HC138_H_
-#define DRIVER_74HC595_X_74HC138_H_
+#ifndef DRV_DM_74HC595_X_74HC138_H_
+#define DRV_DM_74HC595_X_74HC138_H_
 
 #include "Arduino.h"
 #include "drv_74hc138.h"
 #include "drv_74hc595.h"
 #include "dot-matrix.h"
 
-class Drv74hc595X74hc138
+class DrvDm74hc595X74hc138
 {
 public:
 
-	Drv74hc595X74hc138(DotMatrix & dm, uint8_t pin_C_IN, uint8_t pin_C_OE, uint8_t pin_C_ST, uint8_t pin_C_SH, uint8_t pin_R_OE, uint8_t pin_R_A2, uint8_t pin_R_A1, uint8_t pin_R_A0, uint16_t speed = 0x400);
-	virtual ~Drv74hc595X74hc138();
+	DrvDm74hc595X74hc138(DotMatrix & dm, uint8_t pin_C_IN, uint8_t pin_C_OE, uint8_t pin_C_ST, uint8_t pin_C_SH, uint8_t pin_R_OE, uint8_t pin_R_A2, uint8_t pin_R_A1, uint8_t pin_R_A0, uint16_t speed = 0x400);
+	virtual ~DrvDm74hc595X74hc138();
 	void display(byte times = 1);
 	void setSpeed(uint16_t scan_span = 0x400);
 
@@ -45,4 +45,4 @@ protected:
 	void setSize();
 };
 
-#endif /* DRIVER_74HC595_X_74HC138_H_ */
+#endif /* DRV_DM_74HC595_X_74HC138_H_ */

@@ -13,22 +13,22 @@
  *	source host: https://github.com/aguegu/dot-matrix
  */
 
-#ifndef DRV_TB62726_X_74HC138_H_
-#define DRV_TB62726_X_74HC138_H_
+#ifndef DRV_DM_TB62726_X_74HC138_H_
+#define DRV_DM_TB62726_X_74HC138_H_
 
 #include "dot-matrix.h"
 #include "drv_tb62726.h"
 #include "drv_74hc138.h"
 
-class DrvTb62726X74hc138
+class DrvDmTb62726X74hc138
 {
 public:
-	DrvTb62726X74hc138(DotMatrix & dm, uint8_t pin_din, uint8_t pin_clk,
+	DrvDmTb62726X74hc138(DotMatrix & dm, uint8_t pin_din, uint8_t pin_clk,
 			uint8_t pin_latch, uint8_t pin_en, uint8_t pin_rext, uint8_t pin_a2,
 			uint8_t pin_a1, uint8_t pin_a0, uint8_t pin_oe,
 			uint16_t scan_speed = 0x600);
 
-	virtual ~DrvTb62726X74hc138();
+	virtual ~DrvDmTb62726X74hc138();
 
 	void setSpeed(uint16_t scan_span);
 	void setSize();
@@ -51,4 +51,4 @@ protected:
 	void setCol(byte row) const;
 };
 
-#endif /* DRV_TB62726_X_74HC138_H_ */
+#endif /* DRV_DM_TB62726_X_74HC138_H_ */

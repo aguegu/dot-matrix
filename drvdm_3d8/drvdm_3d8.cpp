@@ -15,38 +15,37 @@
 
 #include "drvdm_3d8.h"
 
-DrvDm3D8::DrvDm3D8(DotMatrix & dm, uint8_t pin_din, uint8_t pin_clk,
+DrvDm3d8::DrvDm3d8(DotMatrix & dm, uint8_t pin_din, uint8_t pin_clk,
 		uint8_t pin_latch, uint8_t pin_en, uint8_t pin_rext, uint8_t pin_a2,
 		uint8_t pin_a1, uint8_t pin_a0, uint16_t scan_speed) :
-		DrvTb62726X74hc138(dm, pin_din, pin_clk, pin_latch, pin_en, pin_rext,
+		DrvDmTb62726X74hc138(dm, pin_din, pin_clk, pin_latch, pin_en, pin_rext,
 				pin_a2, pin_a1, pin_a0, 255, scan_speed)
-
 {
 	this->setMode();
 }
 
-DrvDm3D8::~DrvDm3D8()
+DrvDm3d8::~DrvDm3d8()
 {
 
 }
 
-void DrvDm3D8::setMode(ScanMode mode)
+void DrvDm3d8::setMode(ScanMode mode)
 {
 	switch (mode)
 	{
 	case ZXY:
-		_setCol = &DrvDm3D8::setColzxy;
+		_setCol = &DrvDm3d8::setColzxy;
 		break;
 	case YZX:
-		_setCol = &DrvDm3D8::setColyzx;
+		_setCol = &DrvDm3d8::setColyzx;
 		break;
 	default:
-		_setCol = &DrvDm3D8::setColxyz;
+		_setCol = &DrvDm3d8::setColxyz;
 		break;
 	}
 }
 
-void DrvDm3D8::setColxyz(byte row) const
+void DrvDm3d8::setColxyz(byte row) const
 {
 	byte * p = _dm.output();
 	p += _byte_per_row * row;
@@ -54,7 +53,7 @@ void DrvDm3D8::setColxyz(byte row) const
 	chip_col.shiftSendCoupleFromLSB(p, _byte_per_row);
 }
 
-void DrvDm3D8::display(byte times) const
+void DrvDm3d8::display(byte times) const
 {
 	while (times--)
 	{
@@ -72,7 +71,7 @@ void DrvDm3D8::display(byte times) const
 	}
 }
 
-void DrvDm3D8::setColzxy(byte row) const
+void DrvDm3d8::setColzxy(byte row) const
 {
 	byte * p = _dm.output();
 	for (byte j = 0; j < _word_per_row; j++)
@@ -93,7 +92,7 @@ void DrvDm3D8::setColzxy(byte row) const
 	}
 }
 
-void DrvDm3D8::setColyzx(byte row) const
+void DrvDm3d8::setColyzx(byte row) const
 {
 	byte *p = _dm.output() + row;
 	for (byte j = 0; j < _byte_per_row; j++) // z
