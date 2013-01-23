@@ -13,17 +13,17 @@
 
 #include "dot-matrix-3d8.h"
 
-DotMatrix3D8::DotMatrix3D8(byte block_count) :
+DotMatrix3d8::DotMatrix3d8(byte block_count) :
 		DotMatrix(block_count * BLOCK_COLUMN_COUNT, BLOCK_EDGE_LENGTH)
 {
 
 }
 
-DotMatrix3D8::~DotMatrix3D8()
+DotMatrix3d8::~DotMatrix3d8()
 {
 }
 
-void DotMatrix3D8::setDot(byte x, byte y, byte z, bool on)
+void DotMatrix3d8::setDot(byte x, byte y, byte z, bool on)
 {
 	if (y >= BLOCK_EDGE_LENGTH || z >= BLOCK_EDGE_LENGTH)
 		return;
@@ -32,37 +32,37 @@ void DotMatrix3D8::setDot(byte x, byte y, byte z, bool on)
 	this->DotMatrix::setDot(col, y, on);
 }
 
-byte DotMatrix3D8::convertCol(byte x, byte z)
+byte DotMatrix3d8::convertCol(byte x, byte z)
 {
 	return ((x << 3) + z);
 }
 
-void DotMatrix3D8::setMoveDirection(Direction3D d)
+void DotMatrix3d8::setMoveDirection(Direction3D d)
 {
 	switch (d)
 	{
 	case Z_NEGA:
-		_funMoveDirection = &DotMatrix3D8::moveBitInByteNega;
+		_funMoveDirection = &DotMatrix3d8::moveBitInByteNega;
 		break;
 	case Z_POSI:
-		_funMoveDirection = &DotMatrix3D8::moveBitInBytePosi;
+		_funMoveDirection = &DotMatrix3d8::moveBitInBytePosi;
 		break;
 	case Y_NEGA:
-		_funMoveDirection = &DotMatrix3D8::moveBitInRowNega;
+		_funMoveDirection = &DotMatrix3d8::moveBitInRowNega;
 		break;
 	case Y_POSI:
-		_funMoveDirection = &DotMatrix3D8::moveBitInRowPosi;
+		_funMoveDirection = &DotMatrix3d8::moveBitInRowPosi;
 		break;
 	case X_NEGA:
-		_funMoveDirection = &DotMatrix3D8::moveByteInColNega;
+		_funMoveDirection = &DotMatrix3d8::moveByteInColNega;
 		break;
 	case X_POSI:
-		_funMoveDirection = &DotMatrix3D8::moveByteInColPosi;
+		_funMoveDirection = &DotMatrix3d8::moveByteInColPosi;
 		break;
 	}
 }
 
-void DotMatrix3D8::rotate(byte index, bool recycle, bool clockwise)
+void DotMatrix3d8::rotate(byte index, bool recycle, bool clockwise)
 {
 	if (index > 3)
 		return;
@@ -97,7 +97,7 @@ void DotMatrix3D8::rotate(byte index, bool recycle, bool clockwise)
 
 }
 
-void DotMatrix3D8::rotateSync(bool recycle, bool clockwise)
+void DotMatrix3d8::rotateSync(bool recycle, bool clockwise)
 {
 	static byte step = 0;
 	for (byte i=0;i<4;i++)

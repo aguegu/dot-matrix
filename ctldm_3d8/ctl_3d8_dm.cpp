@@ -14,7 +14,7 @@
 
 #include "ctl_3d8_dm.h"
 
-Ctl3D8Dm::Ctl3D8Dm(DotMatrix3D8 & dm, HardwareSerial & sp,
+Ctl3D8Dm::Ctl3D8Dm(DotMatrix3d8 & dm, HardwareSerial & sp,
 		unsigned long baud_rate) :
 		Ctl3D8(sp, baud_rate, dm.countBytes()), _dm(dm)
 {

@@ -21,7 +21,7 @@
 class Ctl3D8Dm: public Ctl3D8
 {
 public:
-	Ctl3D8Dm(DotMatrix3D8 & dm, HardwareSerial & sp, unsigned long baud_rate =
+	Ctl3D8Dm(DotMatrix3d8 & dm, HardwareSerial & sp, unsigned long baud_rate =
 			57600);
 	virtual ~Ctl3D8Dm();
 
