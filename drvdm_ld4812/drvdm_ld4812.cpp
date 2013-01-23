@@ -5,9 +5,9 @@
  *      Author: agu
  */
 
-#include "drv_ld4812.h"
+#include "drvdm_ld4812.h"
 
-DrvLd4812::DrvLd4812(uint8_t pin_col, uint8_t pin_row, uint8_t pin_sh,
+DrvDmLd4812::DrvDmLd4812(uint8_t pin_col, uint8_t pin_row, uint8_t pin_sh,
 		uint8_t pin_st, uint8_t pin_oe) :
 		_dm(48, 12), _pin_col(pin_col), _pin_row(pin_row), _pin_sh(pin_sh), _pin_st(
 				pin_st), _pin_oe(pin_oe)
@@ -21,24 +21,24 @@ DrvLd4812::DrvLd4812(uint8_t pin_col, uint8_t pin_row, uint8_t pin_sh,
 	this->setBrightness();
 }
 
-DrvLd4812::~DrvLd4812()
+DrvDmLd4812::~DrvDmLd4812()
 {
 
 }
 
-void DrvLd4812::shiftLatch() const
+void DrvDmLd4812::shiftLatch() const
 {
 	pinSet(_pin_st);
 	pinClear(_pin_st);
 }
 
-void DrvLd4812::shiftClock() const
+void DrvDmLd4812::shiftClock() const
 {
 	pinSet(_pin_sh);
 	pinClear(_pin_sh);
 }
 
-void DrvLd4812::display() const
+void DrvDmLd4812::display() const
 {
 	static byte r = 0;
 
@@ -62,12 +62,12 @@ void DrvLd4812::display() const
 		r = 0;
 }
 
-DotMatrix & DrvLd4812::getDotMatrix()
+DotMatrix & DrvDmLd4812::getDotMatrix()
 {
 	return _dm;
 }
 
-void DrvLd4812::setBrightness(byte brightness)
+void DrvDmLd4812::setBrightness(byte brightness)
 {
 	analogWrite(_pin_oe, 0xff - brightness);
 }

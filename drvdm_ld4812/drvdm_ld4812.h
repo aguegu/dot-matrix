@@ -5,8 +5,8 @@
  *      Author: agu
  */
 
-#ifndef DRV_LD4812_H_
-#define DRV_LD4812_H_
+#ifndef DRV_DM_LD4812_H_
+#define DRV_DM_LD4812_H_
 
 #include <avr/io.h>
 #include "Arduino.h"
@@ -25,12 +25,12 @@ const uint8_t PROGMEM LD4812_ROW_ADDRESS[] =
 	27, 33, 39, 45,
 };
 
-class DrvLd4812
+class DrvDmLd4812
 {
 public:
 
-	DrvLd4812(uint8_t pin_col, uint8_t pin_row, uint8_t pin_sh, uint8_t pin_st, uint8_t pin_oe);
-	virtual ~DrvLd4812();
+	DrvDmLd4812(uint8_t pin_col, uint8_t pin_row, uint8_t pin_sh, uint8_t pin_st, uint8_t pin_oe);
+	virtual ~DrvDmLd4812();
 	void display() const;
 	DotMatrix & getDotMatrix();
 
@@ -50,4 +50,4 @@ private:
 	inline void shiftClock() const;
 };
 
-#endif /* DRV_LD4812_H_ */
+#endif /* DRV_DM_LD4812_H_ */
