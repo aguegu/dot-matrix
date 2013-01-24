@@ -16,7 +16,7 @@
 
 #include "ctl_3d8.h"
 #include "dot-matrix-3d8.h"
-#include "ReverseByte.h"
+#include "byte-reverse.h"
 
 class CtlDm3d8: public Ctl3d8
 {

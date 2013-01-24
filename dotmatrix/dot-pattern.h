@@ -10,7 +10,6 @@
 
 #include "Arduino.h"
 #include "dot-matrix.h"
-#include "ReverseByte.h"
 
 class DotPattern
 {

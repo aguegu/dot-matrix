@@ -5,7 +5,7 @@
  *      Author: agu
  */
 
-#include "ReverseByte.h"
+#include "byte-reverse.h"
 
 const uint8_t PROGMEM REVERSE[] =
 {
