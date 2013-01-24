@@ -1,5 +1,5 @@
 /*
- *  ctl_3d8_dm.h
+ *  ctldm_3d8.h
  *
  *  Created on: 2012-7-3
  *	Author: Weihong Guan
@@ -11,19 +11,19 @@
  *	source host: https://github.com/aguegu/dot-matrix
  */
 
-#ifndef CONTROLLER_A3D8_H_
-#define CONTROLLER_A3D8_H_
+#ifndef CTL_DM_3D8_H_
+#define CTL_DM_3D8_H_
 
 #include "ctl_3d8.h"
 #include "dot-matrix-3d8.h"
 #include "ReverseByte.h"
 
-class Ctl3D8Dm: public Ctl3D8
+class CtlDm3d8: public Ctl3d8
 {
 public:
-	Ctl3D8Dm(DotMatrix3d8 & dm, HardwareSerial & sp, unsigned long baud_rate =
+	CtlDm3d8(DotMatrix3d8 & dm, HardwareSerial & sp, unsigned long baud_rate =
 			57600);
-	virtual ~Ctl3D8Dm();
+	virtual ~CtlDm3d8();
 
 	void putDM();
 	void putDMrevZ();
@@ -33,4 +33,4 @@ private:
 	DotMatrix & _dm;
 };
 
-#endif /* CONTROLLER_A3D8_H_ */
+#endif /* CTL_DM_3D8_H_ */

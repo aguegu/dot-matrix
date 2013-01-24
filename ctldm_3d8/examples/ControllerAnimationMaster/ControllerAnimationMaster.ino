@@ -1,6 +1,6 @@
 /*
- *  A3D8_Controller_Advanced.ino
- * 
+ *  ControllerAnimationMaster.ino
+ *
  *	animation with the support of dot-matrix library
  *	Advanced animation sample on arduino managing 3D8S 8x8x8 led cubic display
  *	by connecting the serial port on 3D8S board (P2)
@@ -25,15 +25,15 @@
 
 #include "DotMatrixTest.h"
 
-#include "DotMatrix3D.h"
-#include "Controller_A3D8.h"
+#include "dot-matrix-3d8.h"
+#include "ctldm_3d8.h"
 
 #define BYTE_LENGTH 64
 
 extern HardwareSerial Serial;
 
-DotMatrix3D dm(1);
-Controller_A3D8 cube(dm, Serial);
+DotMatrix3d8 dm;
+CtlDm3d8 cube(dm, Serial);
 
 byte * cache;
 
@@ -52,7 +52,7 @@ void setup()
 
 	cache = new byte(BYTE_LENGTH);
 	Serial.begin(57600);
-	cube.sendMode(Controller_A3D8_Basic::XYZ);
+	cube.sendMode(Ctl3d8::XYZ);
 	cube.sendBrightness(0xff);
 
 	dm.clear(0x00);
@@ -92,7 +92,7 @@ void animationBlockScan(word k)
 
 void animationFlowZPosi(word k)
 {
-	dm.setMoveDirection(DotMatrix3D::Z_POSI);
+	dm.setMoveDirection(DotMatrix3d8::Z_POSI);
 	dm.move(false);
 	for (byte i = 0; i < random(4); i++)
 	{
@@ -168,7 +168,7 @@ void animationWave2D(word k)
 	k %= 16;
 	byte value = k < 8 ? k : 15 - k;
 
-	dm.setMoveDirection(DotMatrix3D::Y_POSI);
+	dm.setMoveDirection(DotMatrix3d8::Y_POSI);
 	dm.move(false);
 
 	dm.setByte(value, 0xff);
@@ -183,7 +183,7 @@ void animationWave3D(word k)
 	for (byte i = 0; i < 8; i++)
 		cache[i] = dm.getByte(i);
 
-	dm.setMoveDirection(DotMatrix3D::Y_POSI);
+	dm.setMoveDirection(DotMatrix3d8::Y_POSI);
 	dm.move(false);
 
 	for (byte i = 0; i < 8; i++)
@@ -202,7 +202,7 @@ void animationWaveShake(word k)
 	k %= 16;
 	byte value = k < 8 ? k : 15 - k;
 
-	dm.setMoveDirection(DotMatrix3D::X_POSI);
+	dm.setMoveDirection(DotMatrix3d8::X_POSI);
 	dm.move(false);
 	dm.setLine(0, value, 7, 7 - value);
 
@@ -212,7 +212,7 @@ void animationWaveShake(word k)
 void animationWaveRotate(word k)
 {
 	k %= 28;
-	dm.setMoveDirection(DotMatrix3D::X_POSI);
+	dm.setMoveDirection(DotMatrix3d8::X_POSI);
 	dm.move(false);
 
 	byte temp = k % 7;
@@ -240,7 +240,7 @@ void animationDance(word k)
 	char x = cache[0];
 	char y = cache[1];
 
-	dm.setMoveDirection(DotMatrix3D::Z_POSI);
+	dm.setMoveDirection(DotMatrix3d8::Z_POSI);
 	dm.move();
 
 	char vx = random(3) - 1;
@@ -283,7 +283,7 @@ void animationRotateLove(word k)
 	{
 		for (byte i = 0; i < 4; i++)
 		{
-			byte value = DotMatrix::reverseByte(
+			byte value = reverseByte(
 					pgm_read_byte_near(PATTERN_LOVE+(k/56)*4+i));
 			dm.setByte(0x20 + i, value);
 			dm.setByte(0x27 - i, value);
@@ -299,7 +299,8 @@ void animationRotateLove(word k)
 
 void animationOneByOne(word k)
 {
-	if (k % 512 == 0)	dm.clear(0x00);
+	if (k % 512 == 0)
+		dm.clear(0x00);
 
 	byte col, row;
 
@@ -321,7 +322,7 @@ void animationOneByOne(word k)
 }
 
 void callAnimation(void (*p)(word), word span, word times, byte init_value,
-		Controller_A3D8_Basic::InputMode mode)
+		Ctl3d8::InputMode mode)
 {
 	static word frame_id = 0;
 
@@ -341,13 +342,14 @@ void callAnimationInModes(void (*p)(word), word span, word times,
 {
 	for (byte i = 0; i < 3; i++)
 		callAnimation(p, span, times, init_value,
-				(Controller_A3D8_Basic::InputMode) i);
+				(Ctl3d8::InputMode) i);
 }
 
 void loop()
 {
-	callAnimation(animationFlash, 0xF0, 0x08, 0x00, Controller_A3D8_Basic::XYZ);
-	callAnimation(animationBreathe, 0x08, 0xff * 4, 0xff, Controller_A3D8_Basic::XYZ);
+	callAnimation(animationFlash, 0xF0, 0x08, 0x00, Ctl3d8::XYZ);
+	callAnimation(animationBreathe, 0x08, 0xff * 4, 0xff,
+			Ctl3d8::XYZ);
 	callAnimationInModes(animationFacetScan, 0x40, 0x08, 0x00);
 	callAnimationInModes(animationBlockScan, 0x40, 0x08, 0x00);
 	callAnimationInModes(animationFlowZPosi, 0x40, 0x40, 0x00);
@@ -356,20 +358,28 @@ void loop()
 	callAnimationInModes(animationMoveSideQuick, 0x40, 0x10, 0x01);
 
 	callAnimationInModes(animationWave2D, 0x40, 14 * 4, 0x00);
-	callAnimation(animationWave3D, 0x40, 14 * 8, 0x00, Controller_A3D8_Basic::ZXY);
-	callAnimation(animationWaveShake, 0x40, 14 * 8, 0x00, Controller_A3D8_Basic::XYZ);
+	callAnimation(animationWave3D, 0x40, 14 * 8, 0x00,
+			Ctl3d8::ZXY);
+	callAnimation(animationWaveShake, 0x40, 14 * 8, 0x00,
+			Ctl3d8::XYZ);
 
-	callAnimation(animationWaveRotate, 0x20, 14 * 8, 0x00, Controller_A3D8_Basic::XYZ);
-	callAnimation(animationWaveRotate, 0x20, 14 * 8, 0x00, Controller_A3D8_Basic::YZX);
+	callAnimation(animationWaveRotate, 0x20, 14 * 8, 0x00,
+			Ctl3d8::XYZ);
+	callAnimation(animationWaveRotate, 0x20, 14 * 8, 0x00,
+			Ctl3d8::YZX);
 
-	callAnimation(animationDance, 0x20, 0x80, 0x00, Controller_A3D8_Basic::ZXY);
+	callAnimation(animationDance, 0x20, 0x80, 0x00, Ctl3d8::ZXY);
 
-	callAnimation(animationRotateArrow, 0x20, 28 * 3, 0x00, Controller_A3D8_Basic::YZX);
-	callAnimation(animationRotateArrow, 0x30, 28 * 3, 0x00, Controller_A3D8_Basic::ZXY);
+	callAnimation(animationRotateArrow, 0x20, 28 * 3, 0x00,
+			Ctl3d8::YZX);
+	callAnimation(animationRotateArrow, 0x30, 28 * 3, 0x00,
+			Ctl3d8::ZXY);
 
-	callAnimation(animationRotateLove, 0x30, 28 * 6, 0x00, Controller_A3D8_Basic::ZXY);
+	callAnimation(animationRotateLove, 0x30, 28 * 6, 0x00,
+			Ctl3d8::ZXY);
 
-	callAnimation(animationOneByOne, 0x10, 0x400, 0x00, Controller_A3D8_Basic::XYZ);
+	callAnimation(animationOneByOne, 0x10, 0x400, 0x00,
+			Ctl3d8::XYZ);
 
 }
 

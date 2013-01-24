@@ -19,13 +19,13 @@ DrvDm74hc595X74hc138::DrvDm74hc595X74hc138(DotMatrix & dm, uint8_t pin_c_in,
 		uint8_t pin_c_oe, uint8_t pin_c_st, uint8_t pin_c_sh, uint8_t pin_r_oe,
 		uint8_t pin_r_a2, uint8_t pin_r_a1, uint8_t pin_r_a0,
 		uint16_t scan_span) :
-		_dm(dm), chip_col(pin_c_in, pin_c_sh, pin_c_st, pin_c_oe), chip_row(
+		_dm(dm), _chip_col(pin_c_in, pin_c_sh, pin_c_st, pin_c_oe), _chip_row(
 				pin_r_a2, pin_r_a1, pin_r_a0, pin_r_oe)
 {
 	_row_count = _dm.countRow();
 	_bytes_per_row = _dm.countBytePerRow();
 
-	chip_col.setShiftMode();
+	this->setShiftMode();
 }
 
 DrvDm74hc595X74hc138::~DrvDm74hc595X74hc138()
@@ -37,16 +37,22 @@ void DrvDm74hc595X74hc138::display()
 {
 	static byte r = 0;
 
-	chip_col.shiftSendRev(_dm.output() + _bytes_per_row * r, _bytes_per_row);
-	chip_row.setOE(false);
+	_chip_col.shiftSendRev(_dm.output() + _bytes_per_row * r, _bytes_per_row);
+	_chip_row.setOE(false);
 
-	chip_col.shiftLatch();
+	_chip_col.shiftLatch();
 
-	chip_row.setValue(r);
+	_chip_row.setValue(r);
 
-	chip_row.setOE(true);
+	_chip_row.setOE(true);
 
 	r++;
 	if (r == _row_count)
 		r = 0;
+}
+
+
+void DrvDm74hc595X74hc138::setShiftMode(byte mode)
+{
+	_chip_col.setShiftMode(mode);
 }

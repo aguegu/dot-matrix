@@ -1,5 +1,5 @@
 /*
- * ctl_3d8_dm.cpp
+ * ctldm_3d8.cpp
  *
  *  Created on: 2012-7-3
  *	Author: Weihong Guan
@@ -12,26 +12,26 @@
  *
  */
 
-#include "ctl_3d8_dm.h"
+#include "ctldm_3d8.h"
 
-Ctl3D8Dm::Ctl3D8Dm(DotMatrix3d8 & dm, HardwareSerial & sp,
+CtlDm3d8::CtlDm3d8(DotMatrix3d8 & dm, HardwareSerial & sp,
 		unsigned long baud_rate) :
-		Ctl3D8(sp, baud_rate, dm.countBytes()), _dm(dm)
+		Ctl3d8(sp, baud_rate, dm.countBytes()), _dm(dm)
 {
 
 }
 
-Ctl3D8Dm::~Ctl3D8Dm()
+CtlDm3d8::~CtlDm3d8()
 {
 
 }
 
-void Ctl3D8Dm::putDM()
+void CtlDm3d8::putDM()
 {
 	this->sendBatch(_dm.output(), _length);
 }
 
-void Ctl3D8Dm::putDMrevZ()
+void CtlDm3d8::putDMrevZ()
 {
 	_sp.write(0xf2);
 	byte *p = _dm.output();
@@ -39,7 +39,7 @@ void Ctl3D8Dm::putDMrevZ()
 		_sp.write(reverseByte(*p++));
 }
 
-void Ctl3D8Dm::putReverseDM()
+void CtlDm3d8::putReverseDM()
 {
 	_sp.write(0xf2);
 	byte *p = _dm.output();

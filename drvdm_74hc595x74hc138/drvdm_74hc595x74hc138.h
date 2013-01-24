@@ -31,13 +31,14 @@ public:
 			uint8_t pin_r_a2, uint8_t pin_r_a1, uint8_t pin_r_a0, uint16_t scan_span = 0x400);
 	virtual ~DrvDm74hc595X74hc138();
 	void display();
+	void setShiftMode(byte mode = MSBFIRST);
 
 protected:
 
 	const DotMatrix & _dm;
 
-	Drv74hc595 chip_col;
-	Drv74hc138 chip_row;
+	Drv74hc595 _chip_col;
+	Drv74hc138 _chip_row;
 
 	byte _row_count;
 	byte _bytes_per_row;

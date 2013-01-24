@@ -1,20 +1,18 @@
-#include "DotMatrixTest.h"
+#include "drvdm_ld4812.h"
+#include "dot-matrix.h"
+#include "dot-font.h"
+#include "dot-string.h"
 
-#include "Driver_Dual595.h"
-#include "DotMatrix.h"
-#include "DotFont.h"
-#include "DotString.h"
+#include "vfont_7x3.h"
 
-#include "Font0703.h"
-
-Driver_Dual595 dmd(9, 8, 7, 6, 5);
+DrvDmLd4812 dmd(9, 8, 7, 6, 5);
 DotMatrix dm = dmd.getDotMatrix();
 
 void setup()
 {
 	dm.clear(0x00);
 	DotFont df(dm);
-	df.setPattern(FONT_0703, FONT_0703_STATE);
+	df.setPattern(VFONT_7X3, VFONT_7X3_STATE);
 	DotString ds(df, 16, true);
 	ds.printf("aGuegu.net");
 	dm.setRect(0, 0, 47, 11);

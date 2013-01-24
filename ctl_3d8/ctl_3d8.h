@@ -17,7 +17,7 @@
 
 #include "Arduino.h"
 
-class Ctl3D8
+class Ctl3d8
 {
 public:
 
@@ -26,9 +26,9 @@ public:
 		XYZ = 0x00, YZX = 0x01, ZXY = 0x02
 	};
 
-	Ctl3D8(HardwareSerial & sp, unsigned long baud_rate = 57600,
+	Ctl3d8(HardwareSerial & sp, unsigned long baud_rate = 57600,
 			byte length = 64);
-	virtual ~Ctl3D8();
+	virtual ~Ctl3d8();
 	void sendGlobal(byte c);
 	void sendColumn(byte col, byte value);
 	void sendBatch(const byte *p, byte length);

@@ -1,15 +1,11 @@
-
-
-#include "DotMatrixTest.h"
-#include "Driver_595_138.h"
-#include "DotMatrix.h"
-#include "DotFont.h"
-#include "DotString.h"
-#include "Font0703.h"
+#include "drvdm_74hc595x74hc138.h"
+#include "dot-matrix.h"
+#include "dot-font.h"
+#include "dot-string.h"
+#include "vfont_7x3.h"
 
 DotMatrix dm(32, 8);
-//Driver_595_138 dmd(dm, 10, 11, 13, 12, 7, 6, 5, 4);
-Driver_595_138 dmd(dm, 8, 9, 11, 12, 7, 6, 5, 4);
+DrvDm74hc595X74hc138 dmd(dm, 8, 9, 13, 12, 7, 6, 5, 4);
 DotFont df(dm);
 DotString ds(df, dm.countCol(), true);
 
@@ -18,8 +14,10 @@ byte index = 0;
 
 void setup()
 {
-	pinMode(8, OUTPUT);
-	digitalWrite(8, HIGH);
+	dmd.setShiftMode(LSBFIRST);
+
+	pinMode(10, OUTPUT);
+	digitalWrite(10, HIGH);
 
 	pinMode(9, OUTPUT);
 	digitalWrite(9, LOW);
@@ -27,19 +25,17 @@ void setup()
 	dm.clear(0x00);
 	dm.setDot(0,0);
 
-	df.setPattern(FONT_0703, FONT_0703_STATE);
+	df.setPattern(VFONT_7X3, VFONT_7X3_STATE);
 	ds.printf("Hi, world.");
 	ds.postAt(0,0);
 
-	dmd.setSpeed(0x200);
-
 	Serial.begin(9600);
-
 }
 
 void loop()
 {
-	dmd.display(0x08);
+	dmd.display();
+	delayMicroseconds(0x200);
 }
 
 void serialEvent()
