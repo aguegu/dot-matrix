@@ -1,5 +1,5 @@
 /*
- * 	drv_3d8.cpp
+ * 	drvdm_3d8.cpp
  *
  *	A3D8 (3D8S) 8x8x8 cubic led display driver
  *

@@ -23,7 +23,7 @@
 
 #define BYTE_LENGTH 64
 
-DotMatrix3d8 dm(1);
+DotMatrix3d8 dm;
 DrvDm3d8 cube(dm, 9, 10, A3, 8, 11, 5, 4, 3);
 byte * cache;
 
@@ -31,10 +31,11 @@ uint8_t led_top = 6;
 uint8_t led_bottom = 7;
 
 const uint8_t PROGMEM PATTERN_LOVE[] =
-{ 0x00, 0x81, 0x81, 0xFF, // I
-		0x38, 0xFC, 0xFE, 0x3F, //heart
-		0x00, 0xFF, 0xFF, 0x01, // U
-		};
+{
+	0x00, 0x81, 0x81, 0xFF, // I
+	0x38, 0xFC, 0xFE, 0x3F, //heart
+	0x00, 0xFF, 0xFF, 0x01, // U
+};
 
 const uint8_t PROGMEM PATTERN_ARROW[] =
 { 0x08, 0x14, 0x22, 0x77, 0x14, 0x14, 0x14, 0x14, 0x14, 0x1c, };
@@ -202,7 +203,6 @@ void animationWaveRotate(word k)
 
 	dm.setLine(cache[i % 4], cache[(i + 1) % 4], cache[(i + 2) % 4],
 			cache[(i + 3) % 4]);
-
 }
 
 void animationDance(word k)
@@ -317,5 +317,4 @@ void loop()
 	callAnimation(animationRotateArrow, 0x04, 28 * 3, 0x00, DrvDm3d8::ZXY);
 
 	callAnimation(animationRotateLove, 0x04, 28 * 6, 0x00, DrvDm3d8::ZXY);
-
 }

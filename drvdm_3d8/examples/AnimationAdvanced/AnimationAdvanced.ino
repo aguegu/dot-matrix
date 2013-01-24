@@ -1,5 +1,5 @@
 /*
- *  A3D8_master.ino
+ *  AnimationAdvanced.ino
  *
  *	animation with the support of dot-matrix library
  *	master animation sample on arduino managing 3D8S 8x8x8 led cubic display
@@ -16,28 +16,28 @@
  *
  */
 
-#include "DotMatrixTest.h"
-#include "DotMatrix3D.h"
-#include "Driver_3D8.h"
+#include "dot-matrix-3d8.h"
+#include "drvdm_3d8.h"
+#include "ReverseByte.h"
 
 #define BYTE_LENGTH 64
 
-DotMatrix3D dm(1);
-Driver_3D8 cube(dm, 9, 10, A3, 8, 11, 5, 4, 3);
+DotMatrix3d8 dm;
+DrvDm3d8 cube(dm, 9, 10, A3, 8, 11, 5, 4, 3);
 byte * cache;
 
 uint8_t led_top = 6;
 uint8_t led_bottom = 7;
 
 const uint8_t PROGMEM PATTERN_LOVE[] =
-{ 0x00, 0x81, 0x81, 0xFF, // I
-		0x38, 0xFC, 0xFE, 0x3F, //heart
-		0x00, 0xFF, 0xFF, 0x01, // U
-		};
+{
+	0x00, 0x81, 0x81, 0xFF, // I
+	0x38, 0xFC, 0xFE, 0x3F, //heart
+	0x00, 0xFF, 0xFF, 0x01, // U
+};
 
 const uint8_t PROGMEM PATTERN_ARROW[] =
 { 0x08, 0x14, 0x22, 0x77, 0x14, 0x14, 0x14, 0x14, 0x14, 0x1c, };
-
 
 void setup()
 {
@@ -81,7 +81,7 @@ void animationBlockScan(word k)
 
 void animationFlowZPosi(word k)
 {
-	dm.setMoveDirection(DotMatrix3D::Z_POSI);
+	dm.setMoveDirection(DotMatrix3d8::Z_POSI);
 	dm.move(false);
 	for (byte i = 0; i < random(4); i++)
 	{
@@ -150,7 +150,7 @@ void animationWave2D(word k)
 	k %= 16;
 	byte value = k < 8 ? k : 15 - k;
 
-	dm.setMoveDirection(DotMatrix3D::Y_POSI);
+	dm.setMoveDirection(DotMatrix3d8::Y_POSI);
 	dm.move(false);
 
 	dm.setByte(value, 0xff);
@@ -164,7 +164,7 @@ void animationWave3D(word k)
 	for (byte i = 0; i < 8; i++)
 		cache[i] = dm.getByte(i);
 
-	dm.setMoveDirection(DotMatrix3D::Y_POSI);
+	dm.setMoveDirection(DotMatrix3d8::Y_POSI);
 	dm.move(false);
 
 	for (byte i = 0; i < 8; i++)
@@ -181,7 +181,7 @@ void animationWaveShake(word k)
 	k %= 16;
 	byte value = k < 8 ? k : 15 - k;
 
-	dm.setMoveDirection(DotMatrix3D::X_POSI);
+	dm.setMoveDirection(DotMatrix3d8::X_POSI);
 	dm.move(false);
 	dm.setLine(0, value, 7, 7 - value);
 }
@@ -189,7 +189,7 @@ void animationWaveShake(word k)
 void animationWaveRotate(word k)
 {
 	k %= 28;
-	dm.setMoveDirection(DotMatrix3D::X_POSI);
+	dm.setMoveDirection(DotMatrix3d8::X_POSI);
 	dm.move(false);
 
 	byte temp = k % 7;
@@ -202,7 +202,6 @@ void animationWaveRotate(word k)
 
 	dm.setLine(cache[i % 4], cache[(i + 1) % 4], cache[(i + 2) % 4],
 			cache[(i + 3) % 4]);
-
 }
 
 void animationDance(word k)
@@ -216,7 +215,7 @@ void animationDance(word k)
 	char x = cache[0];
 	char y = cache[1];
 
-	dm.setMoveDirection(DotMatrix3D::Z_POSI);
+	dm.setMoveDirection(DotMatrix3d8::Z_POSI);
 	dm.move();
 
 	char vx = random(3) - 1;
@@ -257,7 +256,7 @@ void animationRotateLove(word k)
 	{
 		for (byte i = 0; i < 4; i++)
 		{
-			byte value = DotMatrix::reverseByte(
+			byte value = reverseByte(
 					pgm_read_byte_near(PATTERN_LOVE+(k/56)*4+i));
 			dm.setByte(0x20 + i, value);
 			dm.setByte(0x27 - i, value);
@@ -270,7 +269,7 @@ void animationRotateLove(word k)
 }
 
 void callAnimation(void (*p)(word), word span, word times, byte init_value,
-		Driver_3D8::ScanMode mode)
+		DrvDm3d8::ScanMode mode)
 {
 	static word frame_id = 0;
 
@@ -289,13 +288,13 @@ void callAnimationInModes(void (*p)(word), word span, word times,
 		byte init_value)
 {
 	for (byte i = 0; i < 3; i++)
-		callAnimation(p, span, times, init_value, (Driver_3D8::ScanMode) i);
+		callAnimation(p, span, times, init_value, (DrvDm3d8::ScanMode) i);
 }
 
 void loop()
 {
-	callAnimation(animationFlash, 0x10, 0x08, 0x00, Driver_3D8::XYZ);
-	callAnimation(animationBreathe, 0x01, 0xff * 2, 0xff, Driver_3D8::XYZ);
+	callAnimation(animationFlash, 0x10, 0x08, 0x00, DrvDm3d8::XYZ);
+	callAnimation(animationBreathe, 0x01, 0xff * 2, 0xff, DrvDm3d8::XYZ);
 	callAnimationInModes(animationFacetScan, 0x08, 0x08, 0x00);
 	callAnimationInModes(animationBlockScan, 0x08, 0x08, 0x00);
 	callAnimationInModes(animationFlowZPosi, 0x04, 0x40, 0x00);
@@ -305,17 +304,16 @@ void loop()
 
 	callAnimationInModes(animationWave2D, 0x04, 14 * 4, 0x00);
 
-	callAnimation(animationWave3D, 0x02, 14 * 16, 0x00, Driver_3D8::ZXY);
-	callAnimation(animationWaveShake, 0x02, 14 * 16, 0x00, Driver_3D8::XYZ);
+	callAnimation(animationWave3D, 0x02, 14 * 16, 0x00, DrvDm3d8::ZXY);
+	callAnimation(animationWaveShake, 0x02, 14 * 16, 0x00, DrvDm3d8::XYZ);
 
-	callAnimation(animationWaveRotate, 0x02, 14 * 8, 0x00, Driver_3D8::XYZ);
-	callAnimation(animationWaveRotate, 0x02, 14 * 8, 0x00, Driver_3D8::YZX);
+	callAnimation(animationWaveRotate, 0x02, 14 * 8, 0x00, DrvDm3d8::XYZ);
+	callAnimation(animationWaveRotate, 0x02, 14 * 8, 0x00, DrvDm3d8::YZX);
 
-	callAnimation(animationDance, 0x02, 0x80, 0x00, Driver_3D8::ZXY);
+	callAnimation(animationDance, 0x02, 0x80, 0x00, DrvDm3d8::ZXY);
 
-	callAnimation(animationRotateArrow, 0x04, 28 * 3, 0x00, Driver_3D8::YZX);
-	callAnimation(animationRotateArrow, 0x04, 28 * 3, 0x00, Driver_3D8::ZXY);
+	callAnimation(animationRotateArrow, 0x04, 28 * 3, 0x00, DrvDm3d8::YZX);
+	callAnimation(animationRotateArrow, 0x04, 28 * 3, 0x00, DrvDm3d8::ZXY);
 
-	callAnimation(animationRotateLove, 0x04, 28 * 6, 0x00, Driver_3D8::ZXY);
-
+	callAnimation(animationRotateLove, 0x04, 28 * 6, 0x00, DrvDm3d8::ZXY);
 }

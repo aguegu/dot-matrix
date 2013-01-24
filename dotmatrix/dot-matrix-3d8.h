@@ -1,5 +1,5 @@
 /*
- *	DotMatrix3D.h
+ *	dot-matrix-3d8.h
  *
  *  Created on: 2012-5-29
  *	Author: Weihong Guan
@@ -43,7 +43,7 @@ const uint8_t PROGMEM ROLL_STEP[] = {0x7f, 0x5d, 0x2a, 0x08};
 class DotMatrix3d8: public DotMatrix
 {
 public:
-	DotMatrix3d8(byte block_count);
+	DotMatrix3d8();
 	virtual ~DotMatrix3d8();
 	void setDot(byte x, byte y, byte z, bool on = true);
 
@@ -62,8 +62,6 @@ public:
 	void rotateSync(bool recycle = true, bool clockwise = true);
 
 private:
-
-	byte _block_count;
 
 	static const byte BLOCK_EDGE_LENGTH = 8;
 	static const byte BLOCK_COLUMN_COUNT = 64;
