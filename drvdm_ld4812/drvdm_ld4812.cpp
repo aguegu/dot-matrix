@@ -57,8 +57,7 @@ void DrvDmLd4812::display() const
 	}
 	this->shiftLatch();
 
-	r++;
-	if (r == LD4812_WIDTH)
+	if (r++ == LD4812_WIDTH)
 		r = 0;
 }
 

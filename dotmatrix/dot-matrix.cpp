@@ -29,6 +29,8 @@ DotMatrix::DotMatrix(byte colCount, byte rowCount)
 
 	_pScreen = (byte *) malloc(sizeof(byte) * (_bytes_length + 1));
 	setMoveDirection(this->BYTE_IN_COL_POSI);
+
+	this->clear(0x00);
 }
 
 DotMatrix::~DotMatrix()
