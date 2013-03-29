@@ -13,7 +13,7 @@ DrvDm3d8Spi::DrvDm3d8Spi(DotMatrix & dm, SPIClass & spi,
 		DrvDmTb62726X74hc138Spi(dm, spi, pin_latch, pin_en, pin_rext, pin_a2,
 				pin_a1, pin_a0, 255, scan_speed)
 {
-	this->setMode();
+	_setCol = &DrvDm3d8Spi::setColxyz;
 }
 
 DrvDm3d8Spi::~DrvDm3d8Spi()

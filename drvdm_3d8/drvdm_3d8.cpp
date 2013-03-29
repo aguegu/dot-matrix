@@ -21,7 +21,7 @@ DrvDm3d8::DrvDm3d8(DotMatrix & dm, uint8_t pin_din, uint8_t pin_clk,
 		DrvDmTb62726X74hc138(dm, pin_din, pin_clk, pin_latch, pin_en, pin_rext,
 				pin_a2, pin_a1, pin_a0, 255, scan_speed)
 {
-	this->setMode();
+	_setCol = &DrvDm3d8::setColxyz;
 }
 
 DrvDm3d8::~DrvDm3d8()
