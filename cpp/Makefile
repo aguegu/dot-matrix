@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -O2 -g -Wall 
 
-SOURCES = dmscreen.cpp
+SOURCES = dmscreen.cpp dot-matrix.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 TARGET = dmscreen
 

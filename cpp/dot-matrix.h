@@ -16,8 +16,9 @@
 #ifndef DOTMATRIX_H_
 #define DOTMATRIX_H_
 
-//#include "Arduino.h"
-#include "bit_op.h"
+#include "cstdlib"
+#include "string.h"
+#include "common.h"
 
 class DotMatrix
 {
