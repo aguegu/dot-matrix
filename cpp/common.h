@@ -45,6 +45,8 @@ typedef unsigned short uint16_t;
 
 #define _BV(bit) (1 << (bit))
 
+#define pgm_read_byte_near(x) (*(x))
+
 
 #ifdef __cplusplus
 }

@@ -6,7 +6,7 @@
  */
 #include "hpattern.h"
 
-const uint8_t PROGMEM H_PATTERN[]  =
+const uint8_t H_PATTERN[]  =
 {
 		// 0x31968, 0xB05, 0xCE, 0xA2, ΢
 

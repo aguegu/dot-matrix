@@ -4,6 +4,9 @@
 #include <locale.h>
 
 #include "dot-matrix.h"
+#include "dot-font.h"
+#include "dot-string.h"
+#include "vfont_6x3.h"
 
 static const unsigned char c_on[] =
 { 0xe2, 0x96, 0xa0, 0x20, 0x00 };
@@ -12,26 +15,38 @@ static const unsigned char c_off[] =
 
 int main()
 {
-	DotMatrix dm(32, 16);
+	DotMatrix dm(40, 8);
+	DotFont df(dm);
+	DotString ds(df, 16);
+	df.setPattern(VFONT_6X3, VFONT_6X3_STATE);
 
 	setlocale(LC_ALL, "");
 	initscr();
 	cbreak();
 	noecho();
 
-	dm.setRect(1, 1, 30, 14);
-	dm.setRect(2, 2, 29, 13, false);
+	timeout(20);
 
-	dm.setLine(2, 2, 29, 13);
+//	dm.setRect(1, 1, 30, 14);
+//	dm.setRect(2, 2, 29, 13, false);
+//	dm.setLine(2, 2, 29, 13);
 
-	for (int r = 0; r < dm.countRow(); r++) {
-		for (int c = 0; c < dm.countCol(); c++)
-			printw("%s", dm.getDot(c, r)? c_on: c_off);
-		printw("\n");		
+	ds.printf("0123456789");
+	ds.postAt(0, 1);	
+
+	dm.setMoveDirection(DotMatrix::BIT_IN_COL_POSI);
+
+	while (getch() != 'q') {
+//		clear();
+		for (int r = 0; r < dm.countRow(); r++) {
+			move(r, 0);
+			for (int c = 0; c < dm.countCol(); c++)
+				printw("%s", dm.getDot(c, r)? c_on: c_off);
+		}
+		refresh();
+		//dm.move(true);
 	}
-	refresh();
 
-	while(getch() != 'q');
 	endwin();
 	exit(EXIT_SUCCESS);
 }

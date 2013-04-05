@@ -11,4 +11,7 @@
 *.la
 *.a
 
+.*
+
 Release/
+cpp/dmscreen
