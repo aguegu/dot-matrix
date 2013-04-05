@@ -27,6 +27,8 @@ typedef unsigned short uint16_t;
 
 #define lowByte(w) ((uint8_t) ((w) & 0xff))
 #define highByte(w) ((uint8_t) ((w) >> 8))
+#define makeWord(h, l) (((h) << 8) + (l))
+
 
 #define bitRead(value, bit) (((value) >> (bit)) & 0x01)
 #define bitSet(value, bit) ((value) |= (1UL << (bit)))
