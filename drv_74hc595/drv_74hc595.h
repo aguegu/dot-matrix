@@ -9,7 +9,7 @@
 #define DRV_74HC595_H_
 
 #include "Arduino.h"
-#include "pin_op.h"
+#include "common/pin_op.h"
 
 #ifndef BIT_IN_BYTE
 #define BIT_IN_BYTE 8

@@ -18,8 +18,8 @@
 #define DRV_ST7920_H_
 
 #include "Arduino.h"
-#include "dot-matrix.h"
-#include "pin_op.h"
+#include "dotmatrix/dot-matrix.h"
+#include "common/pin_op.h"
 
 class DrvSt7920
 {

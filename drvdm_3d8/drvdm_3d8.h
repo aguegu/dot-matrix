@@ -16,8 +16,8 @@
 #ifndef DRV_DM_3D8_H_
 #define DRV_DM_3D8_H_
 
-#include "dot-matrix.h"
-#include "drvdm_tb62726x74hc138.h"
+#include "dotmatrix/dot-matrix.h"
+#include "drvdm_tb62726x74hc138/drvdm_tb62726x74hc138.h"
 
 class DrvDm3d8: public DrvDmTb62726X74hc138
 {

@@ -21,8 +21,8 @@
 #define DRV_HD44780_I2C_H_
 
 #include "Arduino.h"
-#include "drv_hd44780_basic.h"
-#include "Twi.h"
+#include "drv_hd44780/drv_hd44780_basic.h"
+#include "twi/twi.h"
 // The twi library is my substitute of the Wire library,
 // host on https://github.com/aguegu/Arduino/tree/master/libraries/Twi
 

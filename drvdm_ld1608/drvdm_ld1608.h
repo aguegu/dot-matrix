@@ -9,8 +9,8 @@
 #define DRV_DM_LD1608_H_
 
 #include "Arduino.h"
-#include "drv_74hc595_spi.h"
-#include "dot-matrix.h"
+#include "drv_74hc595_spi/drv_74hc595_spi.h"
+#include "dotmatrix/dot-matrix.h"
 
 class DrvDmLd1608
 {

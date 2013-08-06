@@ -14,9 +14,9 @@
 #ifndef CTL_DM_3D8_H_
 #define CTL_DM_3D8_H_
 
-#include "ctl_3d8.h"
-#include "dot-matrix-3d8.h"
-#include "byte-reverse.h"
+#include "ctl_3d8/ctl_3d8.h"
+#include "dotmatrix/dot-matrix-3d8.h"
+#include "common/byte-reverse.h"
 
 class CtlDm3d8: public Ctl3d8
 {

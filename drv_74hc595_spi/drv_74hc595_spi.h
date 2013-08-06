@@ -10,7 +10,7 @@
 
 #include "Arduino.h"
 #include "SPI.h"
-#include "pin_op.h"
+#include "common/pin_op.h"
 
 class Drv74hc595Spi
 {

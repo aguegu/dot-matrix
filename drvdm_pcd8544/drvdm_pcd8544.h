@@ -17,8 +17,8 @@
 #define DRV_DM_PCD8544_H_
 
 #include "Arduino.h"
-#include "dot-matrix.h"
-#include "drv_pcd8544.h"
+#include "dotmatrix/dot-matrix.h"
+#include "drv_pcd8544/drv_pcd8544.h"
 
 #define COMMAND	false
 #define DATA	true

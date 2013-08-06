@@ -17,8 +17,8 @@
 #define DRV_DM_ST7920_H_
 
 #include "Arduino.h"
-#include "drv_st7920.h"
-#include "dot-matrix.h"
+#include "drv_st7920/drv_st7920.h"
+#include "dotmatrix/dot-matrix.h"
 
 class DrvDmSt7920: public DrvSt7920
 {

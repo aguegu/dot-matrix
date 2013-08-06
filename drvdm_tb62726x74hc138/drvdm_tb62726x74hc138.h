@@ -16,9 +16,9 @@
 #ifndef DRV_DM_TB62726_X_74HC138_H_
 #define DRV_DM_TB62726_X_74HC138_H_
 
-#include "dot-matrix.h"
-#include "drv_tb62726.h"
-#include "drv_74hc138.h"
+#include "dotmatrix/dot-matrix.h"
+#include "drv_tb62726/drv_tb62726.h"
+#include "drv_74hc138/drv_74hc138.h"
 
 class DrvDmTb62726X74hc138
 {

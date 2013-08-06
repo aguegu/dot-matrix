@@ -9,7 +9,7 @@
 #define DRV_TB62726_SPI_H_
 
 #include "Arduino.h"
-#include "drv_74hc595_spi.h"
+#include "drv_74hc595_spi/drv_74hc595_spi.h"
 
 class DrvTb62726Spi: public Drv74hc595Spi
 {

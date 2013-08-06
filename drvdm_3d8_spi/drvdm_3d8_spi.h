@@ -8,8 +8,8 @@
 #ifndef DRV_DM_TB62726_X_74HC595_SPI_H_
 #define DRV_DM_TB62726_X_74HC595_SPI_H_
 
-#include "dot-matrix.h"
-#include "drvdm_tb62726x74hc138_spi.h"
+#include "dotmatrix/dot-matrix.h"
+#include "drvdm_tb62726x74hc138_spi/drvdm_tb62726x74hc138_spi.h"
 
 class DrvDm3d8Spi: public DrvDmTb62726X74hc138Spi
 {

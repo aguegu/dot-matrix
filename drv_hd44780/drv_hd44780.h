@@ -17,8 +17,8 @@
 #define DRV_HD44780_H_
 
 #include "Arduino.h"
-#include "pin_op.h"
-#include "drv_hd44780_basic.h"
+#include "common/pin_op.h"
+#include "drv_hd44780/drv_hd44780_basic.h"
 
 class DrvHd44780: public DrvHd44780Basic
 {

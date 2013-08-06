@@ -17,7 +17,7 @@
 #define DOTMATRIX_H_
 
 #include "Arduino.h"
-#include "bit_op.h"
+#include "common/bit_op.h"
 
 class DotMatrix
 {

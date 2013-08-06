@@ -17,7 +17,7 @@
 #define DRV_PCD8544_H_
 
 #include "Arduino.h"
-#include "pin_op.h"
+#include "common/pin_op.h"
 
 #define COMMAND	false
 #define DATA	true

@@ -18,9 +18,9 @@
 #define DRV_DM_74HC595_X_74HC138_H_
 
 #include "Arduino.h"
-#include "drv_74hc138.h"
-#include "drv_74hc595.h"
-#include "dot-matrix.h"
+#include "drv_74hc138/drv_74hc138.h"
+#include "drv_74hc595/drv_74hc595.h"
+#include "dotmatrix/dot-matrix.h"
 
 class DrvDm74hc595X74hc138
 {

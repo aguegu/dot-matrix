@@ -9,10 +9,10 @@
 #define DRV_DM_TB62726_X_74HC138_SPI_H_
 
 #include "Arduino.h"
-#include "dot-matrix.h"
+#include "dotmatrix/dot-matrix.h"
 #include "SPI.h"
-#include "drv_tb62726_spi.h"
-#include "drv_74hc138.h"
+#include "drv_tb62726_spi/drv_tb62726_spi.h"
+#include "drv_74hc138/drv_74hc138.h"
 
 class DrvDmTb62726X74hc138Spi
 {

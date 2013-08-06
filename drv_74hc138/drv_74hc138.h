@@ -9,7 +9,7 @@
 #define DRV_74HC138_H_
 
 #include "Arduino.h"
-#include "pin_op.h"
+#include "common/pin_op.h"
 
 class Drv74hc138
 {

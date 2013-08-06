@@ -10,8 +10,8 @@
 
 #include <avr/io.h>
 #include "Arduino.h"
-#include "pin_op.h"
-#include "dot-matrix.h"
+#include "common/pin_op.h"
+#include "dotmatrix/dot-matrix.h"
 
 #define LD4812_WIDTH	24
 
